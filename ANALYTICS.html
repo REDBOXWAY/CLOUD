@@ -41,13 +41,17 @@
       color: #000;
     }
 
-    /* ТАБЛИЦА ИТОГОВ */
-    .summary-table {
-      margin-top: 25px;
+    .total-row td {
+      background: #fff;
+      color: #000;
+      font-weight: bold;
     }
 
-    .summary-table td {
-      font-weight: bold;
+    .day-separator td {
+      height: 15px;
+      padding: 0;
+      background: #000;
+      border: none;
     }
 
     button {
@@ -69,9 +73,8 @@
 
   <h1>АНАЛИТИКА ПРОДАЖ</h1>
 
-  <!-- ОСНОВНАЯ ТАБЛИЦА -->
-
   <table>
+
     <thead>
       <tr>
         <th>ДАТА</th>
@@ -81,29 +84,9 @@
       </tr>
     </thead>
 
-    <tbody id="salesData">
-    </tbody>
-  </table>
-
-
-  <!-- ИТОГИ ПО ДНЯМ -->
-
-  <table class="summary-table">
-
-    <thead>
-      <tr>
-        <th>ДАТА</th>
-        <th>КАТЕГОРИЙ</th>
-        <th>ПРОДАНО ЕДИНИЦ</th>
-        <th>ОБЩАЯ СУММА</th>
-      </tr>
-    </thead>
-
-    <tbody id="summaryData">
-    </tbody>
+    <tbody id="salesData"></tbody>
 
   </table>
-
 
   <button onclick="window.location.href='HOME.html'">
     ОБРАТНО
@@ -117,79 +100,87 @@
 function loadAnalytics(data) {
 
   const table = document.getElementById('salesData');
-  const summaryTable = document.getElementById('summaryData');
 
   table.innerHTML = '';
-  summaryTable.innerHTML = '';
 
-  const totals = {};
-
-
-  // ОСНОВНАЯ ТАБЛИЦА
+  // ГРУППИРУЕМ ПОЛУЧЕННЫЕ ДАННЫЕ ПО ДНЯМ
+  const days = {};
 
   data.forEach(item => {
 
-    const formattedDate =
+    const date =
       new Date(item.date).toLocaleDateString('ru-RU');
 
-    const row = document.createElement('tr');
-
-    row.innerHTML = `
-      <td>${formattedDate}</td>
-      <td>${item.category}</td>
-      <td>${item.quantity}</td>
-      <td>${Number(item.amount).toFixed(2)}</td>
-    `;
-
-    table.appendChild(row);
-
-
-    // СЧИТАЕМ ИТОГИ ПО ДАТЕ
-
-    if (!totals[formattedDate]) {
-
-      totals[formattedDate] = {
-        categories: 0,
-        quantity: 0,
-        amount: 0
-      };
-
+    if (!days[date]) {
+      days[date] = [];
     }
 
-    totals[formattedDate].categories += 1;
-
-    totals[formattedDate].quantity +=
-      Number(item.quantity);
-
-    totals[formattedDate].amount +=
-      Number(item.amount);
+    days[date].push(item);
 
   });
 
 
-  // ВЫВОДИМ ИТОГИ
+  // ВЫВОДИМ КАЖДЫЙ ДЕНЬ
+  Object.keys(days).forEach(date => {
 
-  Object.keys(totals).forEach(date => {
+    const items = days[date];
 
-    const total = totals[date];
+    let totalQuantity = 0;
+    let totalAmount = 0;
 
-    const row = document.createElement('tr');
 
-    row.innerHTML = `
+    // КАТЕГОРИИ ЭТОГО ДНЯ
+    items.forEach(item => {
+
+      totalQuantity += Number(item.quantity);
+      totalAmount += Number(item.amount);
+
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${date}</td>
+        <td>${item.category}</td>
+        <td>${item.quantity}</td>
+        <td>${Number(item.amount).toFixed(2)}</td>
+      `;
+
+      table.appendChild(row);
+
+    });
+
+
+    // ИТОГО ЗА ЭТОТ ДЕНЬ
+    const totalRow = document.createElement('tr');
+
+    totalRow.className = 'total-row';
+
+    totalRow.innerHTML = `
       <td>${date}</td>
-      <td>${total.categories}</td>
-      <td>${total.quantity}</td>
-      <td>${total.amount.toFixed(2)}</td>
+      <td>КАТЕГОРИЙ: ${items.length}</td>
+      <td>${totalQuantity}</td>
+      <td>${totalAmount.toFixed(2)}</td>
     `;
 
-    summaryTable.appendChild(row);
+    table.appendChild(totalRow);
+
+
+    // ПРОМЕЖУТОК МЕЖДУ ДНЯМИ
+    const separator = document.createElement('tr');
+
+    separator.className = 'day-separator';
+
+    separator.innerHTML = `
+      <td colspan="4"></td>
+    `;
+
+    table.appendChild(separator);
 
   });
 
 }
 
 
-// ЗАГРУЖАЕМ ДАННЫЕ ИЗ GOOGLE SHEETS
+// ЗАГРУЗКА ДАННЫХ ИЗ GOOGLE SHEETS
 
 const script = document.createElement('script');
 
