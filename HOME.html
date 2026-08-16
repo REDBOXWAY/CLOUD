@@ -58,11 +58,88 @@
 
     <p>Добро пожаловать</p>
 
-    <button onclick="window.location.href='INDEX.html'">
-      ЗАПОЛНИТЬ ФОРМУ
-    </button>
+    <button onclick="showLogin()">
+  ЗАПОЛНИТЬ ФОРМУ
+</button>
+<div id="loginBox" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+">
+
+  <div style="
+    background:#111;
+    padding:30px;
+    border-radius:12px;
+    width:90%;
+    max-width:320px;
+    text-align:center;
+  ">
+
+    <h2>ВХОД</h2>
+
+    <input id="login" placeholder="Логин" style="
+      width:100%;
+      padding:12px;
+      margin-bottom:12px;
+      box-sizing:border-box;
+    ">
+
+    <input id="password" type="password" placeholder="Пароль" style="
+      width:100%;
+      padding:12px;
+      margin-bottom:15px;
+      box-sizing:border-box;
+    ">
+
+    <button onclick="loginUser()">ВОЙТИ</button>
+
+    <div id="loginMessage" style="
+      margin-top:12px;
+      color:#ff6b6b;
+    "></div>
 
   </div>
+</div>
 
+<script>
+function showLogin() {
+  document.getElementById('loginBox').style.display = 'flex';
+}
+
+function loginUser() {
+
+  const login = document.getElementById('login').value;
+  const password = document.getElementById('password').value;
+  const msg = document.getElementById('loginMessage');
+
+  msg.textContent = 'Проверка...';
+
+  fetch('https://script.google.com/macros/s/AKfycbzS0XOmo_56-J6-u68K7nv1BpVc4Lvub_AxiP2tl3CjqwrvqGelyd5FXr60XYwwLRw4/exec', {
+    method: 'POST',
+    body: new URLSearchParams({
+      action: 'login',
+      login: login,
+      password: password
+    })
+  })
+  .then(response => response.text())
+  .then(result => {
+
+    if (result === 'LOGIN_OK') {
+      window.location.href = 'INDEX.html';
+    } else {
+      msg.textContent = 'Неверный логин или пароль';
+    }
+
+  })
+  .catch(() => {
+    msg.textContent = 'Ошибка соединения';
+  });
+}
+</script>
 </body>
 </html>
