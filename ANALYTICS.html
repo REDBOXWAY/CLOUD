@@ -80,32 +80,33 @@
 
 </div>
 <script>
-fetch('https://script.google.com/macros/s/AKfycbzUeYVEaOD0k43rC19ZMPUMtucq52XXDiTlQf0AQi3boQQcQF1wunmPw9f345qe36PH/exec?action=analytics')
-  .then(response => response.json())
-  .then(data => {
+function loadAnalytics(data) {
 
-    const table = document.getElementById('salesData');
+  const table = document.getElementById('salesData');
 
-    table.innerHTML = '';
+  table.innerHTML = '';
 
-    data.forEach(item => {
+  data.forEach(item => {
 
-      const row = document.createElement('tr');
+    const row = document.createElement('tr');
 
-      row.innerHTML = `
-        <td>${item.date}</td>
-        <td>${item.category}</td>
-        <td>${item.quantity}</td>
-        <td>${Number(item.amount).toFixed(2)}</td>
-      `;
+    row.innerHTML = `
+      <td>${item.date}</td>
+      <td>${item.category}</td>
+      <td>${item.quantity}</td>
+      <td>${Number(item.amount).toFixed(2)}</td>
+    `;
 
-      table.appendChild(row);
-    });
-
-  })
-  .catch(error => {
-    console.error('Ошибка:', error);
+    table.appendChild(row);
   });
+}
+
+const script = document.createElement('script');
+
+script.src =
+  'https://script.google.com/macros/s/AKfycbzA6KpT_SYSpAX2o8iJ3yUpJQ8x87UHZ44A0kWIEcDb9NLUtHgL_K9iuUtHfs1qfNnB/exec?action=analytics&callback=loadAnalytics';
+
+document.body.appendChild(script);
 </script>
 </body>
 </html>
