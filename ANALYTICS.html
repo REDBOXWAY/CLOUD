@@ -41,6 +41,15 @@
       color: #000;
     }
 
+    /* ТАБЛИЦА ИТОГОВ */
+    .summary-table {
+      margin-top: 25px;
+    }
+
+    .summary-table td {
+      font-weight: bold;
+    }
+
     button {
       width: 100%;
       margin-top: 30px;
@@ -60,6 +69,8 @@
 
   <h1>АНАЛИТИКА ПРОДАЖ</h1>
 
+  <!-- ОСНОВНАЯ ТАБЛИЦА -->
+
   <table>
     <thead>
       <tr>
@@ -74,32 +85,111 @@
     </tbody>
   </table>
 
+
+  <!-- ИТОГИ ПО ДНЯМ -->
+
+  <table class="summary-table">
+
+    <thead>
+      <tr>
+        <th>ДАТА</th>
+        <th>КАТЕГОРИЙ</th>
+        <th>ПРОДАНО ЕДИНИЦ</th>
+        <th>ОБЩАЯ СУММА</th>
+      </tr>
+    </thead>
+
+    <tbody id="summaryData">
+    </tbody>
+
+  </table>
+
+
   <button onclick="window.location.href='HOME.html'">
     ОБРАТНО
   </button>
 
 </div>
+
+
 <script>
+
 function loadAnalytics(data) {
 
   const table = document.getElementById('salesData');
+  const summaryTable = document.getElementById('summaryData');
 
   table.innerHTML = '';
+  summaryTable.innerHTML = '';
+
+  const totals = {};
+
+
+  // ОСНОВНАЯ ТАБЛИЦА
 
   data.forEach(item => {
+
+    const formattedDate =
+      new Date(item.date).toLocaleDateString('ru-RU');
 
     const row = document.createElement('tr');
 
     row.innerHTML = `
-      <td>${new Date(item.date).toLocaleDateString('ru-RU')}</td>
+      <td>${formattedDate}</td>
       <td>${item.category}</td>
       <td>${item.quantity}</td>
       <td>${Number(item.amount).toFixed(2)}</td>
     `;
 
     table.appendChild(row);
+
+
+    // СЧИТАЕМ ИТОГИ ПО ДАТЕ
+
+    if (!totals[formattedDate]) {
+
+      totals[formattedDate] = {
+        categories: 0,
+        quantity: 0,
+        amount: 0
+      };
+
+    }
+
+    totals[formattedDate].categories += 1;
+
+    totals[formattedDate].quantity +=
+      Number(item.quantity);
+
+    totals[formattedDate].amount +=
+      Number(item.amount);
+
   });
+
+
+  // ВЫВОДИМ ИТОГИ
+
+  Object.keys(totals).forEach(date => {
+
+    const total = totals[date];
+
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td>${date}</td>
+      <td>${total.categories}</td>
+      <td>${total.quantity}</td>
+      <td>${total.amount.toFixed(2)}</td>
+    `;
+
+    summaryTable.appendChild(row);
+
+  });
+
 }
+
+
+// ЗАГРУЖАЕМ ДАННЫЕ ИЗ GOOGLE SHEETS
 
 const script = document.createElement('script');
 
@@ -107,6 +197,8 @@ script.src =
   'https://script.google.com/macros/s/AKfycbzA6KpT_SYSpAX2o8iJ3yUpJQ8x87UHZ44A0kWIEcDb9NLUtHgL_K9iuUtHfs1qfNnB/exec?action=analytics&callback=loadAnalytics';
 
 document.body.appendChild(script);
+
 </script>
+
 </body>
 </html>
