@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base target="_top">
+  <meta charset="UTF-8">
+  <title>CLOUD DRIVE</title>
 
   <style>
     body {
@@ -56,27 +57,10 @@
     <h1>CLOUD DRIVE</h1>
 
     <p>Добро пожаловать</p>
-<button onclick="openForm()">
-  ЗАПОЛНИТЬ ФОРМУ
-</button>
 
-<script>
-function openForm() {
-  window.location.href = "INDEX.html";
-}
-  
-
-<script>
-function openForm() {
-  google.script.run
-    .withSuccessHandler(function(html) {
-      document.open();
-      document.write(html);
-      document.close();
-    })
-    .openForm();
-}
-</script>
+    <button onclick="window.location.href='INDEX.html'">
+      ЗАПОЛНИТЬ ФОРМУ
+    </button>
 
   </div>
 
