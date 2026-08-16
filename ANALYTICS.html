@@ -79,6 +79,33 @@
   </button>
 
 </div>
+<script>
+fetch('https://script.google.com/macros/s/AKfycbyga46tp70xraDy_LuV1ijhEXprT1HnnyotFA1XQzxVgqhoJEU2x6wNcIEPFUoM7-kM/exec?action=analytics')
+  .then(response => response.json())
+  .then(data => {
 
+    const table = document.getElementById('salesData');
+
+    table.innerHTML = '';
+
+    data.forEach(item => {
+
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${item.date}</td>
+        <td>${item.category}</td>
+        <td>${item.quantity}</td>
+        <td>${Number(item.amount).toFixed(2)}</td>
+      `;
+
+      table.appendChild(row);
+    });
+
+  })
+  .catch(error => {
+    console.error('Ошибка:', error);
+  });
+</script>
 </body>
 </html>
