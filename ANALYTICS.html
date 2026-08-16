@@ -91,7 +91,7 @@ function loadAnalytics(data) {
     const row = document.createElement('tr');
 
     row.innerHTML = `
-      <td>$${new Date(item.date).toLocaleDateString('ru-RU')}</td>
+      <td>${new Date(item.date).toLocaleDateString('ru-RU')}</td>
       <td>${item.category}</td>
       <td>${item.quantity}</td>
       <td>${Number(item.amount).toFixed(2)}</td>
