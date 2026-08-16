@@ -170,28 +170,57 @@
       quantity: document.getElementById('quantity').value,
       amount: document.getElementById('amount').value
     };
+fetch('https://script.google.com/macros/s/AKfycbzS0XOmo_56-J6-u68K7nv1BpVc4Lvub_AxiP2tl3CjqwrvqGelyd5FXr60XYwwLRw4/exec', {
+  method: 'POST',
+  body: new URLSearchParams(data)
+})
+.then(response => response.text())
+.then(result => {
 
-    google.script.run
-      .withSuccessHandler(function() {
-        msg.textContent = '✓ Данные успешно отправлены!';
-        msg.className = 'success';
+  if (result === 'OK') {
+    msg.textContent = '✓ Данные успешно отправлены!';
+    msg.className = 'success';
 
-        document.getElementById('form').reset();
-        dateInput.value =
-          new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-            .toISOString().split('T')[0];
+    document.getElementById('form').reset();
 
-        btn.disabled = false;
-        btn.textContent = 'ОТПРАВИТЬ';
-         })
-      .withFailureHandler(function(error) {
-        msg.textContent = 'Ошибка: ' + error.message;
-        msg.className = 'error';
+    dateInput.value =
+      new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString().split('T')[0];
 
-        btn.disabled = false;
-        btn.textContent = 'ОТПРАВИТЬ';
-      })
-      .submitForm(data);
+    btn.disabled = false;
+    btn.textContent = 'ОТПРАВИТЬ';
+
+  } else {
+    throw new Error(result);
+  }
+
+})
+.catch(error => {
+
+  msg.textContent = 'Ошибка: ' + error.message;
+  msg.className = 'error';
+
+  btn.disabled = false;
+  btn.textContent = 'ОТПРАВИТЬ';
+
+});
+
+
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+    
   });
 
 function goHome() {
