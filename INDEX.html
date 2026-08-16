@@ -194,15 +194,9 @@
       .submitForm(data);
   });
 
- function goHome() {
-    google.script.run
-      .withSuccessHandler(function(html) {
-        document.open();
-        document.write(html);
-        document.close();
-      })
-      .getHome();
-  }
+function goHome() {
+  window.location.href = "HOME.html";
+}
 
 </script>
 </body>
