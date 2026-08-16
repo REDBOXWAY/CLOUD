@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>СТОК</title>
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1400px;
+      margin: 40px auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #111;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #444;
+      text-align: center;
+    }
+
+    th {
+      background: #fff;
+      color: #000;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 30px;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>СТОК</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>КАТЕГОРИЯ</th>
+        <th>ПРИХОД</th>
+        <th>ЦЕНА ЗАКУПА</th>
+        <th>СУММА ПРИХОДА</th>
+        <th>ПРОДАНО</th>
+        <th>ЦЕНА ПРОДАЖИ</th>
+        <th>СУММА ПРОДАЖ</th>
+        <th>ОСТАТОК</th>
+        <th>СУММА ОСТАТКА</th>
+        <th>ДОХОД</th>
+      </tr>
+    </thead>
+
+    <tbody id="stockData">
+    </tbody>
+  </table>
+
+  <button onclick="window.location.href='HOME.html'">
+    ОБРАТНО
+  </button>
+
+</div>
+
+</body>
+</html>
