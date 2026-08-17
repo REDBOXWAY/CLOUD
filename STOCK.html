@@ -104,6 +104,7 @@ function loadStock(data) {
       <td>${Number(item.incomingAmount).toFixed(2)}</td>
       <td>${item.sold}</td>
       <td>${Number(item.salePrice).toFixed(2)}</td>
+      <td>${item.sold > 0 ? (Number(item.salesAmount) / Number(item.sold)).toFixed(2) : '0.00'}</td>
       <td>${Number(item.salesAmount).toFixed(2)}</td>
       <td>${item.remaining}</td>
       <td>${Number(item.remainingAmount).toFixed(2)}</td>
