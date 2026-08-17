@@ -97,19 +97,19 @@ function loadStock(data) {
 
     const row = document.createElement('tr');
 
-    row.innerHTML = `
-      <td>${item.category}</td>
-      <td>${item.incoming}</td>
-      <td>${Number(item.purchasePrice).toFixed(2)}</td>
-      <td>${Number(item.incomingAmount).toFixed(2)}</td>
-      <td>${item.sold}</td>
-      <td>${Number(item.salePrice).toFixed(2)}</td>
-      <td>${item.sold > 0 ? (Number(item.salesAmount) / Number(item.sold)).toFixed(2) : '0.00'}</td>
-      <td>${Number(item.salesAmount).toFixed(2)}</td>
-      <td>${item.remaining}</td>
-      <td>${Number(item.remainingAmount).toFixed(2)}</td>
-      <td>${Number(item.profit).toFixed(2)}</td>
-    `;
+ row.innerHTML = `
+  <td>${item.category}</td>
+  <td>${item.incoming}</td>
+  <td>${Number(item.purchasePrice).toFixed(2)}</td>
+  <td>${Number(item.incomingAmount).toFixed(2)}</td>
+  <td>${item.sold}</td>
+  <td>${Number(item.salePrice).toFixed(2)}</td>
+  <td>${item.sold > 0 ? (Number(item.salesAmount) / Number(item.sold)).toFixed(2) : '0.00'}</td>
+  <td>${Number(item.salesAmount).toFixed(2)}</td>
+  <td>${item.remaining}</td>
+  <td>${Number(item.remainingAmount).toFixed(2)}</td>
+  <td>${Number(item.profit).toFixed(2)}</td>
+`;
 
     table.appendChild(row);
   });
