@@ -92,6 +92,13 @@ function loadStock(data) {
 
   const table = document.getElementById('stockData');
   table.innerHTML = '';
+let totalIncoming = 0;
+let totalIncomingAmount = 0;
+let totalSold = 0;
+let totalSalesAmount = 0;
+let totalRemaining = 0;
+let totalRemainingAmount = 0;
+let totalProfit = 0;
 
   data.forEach(item => {
 
