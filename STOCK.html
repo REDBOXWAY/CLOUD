@@ -127,10 +127,9 @@ totalRemainingAmount += Number(item.remainingAmount);
 totalProfit += Number(item.profit);
   });
  const totalRow = document.createElement('tr');
-  totalRow.style.backgroundColor = '#ffffff';
+totalRow.style.backgroundColor = '#ffffff';
 totalRow.style.color = '#000000';
-
-  totalRow.innerHTML = `
+totalRow.innerHTML = `
     <td><strong>ИТОГО</strong></td>
     <td><strong>${totalIncoming}</strong></td>
     <td>—</td>
