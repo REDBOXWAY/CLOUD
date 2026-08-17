@@ -80,6 +80,33 @@
   </button>
 
 </div>
+<script>
+function loadReturns(data) {
 
+  const table = document.getElementById('returnData');
+  table.innerHTML = '';
+
+  data.forEach(item => {
+
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td>${new Date(item.date).toLocaleDateString('ru-RU')}</td>
+      <td>${item.product}</td>
+      <td>${item.quantity}</td>
+      <td>${Number(item.amount).toFixed(2)} ₼</td>
+    `;
+
+    table.appendChild(row);
+  });
+}
+
+const script = document.createElement('script');
+
+script.src =
+  'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=return&callback=loadReturns';
+
+document.body.appendChild(script);
+</script>
 </body>
 </html>
