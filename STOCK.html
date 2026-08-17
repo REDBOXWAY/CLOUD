@@ -86,6 +86,39 @@
   </button>
 
 </div>
+<script>
+function loadStock(data) {
 
+  const table = document.getElementById('stockData');
+  table.innerHTML = '';
+
+  data.forEach(item => {
+
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td>${item.category}</td>
+      <td>${item.incoming}</td>
+      <td>${Number(item.purchasePrice).toFixed(2)}</td>
+      <td>${Number(item.incomingAmount).toFixed(2)}</td>
+      <td>${item.sold}</td>
+      <td>${Number(item.salePrice).toFixed(2)}</td>
+      <td>${Number(item.salesAmount).toFixed(2)}</td>
+      <td>${item.remaining}</td>
+      <td>${Number(item.remainingAmount).toFixed(2)}</td>
+      <td>${Number(item.profit).toFixed(2)}</td>
+    `;
+
+    table.appendChild(row);
+  });
+}
+
+const script = document.createElement('script');
+
+script.src =
+  'https://script.google.com/macros/s/AKfycbyTKV3HwDCbwYHd6vw4_IfChILJnJel-tKf8i7JKmxf7YCO6_Kw0PEdMjrkSqnFdpPU/exec?action=stock&callback=loadStock';
+
+document.body.appendChild(script);
+</script>
 </body>
 </html>
