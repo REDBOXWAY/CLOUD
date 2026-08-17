@@ -99,7 +99,6 @@ let totalSalesAmount = 0;
 let totalRemaining = 0;
 let totalRemainingAmount = 0;
 let totalProfit = 0;
-
   data.forEach(item => {
 
     const row = document.createElement('tr');
@@ -119,6 +118,13 @@ let totalProfit = 0;
 `;
 
     table.appendChild(row);
+    totalIncoming += Number(item.incoming);
+totalIncomingAmount += Number(item.incomingAmount);
+totalSold += Number(item.sold);
+totalSalesAmount += Number(item.salesAmount);
+totalRemaining += Number(item.remaining);
+totalRemainingAmount += Number(item.remainingAmount);
+totalProfit += Number(item.profit);
   });
 }
 
