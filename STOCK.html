@@ -129,18 +129,18 @@ totalProfit += Number(item.profit);
 totalRow.style.backgroundColor = '#ffffff';
 totalRow.style.color = '#000000';
 totalRow.innerHTML = `
-    <td><strong>ИТОГО</strong></td>
-    <td><strong>${totalIncoming}</strong></td>
-    <td>—</td>
-    <td><strong>${totalIncomingAmount.toFixed(2)}</strong></td>
-    <td><strong>${totalSold}</strong></td>
-    <td>—</td>
-    <td>—</td>
-    <td><strong>${totalSalesAmount.toFixed(2)}</strong></td>
-    <td><strong>${totalRemaining}</strong></td>
-    <td><strong>${totalRemainingAmount.toFixed(2)}</strong></td>
-    <td><strong>${totalProfit.toFixed(2)}</strong></td>
-  `;
+     <td><strong>ИТОГО</strong></td>
+  <td><strong>${totalIncoming}</strong></td>
+  <td>—</td>
+  <td><strong>${totalIncomingAmount.toFixed(2)} ₼</strong></td>
+  <td><strong>${totalSold}</strong></td>
+  <td>—</td>
+  <td>—</td>
+  <td><strong>${totalSalesAmount.toFixed(2)} ₼</strong></td>
+  <td><strong>${totalRemaining}</strong></td>
+  <td><strong>${totalRemainingAmount.toFixed(2)} ₼</strong></td>
+  <td><strong>${totalProfit.toFixed(2)} ₼</strong></td>
+`;
 
   table.appendChild(totalRow);
 }
