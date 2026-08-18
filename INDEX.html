@@ -303,29 +303,7 @@ function searchBarcode() {
 
   document.body.appendChild(script);
 }
-document.getElementById('barcode').addEventListener('change', function() {
 
-  const barcode = this.value.trim();
-
-  if (!barcode) return;
-
-  const oldScript = document.getElementById('barcodeLookup');
-
-  if (oldScript) {
-    oldScript.remove();
-  }
-
-  const script = document.createElement('script');
-
-  script.id = 'barcodeLookup';
-
-  script.src =
-    'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=product&barcode=' +
-    encodeURIComponent(barcode) +
-    '&callback=loadProduct';
-
-  document.body.appendChild(script);
-});
   const dateInput = document.getElementById('date');
   const today = new Date();
   dateInput.value =
