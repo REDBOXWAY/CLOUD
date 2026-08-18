@@ -218,7 +218,64 @@
   productSelect.value = data.product;
   addBtn.style.display = 'block';
 }
+let purchaseList = [];
 
+function addToList() {
+
+  const info = document.getElementById('productInfo');
+  const barcode = document.getElementById('barcode').value.trim();
+  const productText = info.textContent.trim();
+
+  if (!barcode || !productText || productText === 'BARCODE NOT FOUND') {
+    return;
+  }
+
+  const existing = purchaseList.find(item => item.barcode === barcode);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    purchaseList.push({
+      barcode: barcode,
+      text: productText,
+      quantity: 1
+    });
+  }
+
+  renderPurchaseList();
+
+  document.getElementById('barcode').value = '';
+  document.getElementById('productInfo').style.display = 'none';
+  document.getElementById('addToListBtn').style.display = 'none';
+}
+
+function renderPurchaseList() {
+
+  const box = document.getElementById('purchaseList');
+  const items = document.getElementById('purchaseItems');
+
+  box.style.display = 'block';
+  items.innerHTML = '';
+
+  purchaseList.forEach((item, index) => {
+
+    const row = document.createElement('div');
+
+    row.style.padding = '8px';
+    row.style.marginBottom = '6px';
+    row.style.background = '#111';
+    row.style.color = '#fff';
+    row.style.borderRadius = '8px';
+
+    row.textContent =
+      (index + 1) + '. ' +
+      item.text +
+      ' × ' +
+      item.quantity;
+
+    items.appendChild(row);
+  });
+}
 
 document.getElementById('barcode').addEventListener('change', function() {
 
