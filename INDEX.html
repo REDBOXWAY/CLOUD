@@ -192,13 +192,16 @@
   </div>
 
 <script>
+  let currentProduct = null;
   function loadProduct(data) {
+  currentProduct = data;
 
   const info = document.getElementById('productInfo');
   const productSelect = document.getElementById('product');
   const addBtn = document.getElementById('addToListBtn');
 
   if (!data) {
+    currentProduct = null;
     info.style.display = 'block';
     info.textContent = 'BARCODE NOT FOUND';
     productSelect.value = '';
@@ -235,11 +238,17 @@ function addToList() {
   if (existing) {
     existing.quantity += 1;
   } else {
-    purchaseList.push({
-      barcode: barcode,
-      text: productText,
-      quantity: 1
-    });
+   purchaseList.push({
+  barcode: barcode,
+  product: currentProduct.product,
+  size: currentProduct.size,
+  color: currentProduct.color,
+  brand: currentProduct.brand,
+  gender: currentProduct.gender,
+  text: productText,
+  quantity: 1,
+  amount: ''
+});
   }
 
   renderPurchaseList();
