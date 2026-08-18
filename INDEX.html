@@ -346,8 +346,10 @@ fetch('https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEH
 .then(result => {
 
   if (result === 'OK') {
-    msg.textContent = '✓ Данные успешно отправлены!';
+    msg.textContent = '✓ SUCCESS';
     msg.className = 'success';
+    msg.style.background = 'green';
+    msg.style.color = 'white';
 
     document.getElementById('form').reset();
 purchaseList = [];
