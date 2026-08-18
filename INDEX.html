@@ -226,7 +226,9 @@ let purchaseList = [];
 function addToList() {
 
   const info = document.getElementById('productInfo');
-  const barcode = document.getElementById('barcode').value.trim();
+  const barcode = currentProduct
+  ? String(currentProduct.barcode).trim()
+  : '';
   const productText = info.textContent.trim();
 
   if (!barcode || !productText || productText === 'BARCODE NOT FOUND') {
