@@ -104,8 +104,21 @@
       <form id="form">
         <label for="date">1. ВЫБЕРИ ДАТУ</label>
         <input id="date" type="date" required>
+        <label for="barcode">2. ENTER BARCODE</label>
+<input id="barcode" type="text" placeholder="ENTER BARCODE" required>
 
-        <label for="product">2. ВЫБЕРИ ТОВАР</label>
+<div id="productInfo" style="
+  margin-top:10px;
+  padding:10px;
+  background:#111;
+  color:#fff;
+  border-radius:8px;
+  text-align:center;
+  font-weight:bold;
+  display:none;
+"></div>
+
+      <label for="product">3. SELECT PRODUCT</label>
         <select id="product" required>
           <option value="">Выберите товар</option>
           <option value="ОБУВЬ">ОБУВЬ</option>
@@ -115,7 +128,7 @@
           <option value="КУРТКА">КУРТКА</option>
         </select>
 
-        <label for="quantity">3. ВЫБЕРИ КОЛ-ВО</label>
+        <label for="quantity">4. SELECT QUANTITY</label>
        <select id="quantity" required>
   <option value="">Выберите количество</option>
 
@@ -142,7 +155,7 @@
   <option value="10">10</option>
 </select>
 
-        <label for="amount">4. ВЫБЕРИ СУММУ</label>
+        <label for="amount">5. ENTER AMOUNT</label>
         <input id="amount" type="number" step="0.01"
                placeholder="Введите сумму" required>
 
@@ -158,6 +171,54 @@
   </div>
 
 <script>
+  function loadProduct(data) {
+
+  const info = document.getElementById('productInfo');
+  const productSelect = document.getElementById('product');
+
+  if (!data) {
+    info.style.display = 'block';
+    info.textContent = 'BARCODE NOT FOUND';
+    productSelect.value = '';
+    return;
+  }
+
+  info.style.display = 'block';
+
+  info.textContent =
+    data.product + ' - ' +
+    data.size + ' - ' +
+    data.color + ' - ' +
+    data.brand + ' - ' +
+    data.gender;
+
+  productSelect.value = data.product;
+}
+
+
+document.getElementById('barcode').addEventListener('change', function() {
+
+  const barcode = this.value.trim();
+
+  if (!barcode) return;
+
+  const oldScript = document.getElementById('barcodeLookup');
+
+  if (oldScript) {
+    oldScript.remove();
+  }
+
+  const script = document.createElement('script');
+
+  script.id = 'barcodeLookup';
+
+  script.src =
+    'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=product&barcode=' +
+    encodeURIComponent(barcode) +
+    '&callback=loadProduct';
+
+  document.body.appendChild(script);
+});
   const dateInput = document.getElementById('date');
   const today = new Date();
   dateInput.value =
