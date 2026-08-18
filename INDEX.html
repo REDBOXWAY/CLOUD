@@ -285,10 +285,38 @@ function renderPurchaseList() {
       font-size:16px;
     "
   >
+  <button
+  type="button"
+  onclick="removeFromList(${index})"
+  style="
+    margin-top:8px;
+    width:100%;
+    padding:8px;
+    background:#dc3545;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+  "
+>
+  REMOVE
+</button>
 `;
 
 items.appendChild(row);
   });
+}
+  function removeFromList(index) {
+
+  purchaseList.splice(index, 1);
+
+  if (purchaseList.length === 0) {
+    document.getElementById('purchaseItems').innerHTML = '';
+    document.getElementById('purchaseList').style.display = 'none';
+  } else {
+    renderPurchaseList();
+  }
 }
 function searchBarcode() {
 
