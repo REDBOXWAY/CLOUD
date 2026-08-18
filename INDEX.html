@@ -183,11 +183,13 @@
 
   const info = document.getElementById('productInfo');
   const productSelect = document.getElementById('product');
+  const addBtn = document.getElementById('addToListBtn');
 
   if (!data) {
     info.style.display = 'block';
     info.textContent = 'BARCODE NOT FOUND';
     productSelect.value = '';
+    addBtn.style.display = 'none';
     return;
   }
 
@@ -201,6 +203,7 @@
     data.gender;
 
   productSelect.value = data.product;
+  addBtn.style.display = 'block';
 }
 
 
