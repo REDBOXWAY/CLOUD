@@ -255,8 +255,16 @@ function renderPurchaseList() {
     row.style.borderRadius = '8px';
 
   row.innerHTML = `
-  <div style="margin-bottom:8px;">
+  <div style="margin-bottom:4px;">
     ${(index + 1)}. ${item.text} × ${item.quantity}
+  </div>
+
+  <div style="
+    margin-bottom:8px;
+    font-size:13px;
+    color:#ccc;
+  ">
+    BARCODE: ${item.barcode}
   </div>
 
   <input
