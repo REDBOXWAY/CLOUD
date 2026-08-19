@@ -1,176 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CLOUD DRIVE</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      min-height: 100%;
       background: #000;
       color: #fff;
+      font-family: "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
+    }
+
+    body {
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
     }
 
     .home {
+      width: min(1100px, 92vw);
+      padding: 48px 0 72px;
       text-align: center;
-      width: 90%;
-      max-width: 500px;
     }
 
     h1 {
-      font-size: 38px;
-      margin-bottom: 10px;
+      margin: 0 0 100px;
+      font-size: clamp(52px, 6vw, 82px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 1px;
+      white-space: nowrap;
     }
 
-    p {
-      font-size: 18px;
-      margin-bottom: 40px;
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(24px, 4vw, 64px);
+      align-items: start;
     }
 
-    button {
+    .menu-item {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .menu-item:hover,
+    .menu-item:focus-visible {
+      transform: translateY(-7px);
+      filter: brightness(1.12);
+      outline: none;
+    }
+
+    .menu-title {
+      display: block;
+      margin-bottom: 18px;
+      font-size: clamp(22px, 2.2vw, 32px);
+      line-height: 1;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .menu-icon {
+      display: block;
       width: 100%;
-      padding: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #FFC000;
-      color: black;
+      max-width: 190px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
     }
 
-    button:hover {
-      background: #ddd;
+    .icon-stroke {
+      fill: none;
+      stroke: url(#iconGradient);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        align-items: flex-start;
+      }
+
+      .home {
+        width: min(620px, 90vw);
+        padding: 64px 0;
+      }
+
+      h1 {
+        margin-bottom: 68px;
+        font-size: clamp(42px, 12vw, 64px);
+      }
+
+      .menu {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 52px 26px;
+      }
+
+      .menu-title {
+        font-size: clamp(19px, 5vw, 27px);
+      }
+
+      .menu-icon {
+        max-width: 165px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .home {
+        width: 88vw;
+      }
+
+      h1 {
+        margin-bottom: 58px;
+        font-size: 38px;
+      }
+
+      .menu {
+        gap: 42px 16px;
+      }
+
+      .menu-title {
+        font-size: 17px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="home">
+  <main class="home">
 
     <h1>CLOUD DRIVE</h1>
 
-    <p>Добро пожаловать</p>
+    <nav class="menu">
 
-    <button onclick="showLogin()">
-  ЗАПОЛНИТЬ ФОРМУ
-</button>
-<br><br>
+      <!-- REGISTRY -->
+      <a class="menu-item" href="INDEX.html">
+        <span class="menu-title">REGISTRY</span>
 
-<button onclick="window.location.href='ANALYTICS.html'">
-  АНАЛИТИКА ПРОДАЖ
-</button>
-<br><br>
+        <svg class="menu-icon" viewBox="0 0 180 180">
+          <defs>
+            <linearGradient id="iconGradient" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#ff7827"/>
+              <stop offset="1" stop-color="#ffd633"/>
+            </linearGradient>
+          </defs>
 
-<button onclick="window.location.href='STOCK.html'">
-  СТОК
-</button>
-    <br><br>
+          <path class="icon-stroke"
+                d="M40 20h62l27 27v91H40z"/>
 
-<button onclick="window.location.href='RETURN.html'">
-  ВОЗВРАТЫ
-</button>
-<div id="loginBox" style="
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  justify-content:center;
-  align-items:center;
-">
+          <path class="icon-stroke"
+                d="M102 20v28h27
+                   M59 65h22
+                   m15 0h1
+                   m14 0h1
+                   M59 89h50
+                   M59 113h42"/>
 
- <div style="
-  background:#111;
-  padding:30px;
-  border-radius:12px;
-  width:90%;
-  max-width:320px;
-  text-align:center;
-  position:relative;
-">
+          <circle class="icon-stroke"
+                  cx="126"
+                  cy="130"
+                  r="36"/>
 
-  <button onclick="closeLogin()" style="
-  position:absolute;
-  top:10px;
-  right:15px;
-  width:auto;
-  background:none;
-  color:white;
-  font-size:14px;
-  font-weight:bold;
-  padding:5px;
-  margin:0;
-">
-  CLOSE
-</button> <h2>ВХОД</h2>
+          <path class="icon-stroke"
+                d="M126 113v34
+                   m-17-17h34"/>
+        </svg>
+      </a>
 
-    <input id="login" placeholder="Логин" style="
-      width:100%;
-      padding:12px;
-      margin-bottom:12px;
-      box-sizing:border-box;
-    ">
+      <!-- ANALYTICS -->
+      <a class="menu-item" href="ANALYTICS.html">
+        <span class="menu-title">ANALYTICS</span>
 
-    <input id="password" type="password" placeholder="Пароль" style="
-      width:100%;
-      padding:12px;
-      margin-bottom:15px;
-      box-sizing:border-box;
-    ">
+        <svg class="menu-icon" viewBox="0 0 180 180">
+          <path class="icon-stroke"
+                d="M27 147v-37h28v37z
+                   m49 0V88h28v59z
+                   m49 0V58h28v89z"/>
 
-    <button onclick="loginUser()">ВОЙТИ</button>
+          <path class="icon-stroke"
+                d="m29 86 39-39 25 25 52-52
+                   m-21 0h21v21"/>
+        </svg>
+      </a>
 
-    <div id="loginMessage" style="
-      margin-top:12px;
-      color:#ff6b6b;
-    "></div>
+      <!-- STOCK -->
+      <a class="menu-item" href="STOCK.html">
+        <span class="menu-title">STOCK</span>
 
-  </div>
-</div>
+        <svg class="menu-icon" viewBox="0 0 180 180">
+          <path class="icon-stroke"
+                d="m31 54 58-30 59 30-59 31z
+                   M31 54v70l58 31 21-11
+                   m38-90v43
+                   M60 39l59 31"/>
 
-<script>
-function showLogin() {
-  document.getElementById('loginBox').style.display = 'flex';
-}
-function closeLogin() {
-  document.getElementById('loginBox').style.display = 'none';
-}
-function loginUser() {
+          <circle class="icon-stroke"
+                  cx="132"
+                  cy="128"
+                  r="35"/>
 
-  const login = document.getElementById('login').value;
-  const password = document.getElementById('password').value;
-  const msg = document.getElementById('loginMessage');
+          <path class="icon-stroke"
+                d="m114 128 12 12 24-27"/>
+        </svg>
+      </a>
 
-  msg.textContent = 'Проверка...';
+      <!-- RETURNS -->
+      <a class="menu-item" href="RETURN.html">
+        <span class="menu-title">RETURNS</span>
 
-  fetch('https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec',  {
-    method: 'POST',
-    body: new URLSearchParams({
-      action: 'login',
-      login: login,
-      password: password
-    })
-  })
-  .then(response => response.text())
-  .then(result => {
+        <svg class="menu-icon" viewBox="0 0 180 180">
+          <path class="icon-stroke"
+                d="M35 62A61 61 0 0 1 145 76
+                   V57
+                   m0 19h-19
+                   M145 118A61 61 0 0 1 35 104
+                   v19
+                   m0-19h19"/>
 
-    if (result === 'LOGIN_OK') {
-      window.location.href = 'INDEX.html';
-    } else {
-      msg.textContent = 'Неверный логин или пароль';
-    }
+          <path class="icon-stroke"
+                d="m63 76 27-15 27 15-27 15z
+                   M63 76v34l27 15 27-15V76
+                   M90 91v34"/>
+        </svg>
+      </a>
 
-  })
-  .catch(() => {
-    msg.textContent = 'Ошибка соединения';
-  });
-}
-</script>
+    </nav>
+
+  </main>
+
 </body>
 </html>
