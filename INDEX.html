@@ -404,51 +404,52 @@
     const message =
       document.getElementById('message');
 
+function loadProduct(data) {
+  searchBtn.disabled = false;
+  searchBtn.textContent = 'SEARCH BARCODE';
 
-    function loadProduct(data) {
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
+  if (!data) {
+    currentProduct = null;
 
-      if (!data) {
-        currentProduct = null;
+    productInfo.style.display = 'flex';
+    productInfo.style.background = 'transparent';
+    productInfo.style.color = 'red';
+    productInfo.style.border = 'none';
+    productInfo.style.fontWeight = '700';
+    productInfo.textContent = 'BARCODE NOT FOUND';
 
-        productInfo.style.display = 'flex';
-        productInfo.style.background = 'red';
-        productInfo.style.borderColor = '#000';
-        productInfo.textContent = 'BARCODE NOT FOUND';
+    addToListBtn.style.display = 'none';
 
-        addToListBtn.style.display = 'none';
+    return;
+  }
 
-        return;
-      }
+  currentProduct = data;
 
-      currentProduct = data;
+  productInfo.style.display = 'flex';
+  productInfo.style.background = '#fff';
+  productInfo.style.color = '#000';
+  productInfo.style.border = '1px solid #ffc000';
+  productInfo.style.fontWeight = 'normal';
+  productInfo.textContent = data.article;
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = '#fff';
-      productInfo.style.color = '#000';
-      productInfo.style.borderColor = '#ffc000';
-      productInfo.textContent = data.article;
+  addToListBtn.style.display = 'block';
+}
+    
+function barcodeLookupError() {
+  searchBtn.disabled = false;
+  searchBtn.textContent = 'SEARCH BARCODE';
 
-      addToListBtn.style.display = 'block';
-    }
+  currentProduct = null;
 
+  productInfo.style.display = 'flex';
+  productInfo.style.background = 'transparent';
+  productInfo.style.color = 'red';
+  productInfo.style.border = 'none';
+  productInfo.style.fontWeight = '700';
+  productInfo.textContent = 'CONNECTION ERROR';
 
-    function barcodeLookupError() {
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
-
-      currentProduct = null;
-
-      productInfo.style.display = 'flex';
-      productInfo.style.background = 'red';
-      productInfo.style.color = '#000';
-      productInfo.style.borderColor = '#000';
-      productInfo.textContent = 'CONNECTION ERROR';
-
-      addToListBtn.style.display = 'none';
-    }
-
+  addToListBtn.style.display = 'none';
+}
 
     function searchBarcode() {
       const barcode =
