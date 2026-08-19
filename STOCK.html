@@ -1,184 +1,464 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>STOCK</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
+      min-height: 100vh;
       background: #000;
       color: #fff;
-      min-height: 100vh;
-      font-weight: normal;
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    button,
+    table,
+    th,
+    td {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.5px;
     }
 
     .container {
-      width: 95%;
-      max-width: 1400px;
-      margin: 40px auto;
+      width: 96%;
+      max-width: 1500px;
+      margin: 35px auto 40px;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
-      font-weight: normal;
+      margin: 0 0 32px;
+      font-size: 50px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       background: #111;
-      font-size: 14px;
-      font-weight: normal;
+      font-size: 18px;
     }
 
-    th, td {
-      padding: 8px;
+    th,
+    td {
+      padding: 11px 8px;
       border: 1px solid #444;
       text-align: center;
-      font-weight: normal;
+      font-weight: 400;
+      white-space: nowrap;
     }
 
     th {
       background: #fff;
       color: #000;
-      font-weight: normal;
+      font-size: 19px;
+      line-height: 1.1;
+    }
+
+    .total-row td {
+      background: #fff;
+      color: #000;
+      font-size: 19px;
+      font-weight: 400;
     }
 
     button {
       width: 100%;
+      height: 46px;
       margin-top: 30px;
-      padding: 8px;
-      font-size: 18px;
-      font-weight: normal;
       border: none;
-      border-radius: 10px;
+      border-radius: 7px;
       cursor: pointer;
-      background: #FFC000;
-      color: #000000;
-      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
+      background: #ffc000;
+      color: #000;
+      font-size: 20px;
+      font-weight: 400;
     }
+
+    button:hover {
+      filter: brightness(0.95);
+    }
+
+    @media (max-width: 900px) {
+
+      .container {
+        width: 96%;
+        margin: 22px auto 35px;
+      }
+
+      h1 {
+        font-size: 44px;
+        margin-bottom: 28px;
+      }
+
+      table {
+        font-size: 17px;
+      }
+
+      th {
+        font-size: 18px;
+      }
+
+      .total-row td {
+        font-size: 18px;
+      }
+
+      th,
+      td {
+        padding: 10px 7px;
+      }
+
+      button {
+        height: 46px;
+        font-size: 20px;
+      }
+
+    }
+
   </style>
 </head>
 
+
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <h1>STOCK</h1>
+    <h1>STOCK</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>CATEGORY</th>
-        <th>INCOMING UNITS</th>
-        <th>PURCHASE PRICE</th>
-        <th>TOTAL INCOMING</th>
-        <th>SOLD UNITS</th>
-        <th>SELL PRICE</th>
-        <th>ACTUAL SELL PRICE</th>
-        <th>TOTAL SALES</th>
-        <th>BALANCE UNITS</th>
-        <th>TOTAL BALANCE</th>
-        <th>PROFIT</th>
-      </tr>
-    </thead>
 
-    <tbody id="stockData">
-    </tbody>
-  </table>
+    <div class="table-wrap">
 
-  <button onclick="window.location.href='HOME.html'">
-    BACK
-  </button>
+      <table>
 
-</div>
+        <thead>
 
-<script>
+          <tr>
+            <th>CATEGORY</th>
+            <th>INCOMING UNITS</th>
+            <th>PURCHASE PRICE</th>
+            <th>TOTAL INCOMING</th>
+            <th>SOLD UNITS</th>
+            <th>SELL PRICE</th>
+            <th>ACTUAL SELL PRICE</th>
+            <th>TOTAL SALES</th>
+            <th>BALANCE UNITS</th>
+            <th>TOTAL BALANCE</th>
+            <th>PROFIT</th>
+          </tr>
 
-function loadStock(data) {
+        </thead>
 
-  const table = document.getElementById('stockData');
-  table.innerHTML = '';
 
-  let totalIncoming = 0;
-  let totalIncomingAmount = 0;
-  let totalSold = 0;
-  let totalSalesAmount = 0;
-  let totalRemaining = 0;
-  let totalRemainingAmount = 0;
-  let totalProfit = 0;
+        <tbody id="stockData"></tbody>
 
-  data.forEach(item => {
+      </table>
 
-    const row = document.createElement('tr');
+    </div>
 
-    let category = item.category;
 
-    if (category === 'БРЮКИ') category = 'PANTS';
-    if (category === 'ПОЛО') category = 'POLO';
-    if (category === 'ОБУВЬ') category = 'SHOES';
-    if (category === 'СПОРТ КОСТЮМ') category = 'SPORT SUIT';
+    <button onclick="window.location.href='HOME.html'">
+      BACK
+    </button>
 
-    row.innerHTML = `
-      <td>${category}</td>
-      <td>${item.incoming}</td>
-      <td>${Number(item.purchasePrice).toFixed(2)} ₼</td>
-      <td>${Number(item.incomingAmount).toFixed(2)} ₼</td>
-      <td>${item.sold}</td>
-      <td>${Number(item.salePrice).toFixed(2)} ₼</td>
-      <td>${item.sold > 0 ? (Number(item.salesAmount) / Number(item.sold)).toFixed(2) : '0.00'} ₼</td>
-      <td>${Number(item.salesAmount).toFixed(2)} ₼</td>
-      <td>${item.remaining}</td>
-      <td>${Number(item.remainingAmount).toFixed(2)} ₼</td>
-      <td>${Number(item.profit).toFixed(2)} ₼</td>
-    `;
+  </div>
 
-    table.appendChild(row);
 
-    totalIncoming += Number(item.incoming);
-    totalIncomingAmount += Number(item.incomingAmount);
-    totalSold += Number(item.sold);
-    totalSalesAmount += Number(item.salesAmount);
-    totalRemaining += Number(item.remaining);
-    totalRemainingAmount += Number(item.remainingAmount);
-    totalProfit += Number(item.profit);
 
-  });
+  <script>
 
-  const totalRow = document.createElement('tr');
+    function loadStock(data) {
 
-  totalRow.style.backgroundColor = '#ffffff';
-  totalRow.style.color = '#000000';
-  totalRow.style.fontWeight = 'normal';
+      const table =
+        document.getElementById(
+          'stockData'
+        );
 
-  totalRow.innerHTML = `
-    <td>TOTAL</td>
-    <td>${totalIncoming}</td>
-    <td>—</td>
-    <td>${totalIncomingAmount.toFixed(2)} ₼</td>
-    <td>${totalSold}</td>
-    <td>—</td>
-    <td>—</td>
-    <td>${totalSalesAmount.toFixed(2)} ₼</td>
-    <td>${totalRemaining}</td>
-    <td>${totalRemainingAmount.toFixed(2)} ₼</td>
-    <td>${totalProfit.toFixed(2)} ₼</td>
-  `;
 
-  table.appendChild(totalRow);
-}
+      table.innerHTML =
+        '';
 
-const script = document.createElement('script');
 
-script.src =
-  'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=stock&callback=loadStock';
+      let totalIncoming =
+        0;
 
-document.body.appendChild(script);
+      let totalIncomingAmount =
+        0;
 
-</script>
+      let totalSold =
+        0;
+
+      let totalSalesAmount =
+        0;
+
+      let totalRemaining =
+        0;
+
+      let totalRemainingAmount =
+        0;
+
+      let totalProfit =
+        0;
+
+
+
+      data.forEach(
+        item => {
+
+
+          const row =
+            document.createElement(
+              'tr'
+            );
+
+
+          let category =
+            item.category;
+
+
+          if (
+            category === 'БРЮКИ'
+          ) {
+            category = 'PANTS';
+          }
+
+
+          if (
+            category === 'ПОЛО'
+          ) {
+            category = 'POLO';
+          }
+
+
+          if (
+            category === 'ОБУВЬ'
+          ) {
+            category = 'SHOES';
+          }
+
+
+          if (
+            category === 'СПОРТ КОСТЮМ'
+          ) {
+            category = 'SPORT SUIT';
+          }
+
+
+
+          row.innerHTML = `
+
+            <td>
+              ${category}
+            </td>
+
+            <td>
+              ${item.incoming}
+            </td>
+
+            <td>
+              ${Number(item.purchasePrice).toFixed(2)} ₼
+            </td>
+
+            <td>
+              ${Number(item.incomingAmount).toFixed(2)} ₼
+            </td>
+
+            <td>
+              ${item.sold}
+            </td>
+
+            <td>
+              ${Number(item.salePrice).toFixed(2)} ₼
+            </td>
+
+            <td>
+              ${
+                item.sold > 0
+                  ? (
+                      Number(item.salesAmount) /
+                      Number(item.sold)
+                    ).toFixed(2)
+                  : '0.00'
+              } ₼
+            </td>
+
+            <td>
+              ${Number(item.salesAmount).toFixed(2)} ₼
+            </td>
+
+            <td>
+              ${item.remaining}
+            </td>
+
+            <td>
+              ${Number(item.remainingAmount).toFixed(2)} ₼
+            </td>
+
+            <td>
+              ${Number(item.profit).toFixed(2)} ₼
+            </td>
+
+          `;
+
+
+          table.appendChild(
+            row
+          );
+
+
+
+          totalIncoming +=
+            Number(
+              item.incoming
+            );
+
+
+          totalIncomingAmount +=
+            Number(
+              item.incomingAmount
+            );
+
+
+          totalSold +=
+            Number(
+              item.sold
+            );
+
+
+          totalSalesAmount +=
+            Number(
+              item.salesAmount
+            );
+
+
+          totalRemaining +=
+            Number(
+              item.remaining
+            );
+
+
+          totalRemainingAmount +=
+            Number(
+              item.remainingAmount
+            );
+
+
+          totalProfit +=
+            Number(
+              item.profit
+            );
+
+        }
+      );
+
+
+
+      const totalRow =
+        document.createElement(
+          'tr'
+        );
+
+
+      totalRow.className =
+        'total-row';
+
+
+
+      totalRow.innerHTML = `
+
+        <td>
+          TOTAL
+        </td>
+
+        <td>
+          ${totalIncoming}
+        </td>
+
+        <td>
+          —
+        </td>
+
+        <td>
+          ${totalIncomingAmount.toFixed(2)} ₼
+        </td>
+
+        <td>
+          ${totalSold}
+        </td>
+
+        <td>
+          —
+        </td>
+
+        <td>
+          —
+        </td>
+
+        <td>
+          ${totalSalesAmount.toFixed(2)} ₼
+        </td>
+
+        <td>
+          ${totalRemaining}
+        </td>
+
+        <td>
+          ${totalRemainingAmount.toFixed(2)} ₼
+        </td>
+
+        <td>
+          ${totalProfit.toFixed(2)} ₼
+        </td>
+
+      `;
+
+
+      table.appendChild(
+        totalRow
+      );
+
+    }
+
+
+
+    const script =
+      document.createElement(
+        'script'
+      );
+
+
+    script.src =
+      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=stock&callback=loadStock';
+
+
+    document.body.appendChild(
+      script
+    );
+
+  </script>
 
 </body>
+
 </html>
