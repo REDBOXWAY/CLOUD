@@ -11,89 +11,282 @@
 
     body {
       margin: 0;
+      background: #ffffff;
+      color: #000;
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      color: #111;
     }
 
-    .container {
-      max-width: 560px;
+    .page {
+      width: 92%;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 18px;
+      padding: 28px 0 40px;
     }
 
-    .card {
-      background: #fff;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 5px 22px rgba(0,0,0,.08);
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+
+    .header-right {
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      margin: 0 0 5px;
-      font-size: 28px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #777;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
+      margin: 0 0 8px;
+      font-size: 36px;
       font-weight: 700;
-      margin: 18px 0 8px;
-      text-transform: uppercase;
-      font-size: 14px;
     }
 
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 17px;
+    .date-input {
+      width: 150px;
+      height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      text-align: center;
+      font-size: 14px;
       background: #fff;
     }
 
-    button {
-      width: 100%;
-      margin-top: 25px;
-      padding: 15px;
-      border: 0;
-      border-radius: 11px;
-      background: #111;
-      color: #fff;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
+    .date-label {
+      margin-top: 7px;
+      font-size: 13px;
     }
 
-    button:disabled {
-      opacity: .55;
+    /* =========================
+       BARCODE AREA
+    ========================= */
+
+    .barcode-label {
+      font-size: 13px;
+      margin-bottom: 6px;
     }
+
+    .barcode-row,
+    .result-row {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) 150px;
+      gap: 18px;
+      max-width: 570px;
+      margin-bottom: 16px;
+    }
+
+    #barcode {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      text-align: center;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+    }
+
+    .small-button {
+      height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      background: #fff;
+      color: #000;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .small-button:hover {
+      background: #f2f2f2;
+    }
+
+    /* =========================
+       PRODUCT RESULT
+    ========================= */
+
+    #productInfo {
+      min-height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7px 12px;
+      font-size: 13px;
+      background: #fff;
+      color: #000;
+    }
+
+    #addToListBtn {
+      display: none;
+    }
+
+    /* =========================
+       PURCHASE HEADER
+    ========================= */
+
+    .purchase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 5px 7px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    #totalAmount {
+      font-weight: 700;
+    }
+
+    /* =========================
+       PURCHASE LIST
+    ========================= */
+
+    #purchaseList {
+      display: none;
+      width: 100%;
+      min-height: 245px;
+      border: 1px solid #123047;
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    .purchase-item {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) 150px 150px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .purchase-description {
+      font-size: 13px;
+      white-space: normal;
+    }
+
+    .amount-input {
+      width: 100%;
+      height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      padding: 0 12px;
+      font-size: 13px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .remove-button {
+      height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      background: #fff;
+      color: #000;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .remove-button:hover {
+      background: #f2f2f2;
+    }
+
+    /* =========================
+       BOTTOM BUTTONS
+    ========================= */
+
+    .bottom-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .bottom-button {
+      height: 38px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      background: #fff;
+      color: #000;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .bottom-button:hover {
+      background: #f2f2f2;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
 
     #message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: 700;
       display: none;
+      width: 400px;
+      max-width: 100%;
+      margin: 30px auto 0;
+      padding: 11px 15px;
+      border: 1px solid #123047;
+      border-radius: 7px;
+      text-align: center;
+      font-size: 13px;
     }
 
     .success {
       display: block !important;
-      background: green;
-      color: white;
+      background: #8fd14f;
+      color: #000;
     }
 
     .error {
       display: block !important;
       background: red;
-      color: white;
+      color: #000;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      .page {
+        width: 94%;
+        padding-top: 18px;
+      }
+
+      .header {
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .barcode-row,
+      .result-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        max-width: none;
+      }
+
+      .purchase-item {
+        grid-template-columns: 1fr;
+      }
+
+      #purchaseList {
+        min-height: 180px;
+      }
+
+      .bottom-buttons {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .purchase-header {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -101,157 +294,129 @@
 
 <body>
 
-<div class="container">
+<div class="page">
 
-  <div class="card">
+  <!-- HEADER -->
 
-    <h1>CLOUD DRIVE</h1>
+  <div class="header">
 
-    <div class="subtitle">
-      DATA ENTRY
-    </div>
+    <div class="header-right">
 
-
-    <form id="form">
-
-
-      <!-- DATE -->
-
-      <label for="date">
-        1. ВЫБЕРИ ДАТУ
-      </label>
+      <h1>CLOUD DRIVE</h1>
 
       <input
         id="date"
+        class="date-input"
         type="date"
         required
       >
 
+      <div class="date-label">
+        SET THE DATE
+      </div>
 
-      <!-- BARCODE -->
+    </div>
 
-      <label for="barcode">
-        2. ENTER BARCODE
-      </label>
+  </div>
+
+
+  <form id="form">
+
+    <!-- BARCODE -->
+
+    <div class="barcode-label">
+      ENTER BARCODE
+    </div>
+
+    <div class="barcode-row">
 
       <input
         id="barcode"
         type="text"
-        placeholder="ENTER BARCODE"
+        placeholder=""
       >
-
-
-      <!-- SEARCH -->
 
       <button
-        id="searchBarcodeBtn"
         type="button"
+        class="small-button"
         onclick="searchBarcode()"
-        style="
-          margin-top:10px;
-          background:#111;
-          color:#fff;
-        "
       >
-        SEARCH
+        SEARCH BARCODE
       </button>
 
-
-      <!-- PRODUCT FOUND / NOT FOUND -->
-
-      <div
-        id="productInfo"
-        style="
-          margin-top:10px;
-          padding:10px;
-          background:#111;
-          color:#fff;
-          border-radius:8px;
-          text-align:center;
-          font-weight:bold;
-          display:none;
-        "
-      ></div>
+    </div>
 
 
-      <!-- ADD TO LIST -->
+    <!-- SEARCH RESULT -->
+
+    <div class="result-row">
+
+      <div id="productInfo"></div>
 
       <button
         id="addToListBtn"
         type="button"
+        class="small-button"
         onclick="addToList()"
-        style="
-          display:none;
-          margin-top:10px;
-          background:#FFC000;
-          color:#000;
-        "
       >
         ADD TO LIST
       </button>
 
-
-      <!-- PURCHASE LIST -->
-
-      <div
-        id="purchaseList"
-        style="
-          margin-top:15px;
-          display:none;
-        "
-      >
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            font-weight:bold;
-            margin-bottom:8px;
-          "
-        >
-
-          <span>
-            PURCHASE LIST
-          </span>
-
-          <span id="totalAmount">
-            TOTAL: 0.00 ₼
-          </span>
-
-        </div>
-
-        <div id="purchaseItems"></div>
-
-      </div>
+    </div>
 
 
-      <!-- SUBMIT -->
+    <!-- PURCHASE HEADER -->
+
+    <div class="purchase-header">
+
+      <span>
+        PURCHASE LIST
+      </span>
+
+      <span id="totalAmount">
+        TOTAL: 0.00 ₼
+      </span>
+
+    </div>
+
+
+    <!-- PURCHASE LIST -->
+
+    <div id="purchaseList">
+
+      <div id="purchaseItems"></div>
+
+    </div>
+
+
+    <!-- BOTTOM BUTTONS -->
+
+    <div class="bottom-buttons">
 
       <button
         id="submitBtn"
         type="submit"
+        class="bottom-button"
       >
-        ОТПРАВИТЬ
+        SEND
       </button>
-
-
-      <!-- BACK -->
 
       <button
         type="button"
+        class="bottom-button"
         onclick="goHome()"
       >
-        ОБРАТНО
+        BACK
       </button>
 
+    </div>
 
-      <div id="message"></div>
 
+    <!-- MESSAGE -->
 
-    </form>
+    <div id="message"></div>
 
-  </div>
+  </form>
 
 </div>
 
@@ -259,19 +424,19 @@
 
 <script>
 
-let currentProduct = null;
+/* ==========================================
+   DATA
+========================================== */
 
+let currentProduct = null;
 let purchaseList = [];
 
 
-
 /* ==========================================
-   PRODUCT FOUND
+   PRODUCT SEARCH RESULT
 ========================================== */
 
 function loadProduct(data) {
-
-  currentProduct = data;
 
   const info =
     document.getElementById('productInfo');
@@ -280,17 +445,14 @@ function loadProduct(data) {
     document.getElementById('addToListBtn');
 
 
-  /* NOT FOUND */
-
   if (!data) {
 
     currentProduct = null;
 
-    info.style.display = 'block';
-
+    info.style.display = 'flex';
     info.style.background = 'red';
-
-    info.style.color = 'white';
+    info.style.color = '#000';
+    info.style.border = '1px solid #000';
 
     info.textContent =
       'BARCODE NOT FOUND';
@@ -301,25 +463,22 @@ function loadProduct(data) {
   }
 
 
-  /* FOUND */
+  currentProduct = data;
 
-  info.style.display = 'block';
-
-  info.style.background = 'green';
-
-  info.style.color = 'white';
+  info.style.display = 'flex';
+  info.style.background = '#fff';
+  info.style.color = '#000';
+  info.style.border = '1px solid #123047';
 
   info.textContent =
-    data.product + ' - ' +
-    data.size + ' - ' +
-    data.color + ' - ' +
-    data.brand + ' - ' +
-    data.gender;
-
+    data.product + ' – ' +
+    data.size + ' – ' +
+    data.color + ' – ' +
+    data.gender + ' – ' +
+    data.barcode;
 
   addBtn.style.display = 'block';
 }
-
 
 
 /* ==========================================
@@ -352,9 +511,7 @@ function searchBarcode() {
 
 
   const script =
-    document.createElement(
-      'script'
-    );
+    document.createElement('script');
 
 
   script.id =
@@ -371,40 +528,21 @@ function searchBarcode() {
 }
 
 
-
 /* ==========================================
-   ADD TO PURCHASE LIST
+   ADD TO LIST
 ========================================== */
 
 function addToList() {
 
-  const info =
-    document.getElementById(
-      'productInfo'
-    );
+  if (!currentProduct) {
+    return;
+  }
 
 
   const barcode =
-    currentProduct
-      ? String(
-          currentProduct.barcode
-        ).trim()
-      : '';
-
-
-  const productText =
-    info.textContent.trim();
-
-
-  if (
-    !barcode ||
-    !currentProduct ||
-    !productText ||
-    productText ===
-      'BARCODE NOT FOUND'
-  ) {
-    return;
-  }
+    String(
+      currentProduct.barcode
+    ).trim();
 
 
   const existing =
@@ -414,15 +552,11 @@ function addToList() {
     );
 
 
-  /* SAME PRODUCT AGAIN */
-
   if (existing) {
 
     existing.quantity += 1;
 
   }
-
-  /* NEW PRODUCT */
 
   else {
 
@@ -446,9 +580,6 @@ function addToList() {
       gender:
         currentProduct.gender,
 
-      text:
-        productText,
-
       quantity:
         1,
 
@@ -463,24 +594,18 @@ function addToList() {
   renderPurchaseList();
 
 
-  /* CLEAN SEARCH AREA */
-
   document
     .getElementById('barcode')
     .value = '';
 
 
   document
-    .getElementById(
-      'productInfo'
-    )
+    .getElementById('productInfo')
     .style.display = 'none';
 
 
   document
-    .getElementById(
-      'addToListBtn'
-    )
+    .getElementById('addToListBtn')
     .style.display = 'none';
 
 
@@ -488,9 +613,8 @@ function addToList() {
 }
 
 
-
 /* ==========================================
-   PURCHASE LIST
+   RENDER PURCHASE LIST
 ========================================== */
 
 function renderPurchaseList() {
@@ -525,107 +649,116 @@ function renderPurchaseList() {
         );
 
 
-      row.style.padding =
-        '8px';
+      row.className =
+        'purchase-item';
 
 
-      row.style.marginBottom =
-        '6px';
+      const description =
+        document.createElement(
+          'div'
+        );
 
 
-      row.style.background =
-        '#111';
+      description.className =
+        'purchase-description';
 
 
-      row.style.color =
-        '#fff';
+      description.textContent =
+
+        item.product + ' – ' +
+        item.size + ' – ' +
+        item.color + ' – ' +
+        item.gender + ' – ' +
+        item.barcode +
+        '  × ' +
+        item.quantity;
 
 
-      row.style.borderRadius =
-        '8px';
+      const amount =
+        document.createElement(
+          'input'
+        );
 
 
-
-      row.innerHTML = `
-
-        <div
-          style="
-            margin-bottom:4px;
-          "
-        >
-
-          ${index + 1}.
-          ${item.text}
-          × ${item.quantity}
-
-        </div>
+      amount.type =
+        'number';
 
 
-        <div
-          style="
-            margin-bottom:8px;
-            font-size:13px;
-            color:#ccc;
-            font-weight:bold;
-          "
-        >
-
-          BARCODE:
-          ${item.barcode}
-
-        </div>
+      amount.step =
+        '0.01';
 
 
-        <input
-          type="number"
-          step="0.01"
-          placeholder="ENTER AMOUNT"
-
-          value="${item.amount || ''}"
-
-          oninput="
-            purchaseList[${index}].amount = this.value;
-            updateTotal();
-          "
-
-          style="
-            width:100%;
-            padding:10px;
-            border-radius:8px;
-            border:none;
-            font-size:16px;
-          "
-        >
+      amount.placeholder =
+        'ENTER AMOUNT';
 
 
-        <button
-          type="button"
-
-          onclick="
-            removeFromList(${index})
-          "
-
-          style="
-            margin-top:8px;
-            width:100%;
-            padding:8px;
-            background:#dc3545;
-            color:white;
-            border:none;
-            border-radius:8px;
-            font-weight:bold;
-            cursor:pointer;
-          "
-        >
-
-          REMOVE
-
-        </button>
-
-      `;
+      amount.className =
+        'amount-input';
 
 
-      items.appendChild(row);
+      amount.value =
+        item.amount || '';
+
+
+      amount.addEventListener(
+        'input',
+        function() {
+
+          purchaseList[index].amount =
+            this.value;
+
+          updateTotal();
+
+        }
+      );
+
+
+      const remove =
+        document.createElement(
+          'button'
+        );
+
+
+      remove.type =
+        'button';
+
+
+      remove.className =
+        'remove-button';
+
+
+      remove.textContent =
+        'REMOVE';
+
+
+      remove.addEventListener(
+        'click',
+        function() {
+
+          removeFromList(index);
+
+        }
+      );
+
+
+      row.appendChild(
+        description
+      );
+
+
+      row.appendChild(
+        amount
+      );
+
+
+      row.appendChild(
+        remove
+      );
+
+
+      items.appendChild(
+        row
+      );
 
     }
   );
@@ -633,7 +766,6 @@ function renderPurchaseList() {
 
   updateTotal();
 }
-
 
 
 /* ==========================================
@@ -660,15 +792,15 @@ function updateTotal() {
       'totalAmount'
     )
     .textContent =
+
       'TOTAL: ' +
       total.toFixed(2) +
       ' ₼';
 }
 
 
-
 /* ==========================================
-   REMOVE ITEM
+   REMOVE
 ========================================== */
 
 function removeFromList(index) {
@@ -698,12 +830,7 @@ function removeFromList(index) {
         'none';
 
 
-    document
-      .getElementById(
-        'totalAmount'
-      )
-      .textContent =
-        'TOTAL: 0.00 ₼';
+    updateTotal();
 
   }
 
@@ -715,15 +842,12 @@ function removeFromList(index) {
 }
 
 
-
 /* ==========================================
    DEFAULT DATE
 ========================================== */
 
 const dateInput =
-  document.getElementById(
-    'date'
-  );
+  document.getElementById('date');
 
 
 const today =
@@ -746,9 +870,8 @@ dateInput.value =
   .split('T')[0];
 
 
-
 /* ==========================================
-   SUBMIT PURCHASE LIST
+   SEND DATA
 ========================================== */
 
 document
@@ -773,8 +896,6 @@ document
         );
 
 
-      /* EMPTY LIST */
-
       if (
         purchaseList.length === 0
       ) {
@@ -785,14 +906,9 @@ document
         msg.className =
           'error';
 
-        msg.style.display =
-          'block';
-
         return;
       }
 
-
-      /* CHECK AMOUNTS */
 
       const invalidAmount =
         purchaseList.some(
@@ -813,9 +929,6 @@ document
         msg.className =
           'error';
 
-        msg.style.display =
-          'block';
-
         return;
       }
 
@@ -825,7 +938,7 @@ document
 
 
       btn.textContent =
-        'ОТПРАВКА...';
+        'SENDING...';
 
 
       msg.className =
@@ -834,7 +947,6 @@ document
 
       msg.style.display =
         'none';
-
 
 
       const data = {
@@ -851,7 +963,6 @@ document
           )
 
       };
-
 
 
       fetch(
@@ -889,28 +1000,11 @@ document
 
 
             msg.textContent =
-              '✓ SUCCESS';
+              'ALL DATA SENT SUCCESSFULLY!';
 
 
             msg.className =
               'success';
-
-
-            msg.style.background =
-              'green';
-
-
-            msg.style.color =
-              'white';
-
-
-            /* CLEAR EVERYTHING */
-
-            document
-              .getElementById(
-                'form'
-              )
-              .reset();
 
 
             purchaseList =
@@ -931,14 +1025,6 @@ document
               )
               .style.display =
                 'none';
-
-
-            document
-              .getElementById(
-                'totalAmount'
-              )
-              .textContent =
-                'TOTAL: 0.00 ₼';
 
 
             currentProduct =
@@ -969,23 +1055,7 @@ document
                 '';
 
 
-            /* RESTORE TODAY */
-
-            dateInput.value =
-
-              new Date(
-
-                Date.now() -
-
-                new Date()
-                  .getTimezoneOffset()
-                * 60000
-
-              )
-
-              .toISOString()
-
-              .split('T')[0];
+            updateTotal();
 
 
             btn.disabled =
@@ -993,7 +1063,7 @@ document
 
 
             btn.textContent =
-              'ОТПРАВИТЬ';
+              'SEND';
 
           }
 
@@ -1006,7 +1076,6 @@ document
           }
 
         }
-
       )
 
 
@@ -1015,7 +1084,7 @@ document
 
 
           msg.textContent =
-            'Ошибка: ' +
+            'ERROR: ' +
             error.message;
 
 
@@ -1028,19 +1097,17 @@ document
 
 
           btn.textContent =
-            'ОТПРАВИТЬ';
+            'SEND';
 
         }
-
       );
 
     }
   );
 
 
-
 /* ==========================================
-   HOME
+   BACK
 ========================================== */
 
 function goHome() {
