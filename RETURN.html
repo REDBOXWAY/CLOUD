@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>RETURNS</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -15,8 +22,20 @@
       min-height: 100vh;
       background: #000;
       color: #fff;
-      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
-      font-weight: normal;
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    button,
+    input,
+    textarea,
+    select,
+    option,
+    table {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.5px;
     }
 
     input[type="number"]::-webkit-inner-spin-button,
@@ -31,22 +50,24 @@
     }
 
     .container {
-      width: 90%;
-      max-width: 1100px;
-      margin: 45px auto;
+      width: 92%;
+      max-width: 1200px;
+      margin: 28px auto 40px;
     }
 
     h1 {
-      margin: 0 0 38px;
+      margin: 0 0 28px;
       text-align: center;
-      font-weight: normal;
+      font-size: 50px;
+      font-weight: 400;
+      line-height: 1;
     }
 
     h2 {
-      margin: 42px 0 14px;
+      margin: 42px 0 16px;
       text-align: center;
-      font-size: 20px;
-      font-weight: normal;
+      font-size: 30px;
+      font-weight: 400;
     }
 
     .return-form {
@@ -68,50 +89,53 @@
     .text-input,
     .unit-input,
     .amount-input {
-      height: 40px;
+      height: 46px;
       border: 1px solid #ffc000;
       border-radius: 7px;
       background: #fff;
       color: #000;
       text-align: center;
-      font-size: 14px;
+      font-size: 20px;
+      font-weight: 400;
     }
 
     .date-input {
-      width: 160px;
+      width: 168px;
     }
 
     .date-input,
     .text-input {
-      border: 1px solid #000;
       outline: none;
       box-shadow: none;
     }
 
     .date-input:focus,
     .text-input:focus {
-      border: 1px solid #000;
       outline: none;
       box-shadow: none;
     }
 
     .date-label,
     .field-label {
-      margin-bottom: 7px;
-      font-size: 13px;
+      font-size: 19px;
+      font-weight: 400;
+    }
+
+    .field-label {
+      margin-bottom: 8px;
     }
 
     .date-label {
-      margin-top: 7px;
+      margin-top: 8px;
     }
 
     .search-row,
     .result-row {
       display: grid;
-      grid-template-columns: minmax(280px, 1fr) 170px;
+      grid-template-columns: minmax(300px, 1fr) 160px;
       gap: 18px;
-      max-width: 650px;
-      margin-bottom: 14px;
+      max-width: 640px;
+      margin-bottom: 18px;
     }
 
     .text-input {
@@ -120,12 +144,12 @@
 
     button {
       border: none;
-      border-radius: 9px;
+      border-radius: 7px;
       background: #ffc000;
       color: #000;
       cursor: pointer;
-      font-family: inherit;
-      font-size: 14px;
+      font-size: 20px;
+      font-weight: 400;
     }
 
     button:hover {
@@ -138,13 +162,13 @@
     }
 
     .small-button {
-      height: 40px;
+      height: 46px;
     }
 
     .search-actions {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .search-actions .small-button {
@@ -153,9 +177,9 @@
 
     .clear-search-button {
       display: flex;
-      width: 40px;
-      height: 40px;
-      flex: 0 0 40px;
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
       align-items: center;
       justify-content: center;
       padding: 0;
@@ -166,11 +190,11 @@
     }
 
     .clear-search-button svg {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       fill: none;
       stroke: currentColor;
-      stroke-width: 3;
+      stroke-width: 2.7;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
@@ -181,16 +205,17 @@
 
     #productInfo {
       display: none;
-      min-height: 40px;
+      min-height: 46px;
       align-items: center;
       justify-content: center;
       border: 1px solid #ffc000;
       border-radius: 7px;
-      padding: 7px 12px;
+      padding: 8px 14px;
       background: #fff;
       color: #000;
       text-align: center;
-      font-size: 13px;
+      font-size: 20px;
+      font-weight: 400;
       overflow-wrap: anywhere;
     }
 
@@ -201,28 +226,30 @@
     .list-header {
       display: flex;
       justify-content: space-between;
-      margin: 24px 4px 9px;
-      font-size: 13px;
-      font-weight: 700;
+      margin: 24px 5px 10px;
+      font-size: 20px;
+      font-weight: 400;
     }
 
     #returnList {
       display: none;
-      min-height: 120px;
+      min-height: 140px;
       border: 1px solid #ffc000;
-      padding: 14px;
+      padding: 16px 18px;
     }
 
     .return-item {
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) 110px 150px 130px;
-      gap: 10px;
+      grid-template-columns: minmax(260px, 1fr) 120px 170px 150px;
+      gap: 14px;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .return-description {
-      font-size: 13px;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.2;
       overflow-wrap: anywhere;
     }
 
@@ -232,9 +259,11 @@
     }
 
     .remove-button {
-      height: 40px;
+      height: 46px;
       background: red;
-      font-weight: bold;
+      color: #000;
+      font-size: 20px;
+      font-weight: 400;
     }
 
     .actions {
@@ -245,26 +274,26 @@
     }
 
     .action-button {
-      height: 42px;
-      font-size: 16px;
+      height: 46px;
+      font-size: 20px;
+      font-weight: 400;
     }
 
     #message {
       display: none;
-      max-width: 460px;
-      margin: 22px auto 0;
+      max-width: 500px;
+      margin: 30px auto 0;
       padding: 11px 15px;
       border-radius: 7px;
       text-align: center;
-      color: #000;
-      font-size: 13px;
+      font-size: 21px;
+      font-weight: 400;
     }
 
     .success {
       display: block !important;
       background: transparent;
       color: #8fd14f;
-      font-weight: 700;
       border: none !important;
       padding: 0 !important;
     }
@@ -273,7 +302,6 @@
       display: block !important;
       background: transparent;
       color: red;
-      font-weight: 700;
       border: none !important;
       padding: 0 !important;
     }
@@ -286,31 +314,43 @@
       width: 100%;
       border-collapse: collapse;
       background: #111;
+      font-size: 19px;
     }
 
     th,
     td {
-      padding: 8px;
+      padding: 10px;
       border: 1px solid #444;
       text-align: center;
-      font-weight: normal;
+      font-weight: 400;
       white-space: nowrap;
     }
 
     th {
       background: #fff;
       color: #000;
+      font-size: 20px;
     }
 
     .empty-row td {
-      padding: 25px;
+      padding: 28px;
       color: #aaa;
+      font-size: 20px;
     }
 
     @media (max-width: 760px) {
+
       .container {
         width: 94%;
-        margin: 25px auto;
+        margin: 18px auto 35px;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      h2 {
+        font-size: 28px;
       }
 
       .return-form {
@@ -330,11 +370,12 @@
 
       .search-row,
       .result-row {
-        gap: 8px;
+        gap: 10px;
         max-width: none;
       }
 
       .return-item {
+        gap: 10px;
         border-bottom: 1px solid #333;
         padding-bottom: 14px;
       }
@@ -342,15 +383,34 @@
       .actions {
         gap: 10px;
       }
+
+      .list-header {
+        font-size: 19px;
+      }
+
+      button,
+      .small-button,
+      .action-button,
+      .remove-button {
+        font-size: 20px;
+      }
+
+      table {
+        font-size: 18px;
+      }
+
     }
+
   </style>
 </head>
+
 
 <body>
 
   <div class="container">
 
     <h1>RETURNS</h1>
+
 
     <form id="returnForm" class="return-form">
 
@@ -373,9 +433,11 @@
 
       </div>
 
+
       <div class="field-label">
         ENTER BARCODE
       </div>
+
 
       <div class="search-row">
 
@@ -387,6 +449,7 @@
           autocomplete="off"
         >
 
+
         <div class="search-actions">
 
           <button
@@ -397,22 +460,30 @@
             SEARCH
           </button>
 
+
           <button
             id="clearSearchBtn"
             class="clear-search-button"
             type="button"
             aria-label="Clear search message"
           >
+
             <svg viewBox="0 0 24 24">
+
               <path d="M20 7V3l-2 2a8 8 0 0 0-13 3"/>
+
               <path d="M4 17v4l2-2a8 8 0 0 0 13-3"/>
+
               <path d="M20 3h-4M4 21h4"/>
+
             </svg>
+
           </button>
 
         </div>
 
       </div>
+
 
       <div class="result-row">
 
@@ -428,6 +499,7 @@
 
       </div>
 
+
       <div class="list-header">
 
         <span>
@@ -440,9 +512,11 @@
 
       </div>
 
+
       <div id="returnList">
         <div id="returnItems"></div>
       </div>
+
 
       <div class="actions">
 
@@ -454,6 +528,7 @@
           SEND RETURN
         </button>
 
+
         <button
           class="action-button"
           type="button"
@@ -464,17 +539,21 @@
 
       </div>
 
+
       <div id="message"></div>
 
     </form>
 
+
     <h2>RETURN HISTORY</h2>
+
 
     <div class="table-wrap">
 
       <table>
 
         <thead>
+
           <tr>
             <th>DATE</th>
             <th>BARCODE</th>
@@ -482,14 +561,18 @@
             <th>UNIT</th>
             <th>AMOUNT</th>
           </tr>
+
         </thead>
+
 
         <tbody id="returnData">
 
           <tr class="empty-row">
+
             <td colspan="5">
               LOADING...
             </td>
+
           </tr>
 
         </tbody>
@@ -501,12 +584,17 @@
   </div>
 
 
+
   <script>
+
     const BACKEND_URL =
       'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec';
 
+
     let currentProduct = null;
+
     let returnList = [];
+
 
     const dateInput =
       document.getElementById('date');
@@ -530,140 +618,274 @@
       document.getElementById('message');
 
 
-    const today = new Date();
+
+    const today =
+      new Date();
+
 
     dateInput.value =
       new Date(
+
         today.getTime() -
+
         today.getTimezoneOffset() * 60000
+
       )
       .toISOString()
       .split('T')[0];
 
 
+
     function loadProduct(data) {
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
+
+      searchBtn.disabled =
+        false;
+
+      searchBtn.textContent =
+        'SEARCH';
+
 
       if (!data) {
-        currentProduct = null;
 
-        productInfo.style.display = 'flex';
-        productInfo.style.background = 'transparent';
-        productInfo.style.color = 'red';
-        productInfo.style.border = 'none';
-        productInfo.style.fontWeight = '700';
-        productInfo.textContent = 'BARCODE NOT FOUND';
+        currentProduct =
+          null;
 
-        addBtn.style.display = 'none';
+
+        productInfo.style.display =
+          'flex';
+
+        productInfo.style.background =
+          'transparent';
+
+        productInfo.style.color =
+          'red';
+
+        productInfo.style.border =
+          'none';
+
+        productInfo.style.fontWeight =
+          '400';
+
+        productInfo.textContent =
+          'BARCODE NOT FOUND';
+
+
+        addBtn.style.display =
+          'none';
+
 
         return;
+
       }
 
-      currentProduct = data;
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = '#fff';
-      productInfo.style.color = '#000';
-      productInfo.style.border = '1px solid #ffc000';
-      productInfo.style.fontWeight = 'normal';
-      productInfo.textContent = data.article;
+      currentProduct =
+        data;
 
-      addBtn.style.display = 'block';
+
+      productInfo.style.display =
+        'flex';
+
+      productInfo.style.background =
+        '#fff';
+
+      productInfo.style.color =
+        '#000';
+
+      productInfo.style.border =
+        '1px solid #ffc000';
+
+      productInfo.style.fontWeight =
+        '400';
+
+      productInfo.textContent =
+        data.article;
+
+
+      addBtn.style.display =
+        'block';
+
     }
+
 
 
     function lookupError() {
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
 
-      currentProduct = null;
+      searchBtn.disabled =
+        false;
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = 'transparent';
-      productInfo.style.color = 'red';
-      productInfo.style.border = 'none';
-      productInfo.style.fontWeight = '700';
-      productInfo.textContent = 'CONNECTION ERROR';
+      searchBtn.textContent =
+        'SEARCH';
 
-      addBtn.style.display = 'none';
+
+      currentProduct =
+        null;
+
+
+      productInfo.style.display =
+        'flex';
+
+      productInfo.style.background =
+        'transparent';
+
+      productInfo.style.color =
+        'red';
+
+      productInfo.style.border =
+        'none';
+
+      productInfo.style.fontWeight =
+        '400';
+
+      productInfo.textContent =
+        'CONNECTION ERROR';
+
+
+      addBtn.style.display =
+        'none';
+
     }
 
 
+
     function searchBarcode() {
+
       const barcode =
         barcodeInput.value.trim();
+
 
       if (!barcode) {
         return;
       }
 
-      currentProduct = null;
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = 'transparent';
-      productInfo.style.color = '#8fd14f';
-      productInfo.style.border = 'none';
-      productInfo.style.fontWeight = '700';
-      productInfo.textContent = 'SEARCHING...';
+      currentProduct =
+        null;
 
-      addBtn.style.display = 'none';
 
-      searchBtn.disabled = true;
-      searchBtn.textContent = 'SEARCHING...';
+      productInfo.style.display =
+        'flex';
+
+      productInfo.style.background =
+        'transparent';
+
+      productInfo.style.color =
+        '#8fd14f';
+
+      productInfo.style.border =
+        'none';
+
+      productInfo.style.fontWeight =
+        '400';
+
+      productInfo.textContent =
+        'SEARCHING...';
+
+
+      addBtn.style.display =
+        'none';
+
+
+      searchBtn.disabled =
+        true;
+
+      searchBtn.textContent =
+        'SEARCHING...';
+
 
       const oldScript =
         document.getElementById(
           'productLookup'
         );
 
+
       if (oldScript) {
         oldScript.remove();
       }
 
-      const script =
-        document.createElement('script');
 
-      script.id = 'productLookup';
-      script.onerror = lookupError;
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      script.id =
+        'productLookup';
+
+
+      script.onerror =
+        lookupError;
+
 
       script.src =
         BACKEND_URL +
+
         '?action=product&barcode=' +
-        encodeURIComponent(barcode) +
+
+        encodeURIComponent(
+          barcode
+        ) +
+
         '&callback=loadProduct&_=' +
+
         Date.now();
 
-      document.body.appendChild(script);
+
+      document.body.appendChild(
+        script
+      );
+
     }
+
 
 
     function clearSearchMessage() {
-      currentProduct = null;
 
-      productInfo.textContent = '';
-      productInfo.style.display = 'none';
+      currentProduct =
+        null;
 
-      addBtn.style.display = 'none';
 
-      barcodeInput.value = '';
+      productInfo.textContent =
+        '';
 
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
+      productInfo.style.display =
+        'none';
+
+
+      addBtn.style.display =
+        'none';
+
+
+      barcodeInput.value =
+        '';
+
+
+      searchBtn.disabled =
+        false;
+
+      searchBtn.textContent =
+        'SEARCH';
+
 
       barcodeInput.focus();
+
     }
 
 
+
     function addToReturnList() {
+
       if (!currentProduct) {
         return;
       }
+
 
       const barcode =
         String(
           currentProduct.barcode
         ).trim();
+
 
       const existing =
         returnList.find(
@@ -671,170 +893,311 @@
             item.barcode === barcode
         );
 
+
       if (existing) {
+
         existing.unit += 1;
+
       } else {
+
         returnList.push({
-          barcode: barcode,
-          article: currentProduct.article,
-          unit: 1,
-          amount: ''
+
+          barcode:
+            barcode,
+
+          article:
+            currentProduct.article,
+
+          unit:
+            1,
+
+          amount:
+            ''
+
         });
+
       }
+
 
       renderReturnList();
 
-      barcodeInput.value = '';
-      productInfo.style.display = 'none';
-      addBtn.style.display = 'none';
 
-      currentProduct = null;
+      barcodeInput.value =
+        '';
+
+      productInfo.style.display =
+        'none';
+
+      addBtn.style.display =
+        'none';
+
+
+      currentProduct =
+        null;
+
 
       barcodeInput.focus();
+
     }
 
 
+
     function renderReturnList() {
+
       const listBox =
         document.getElementById(
           'returnList'
         );
+
 
       const itemsBox =
         document.getElementById(
           'returnItems'
         );
 
+
       listBox.style.display =
         returnList.length
           ? 'block'
           : 'none';
 
-      itemsBox.innerHTML = '';
+
+      itemsBox.innerHTML =
+        '';
+
 
       returnList.forEach(
         (item, index) => {
 
-          const row =
-            document.createElement('div');
 
-          row.className = 'return-item';
+          const row =
+            document.createElement(
+              'div'
+            );
+
+
+          row.className =
+            'return-item';
+
+
 
           const description =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
+
 
           description.className =
             'return-description';
 
+
           description.textContent =
             item.article;
 
-          const unit =
-            document.createElement('input');
 
-          unit.type = 'number';
-          unit.min = '1';
-          unit.step = '1';
-          unit.placeholder = 'UNIT';
-          unit.className = 'unit-input';
-          unit.value = item.unit;
+
+          const unit =
+            document.createElement(
+              'input'
+            );
+
+
+          unit.type =
+            'number';
+
+          unit.min =
+            '1';
+
+          unit.step =
+            '1';
+
+          unit.placeholder =
+            'UNIT';
+
+          unit.className =
+            'unit-input';
+
+          unit.value =
+            item.unit;
+
 
           unit.addEventListener(
             'input',
-            function() {
+            function () {
+
               returnList[index].unit =
                 this.value;
+
             }
           );
 
-          const amount =
-            document.createElement('input');
 
-          amount.type = 'number';
-          amount.min = '0.01';
-          amount.step = '0.01';
-          amount.placeholder = 'AMOUNT';
-          amount.className = 'amount-input';
-          amount.value = item.amount;
+
+          const amount =
+            document.createElement(
+              'input'
+            );
+
+
+          amount.type =
+            'number';
+
+          amount.min =
+            '0.01';
+
+          amount.step =
+            '0.01';
+
+          amount.placeholder =
+            'AMOUNT';
+
+          amount.className =
+            'amount-input';
+
+          amount.value =
+            item.amount;
+
 
           amount.addEventListener(
             'input',
-            function() {
+            function () {
+
               returnList[index].amount =
                 this.value;
 
               updateTotal();
+
             }
           );
 
-          const remove =
-            document.createElement('button');
 
-          remove.type = 'button';
-          remove.className = 'remove-button';
-          remove.textContent = 'REMOVE';
+
+          const remove =
+            document.createElement(
+              'button'
+            );
+
+
+          remove.type =
+            'button';
+
+          remove.className =
+            'remove-button';
+
+          remove.textContent =
+            'REMOVE';
+
 
           remove.addEventListener(
             'click',
-            function() {
+            function () {
+
               returnList.splice(
                 index,
                 1
               );
 
+
               renderReturnList();
+
             }
           );
 
-          row.appendChild(description);
-          row.appendChild(unit);
-          row.appendChild(amount);
-          row.appendChild(remove);
 
-          itemsBox.appendChild(row);
+          row.appendChild(
+            description
+          );
+
+          row.appendChild(
+            unit
+          );
+
+          row.appendChild(
+            amount
+          );
+
+          row.appendChild(
+            remove
+          );
+
+
+          itemsBox.appendChild(
+            row
+          );
+
         }
       );
 
+
       updateTotal();
+
     }
+
 
 
     function updateTotal() {
+
       const total =
         returnList.reduce(
+
           (sum, item) =>
             sum +
-            (Number(item.amount) || 0),
+            (
+              Number(item.amount)
+              || 0
+            ),
+
           0
+
         );
 
+
       document
-        .getElementById('returnTotal')
+        .getElementById(
+          'returnTotal'
+        )
         .textContent =
+
           'RETURN TOTAL: ' +
           total.toFixed(2) +
           ' ₼';
+
     }
 
 
-    function showMessage(text, type) {
-      message.textContent = text;
-      message.className = type;
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+      message.className =
+        type;
+
     }
+
 
 
     function loadReturns(data) {
+
       const table =
         document.getElementById(
           'returnData'
         );
 
-      table.innerHTML = '';
+
+      table.innerHTML =
+        '';
+
 
       if (
         !Array.isArray(data) ||
         !data.length
       ) {
+
         table.innerHTML =
           '<tr class="empty-row">' +
           '<td colspan="5">' +
@@ -842,20 +1205,31 @@
           '</td>' +
           '</tr>';
 
+
         return;
+
       }
+
 
       data.forEach(
         item => {
 
+
           const row =
-            document.createElement('tr');
+            document.createElement(
+              'tr'
+            );
+
 
           const rawDate =
             item.date || '';
 
+
           const parsedDate =
-            new Date(rawDate);
+            new Date(
+              rawDate
+            );
+
 
           const dateText =
             Number.isNaN(
@@ -867,21 +1241,28 @@
                     'en-GB'
                   );
 
+
           const unit =
             item.units !== undefined
               ? item.units
               : item.quantity;
 
+
           row.innerHTML =
+
             '<td>' +
-            escapeHtml(dateText) +
+            escapeHtml(
+              dateText
+            ) +
             '</td>' +
+
 
             '<td>' +
             escapeHtml(
               item.barcode || ''
             ) +
             '</td>' +
+
 
             '<td>' +
             escapeHtml(
@@ -891,9 +1272,13 @@
             ) +
             '</td>' +
 
+
             '<td>' +
-            Number(unit) +
+            Number(
+              unit
+            ) +
             '</td>' +
+
 
             '<td>' +
             Number(
@@ -902,46 +1287,92 @@
             ' ₼' +
             '</td>';
 
-          table.appendChild(row);
+
+          table.appendChild(
+            row
+          );
+
         }
       );
+
     }
 
 
+
     function loadReturnHistory() {
+
       const oldScript =
         document.getElementById(
           'returnHistory'
         );
 
+
       if (oldScript) {
         oldScript.remove();
       }
 
-      const script =
-        document.createElement('script');
 
-      script.id = 'returnHistory';
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      script.id =
+        'returnHistory';
+
 
       script.src =
         BACKEND_URL +
+
         '?action=return' +
+
         '&callback=loadReturns' +
+
         '&_=' +
+
         Date.now();
 
-      document.body.appendChild(script);
+
+      document.body.appendChild(
+        script
+      );
+
     }
+
 
 
     function escapeHtml(value) {
+
       return String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+
+        .replaceAll(
+          '&',
+          '&amp;'
+        )
+
+        .replaceAll(
+          '<',
+          '&lt;'
+        )
+
+        .replaceAll(
+          '>',
+          '&gt;'
+        )
+
+        .replaceAll(
+          '"',
+          '&quot;'
+        )
+
+        .replaceAll(
+          "'",
+          '&#039;'
+        );
+
     }
+
 
 
     searchBtn.addEventListener(
@@ -950,10 +1381,12 @@
     );
 
 
+
     clearSearchBtn.addEventListener(
       'click',
       clearSearchMessage
     );
+
 
 
     addBtn.addEventListener(
@@ -962,15 +1395,24 @@
     );
 
 
+
     barcodeInput.addEventListener(
       'keydown',
-      function(event) {
-        if (event.key === 'Enter') {
+      function (event) {
+
+        if (
+          event.key === 'Enter'
+        ) {
+
           event.preventDefault();
+
           searchBarcode();
+
         }
+
       }
     );
+
 
 
     document
@@ -979,164 +1421,272 @@
       )
       .addEventListener(
         'submit',
-        function(event) {
+        function (event) {
+
 
           event.preventDefault();
 
-          if (!dateInput.value) {
+
+          if (
+            !dateInput.value
+          ) {
+
             showMessage(
               'SET THE DATE',
               'error'
             );
 
+
             return;
+
           }
 
-          if (!returnList.length) {
+
+          if (
+            !returnList.length
+          ) {
+
             showMessage(
               'RETURN LIST EMPTY',
               'error'
             );
 
+
             return;
+
           }
+
 
           const invalid =
             returnList.some(
+
               item =>
+
                 !Number.isInteger(
-                  Number(item.unit)
+                  Number(
+                    item.unit
+                  )
                 ) ||
-                Number(item.unit) <= 0 ||
+
+                Number(
+                  item.unit
+                ) <= 0 ||
+
                 !Number.isFinite(
-                  Number(item.amount)
+                  Number(
+                    item.amount
+                  )
                 ) ||
-                Number(item.amount) <= 0
+
+                Number(
+                  item.amount
+                ) <= 0
+
             );
 
-          if (invalid) {
+
+          if (
+            invalid
+          ) {
+
             showMessage(
               'ENTER CORRECT UNIT AND AMOUNT',
               'error'
             );
 
+
             return;
+
           }
+
 
           const sendBtn =
             document.getElementById(
               'sendBtn'
             );
 
-          sendBtn.disabled = true;
-          sendBtn.textContent = 'SENDING...';
 
-          message.style.display = 'none';
-          message.className = '';
+          sendBtn.disabled =
+            true;
+
+
+          sendBtn.textContent =
+            'SENDING...';
+
+
+          message.style.display =
+            'none';
+
+
+          message.className =
+            '';
+
 
           const itemsToSend =
             returnList.map(
+
               item => ({
-                barcode: item.barcode,
-                article: item.article,
+
+                barcode:
+                  item.barcode,
+
+                article:
+                  item.article,
+
 
                 quantity:
                   -Math.abs(
-                    Number(item.unit)
+                    Number(
+                      item.unit
+                    )
                   ),
+
 
                 amount:
                   -Math.abs(
-                    Number(item.amount)
+                    Number(
+                      item.amount
+                    )
                   )
+
               })
+
             );
+
 
           fetch(
             BACKEND_URL,
             {
-              method: 'POST',
+
+              method:
+                'POST',
+
 
               body:
                 new URLSearchParams({
-                  action: 'purchaseList',
-                  date: dateInput.value,
+
+                  action:
+                    'purchaseList',
+
+                  date:
+                    dateInput.value,
+
 
                   items:
                     JSON.stringify(
                       itemsToSend
                     )
+
                 })
+
             }
           )
+
 
           .then(
             response =>
               response.text()
           )
 
+
           .then(
             result => {
+
+
               if (
-                result.trim() !== 'OK'
+                result.trim()
+                !== 'OK'
               ) {
+
                 throw new Error(
                   result
                 );
+
               }
+
 
               showMessage(
                 'RETURN SENT SUCCESSFULLY!',
                 'success'
               );
 
-              returnList = [];
-              currentProduct = null;
+
+              returnList =
+                [];
+
+
+              currentProduct =
+                null;
+
 
               renderReturnList();
+
 
               productInfo.style.display =
                 'none';
 
+
               addBtn.style.display =
                 'none';
 
-              barcodeInput.value = '';
+
+              barcodeInput.value =
+                '';
+
+
               barcodeInput.focus();
 
+
               loadReturnHistory();
+
             }
           )
 
+
           .catch(
             error => {
+
               showMessage(
                 'ERROR: ' +
                 error.message,
                 'error'
               );
+
             }
           )
 
+
           .finally(
             () => {
-              sendBtn.disabled = false;
+
+              sendBtn.disabled =
+                false;
+
+
               sendBtn.textContent =
                 'SEND RETURN';
+
             }
           );
+
         }
       );
 
 
+
     function goHome() {
+
       window.location.href =
         'HOME.html';
+
     }
 
 
+
     loadReturnHistory();
+
   </script>
 
 </body>
+
 </html>
