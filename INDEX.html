@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <base target="_top">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CLOUD DRIVE — REGISTRY</title>
 
   <style>
     * {
@@ -11,32 +13,29 @@
 
     body {
       margin: 0;
-      background: #fff;
-      color: #000;
+      min-height: 100vh;
+      background: #000;
+      color: #fff;
       font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
     }
-/* УБРАТЬ СТРЕЛКИ В ENTER AMOUNT */
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
 
-input[type="number"] {
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
     .page {
       width: 92%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 28px 0 40px;
     }
-
-    /* =========================
-       HEADER
-    ========================= */
 
     .header {
       display: flex;
@@ -58,11 +57,12 @@ input[type="number"] {
     .date-input {
       width: 150px;
       height: 38px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       border-radius: 7px;
       text-align: center;
       font-size: 14px;
       background: #fff;
+      color: #000;
     }
 
     .date-label {
@@ -70,13 +70,9 @@ input[type="number"] {
       font-size: 13px;
     }
 
-    /* =========================
-       BARCODE AREA
-    ========================= */
-
     .barcode-label {
-      font-size: 13px;
       margin-bottom: 6px;
+      font-size: 13px;
     }
 
     .barcode-row,
@@ -91,53 +87,56 @@ input[type="number"] {
     #barcode {
       width: 100%;
       height: 38px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       border-radius: 7px;
       text-align: center;
       font-size: 14px;
       outline: none;
       background: #fff;
+      color: #000;
     }
 
-    .small-button {
+    .small-button,
+    .bottom-button {
       height: 38px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       border-radius: 7px;
-      background: #FFC000;
+      background: #ffc000;
       color: #000;
       cursor: pointer;
       font-size: 13px;
+      font-weight: 700;
     }
 
-    .small-button:hover {
-      background: #f2f2f2;
+    .small-button:hover,
+    .bottom-button:hover {
+      filter: brightness(0.95);
     }
 
-    /* =========================
-       PRODUCT RESULT
-    ========================= */
+    .small-button:disabled,
+    .bottom-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
 
     #productInfo {
       min-height: 38px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       border-radius: 7px;
       display: none;
       align-items: center;
       justify-content: center;
-      text-align: center;
       padding: 7px 12px;
+      text-align: center;
       font-size: 13px;
       background: #fff;
       color: #000;
+      overflow-wrap: anywhere;
     }
 
     #addToListBtn {
       display: none;
     }
-
-    /* =========================
-       PURCHASE HEADER
-    ========================= */
 
     .purchase-header {
       display: flex;
@@ -148,21 +147,14 @@ input[type="number"] {
       font-size: 13px;
     }
 
-    #totalAmount {
-      font-weight: 700;
-    }
-
-    /* =========================
-       PURCHASE LIST
-    ========================= */
-
     #purchaseList {
       display: none;
       width: 100%;
       min-height: 245px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       padding: 14px 16px;
-      background: #fff;
+      background: #000;
+      color: #fff;
     }
 
     .purchase-item {
@@ -175,37 +167,32 @@ input[type="number"] {
 
     .purchase-description {
       font-size: 13px;
-      white-space: normal;
+      color: #fff;
+      overflow-wrap: anywhere;
     }
 
     .amount-input {
       width: 100%;
       height: 38px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       border-radius: 7px;
       padding: 0 12px;
-      font-size: 13px;
       text-align: center;
+      font-size: 13px;
       background: #fff;
+      color: #000;
     }
 
     .remove-button {
       height: 38px;
-      border: 1px solid #123047;
+      border: 1px solid red;
       border-radius: 7px;
       background: red;
-      color: black;
+      color: #000;
       cursor: pointer;
       font-size: 13px;
+      font-weight: 700;
     }
-
-    .remove-button:hover {
-      background: #cc0000;
-    }
-
-    /* =========================
-       BOTTOM BUTTONS
-    ========================= */
 
     .bottom-buttons {
       display: grid;
@@ -214,31 +201,13 @@ input[type="number"] {
       margin-top: 16px;
     }
 
-    .bottom-button {
-      height: 38px;
-      border: 1px solid #123047;
-      border-radius: 7px;
-      background: #FFC000;
-      color: #000;
-      cursor: pointer;
-      font-size: 13px;
-    }
-
-    .bottom-button:hover {
-      background: #f2f2f2;
-    }
-
-    /* =========================
-       MESSAGE
-    ========================= */
-
     #message {
       display: none;
       width: 400px;
       max-width: 100%;
       margin: 30px auto 0;
       padding: 11px 15px;
-      border: 1px solid #123047;
+      border: 1px solid #ffc000;
       border-radius: 7px;
       text-align: center;
       font-size: 13px;
@@ -256,12 +225,7 @@ input[type="number"] {
       color: #000;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
-
     @media (max-width: 700px) {
-
       .page {
         width: 94%;
         padding-top: 18px;
@@ -276,23 +240,28 @@ input[type="number"] {
       }
 
       .barcode-row,
-      .result-row {
+      .result-row,
+      .purchase-item,
+      .bottom-buttons {
         grid-template-columns: 1fr;
+      }
+
+      .barcode-row,
+      .result-row {
         gap: 8px;
         max-width: none;
       }
 
       .purchase-item {
-        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .bottom-buttons {
+        gap: 10px;
       }
 
       #purchaseList {
         min-height: 180px;
-      }
-
-      .bottom-buttons {
-        grid-template-columns: 1fr;
-        gap: 10px;
       }
 
       .purchase-header {
@@ -302,833 +271,531 @@ input[type="number"] {
   </style>
 </head>
 
-
 <body>
 
-<div class="page">
+  <div class="page">
 
-  <!-- HEADER -->
+    <div class="header">
+      <div class="header-right">
 
-  <div class="header">
+        <h1>CLOUD DRIVE</h1>
 
-    <div class="header-right">
+        <input
+          id="date"
+          class="date-input"
+          type="date"
+          required
+        >
 
-      <h1>CLOUD DRIVE</h1>
+        <div class="date-label">
+          SET THE DATE
+        </div>
 
-      <input
-        id="date"
-        class="date-input"
-        type="date"
-        required
-      >
+      </div>
+    </div>
 
-      <div class="date-label">
-        SET THE DATE
+    <form id="form">
+
+      <div class="barcode-label">
+        ENTER BARCODE
       </div>
 
-    </div>
+      <div class="barcode-row">
+
+        <input
+          id="barcode"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+        >
+
+        <button
+          id="searchBtn"
+          type="button"
+          class="small-button"
+        >
+          SEARCH BARCODE
+        </button>
+
+      </div>
+
+      <div class="result-row">
+
+        <div id="productInfo"></div>
+
+        <button
+          id="addToListBtn"
+          type="button"
+          class="small-button"
+        >
+          ADD TO LIST
+        </button>
+
+      </div>
+
+      <div class="purchase-header">
+
+        <span>PURCHASE LIST</span>
+
+        <span id="totalAmount">
+          TOTAL: 0.00 ₼
+        </span>
+
+      </div>
+
+      <div id="purchaseList">
+        <div id="purchaseItems"></div>
+      </div>
+
+      <div class="bottom-buttons">
+
+        <button
+          id="submitBtn"
+          type="submit"
+          class="bottom-button"
+        >
+          SEND
+        </button>
+
+        <button
+          type="button"
+          class="bottom-button"
+          onclick="goHome()"
+        >
+          BACK
+        </button>
+
+      </div>
+
+      <div id="message"></div>
+
+    </form>
 
   </div>
 
+  <script>
+    const BACKEND_URL =
+      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec';
 
-  <form id="form">
+    let currentProduct = null;
+    let purchaseList = [];
 
-    <!-- BARCODE -->
+    const dateInput =
+      document.getElementById('date');
 
-    <div class="barcode-label">
-      ENTER BARCODE
-    </div>
+    const barcodeInput =
+      document.getElementById('barcode');
 
-    <div class="barcode-row">
+    const searchBtn =
+      document.getElementById('searchBtn');
 
-      <input
-        id="barcode"
-        type="text"
-        placeholder=""
-      >
+    const addToListBtn =
+      document.getElementById('addToListBtn');
 
-      <button
-        type="button"
-        class="small-button"
-        onclick="searchBarcode()"
-      >
-        SEARCH BARCODE
-      </button>
+    const productInfo =
+      document.getElementById('productInfo');
 
-    </div>
+    const message =
+      document.getElementById('message');
 
 
-    <!-- SEARCH RESULT -->
+    function loadProduct(data) {
+      searchBtn.disabled = false;
+      searchBtn.textContent = 'SEARCH BARCODE';
 
-    <div class="result-row">
+      if (!data) {
+        currentProduct = null;
 
-      <div id="productInfo"></div>
+        productInfo.style.display = 'flex';
+        productInfo.style.background = 'red';
+        productInfo.style.borderColor = '#000';
+        productInfo.textContent = 'BARCODE NOT FOUND';
 
-      <button
-        id="addToListBtn"
-        type="button"
-        class="small-button"
-        onclick="addToList()"
-      >
-        ADD TO LIST
-      </button>
-
-    </div>
-
-
-    <!-- PURCHASE HEADER -->
-
-    <div class="purchase-header">
-
-      <span>
-        PURCHASE LIST
-      </span>
-
-      <span id="totalAmount">
-        TOTAL: 0.00 ₼
-      </span>
-
-    </div>
-
-
-    <!-- PURCHASE LIST -->
-
-    <div id="purchaseList">
-
-      <div id="purchaseItems"></div>
-
-    </div>
-
-
-    <!-- BOTTOM BUTTONS -->
-
-    <div class="bottom-buttons">
-
-      <button
-        id="submitBtn"
-        type="submit"
-        class="bottom-button"
-      >
-        SEND
-      </button>
-
-      <button
-        type="button"
-        class="bottom-button"
-        onclick="goHome()"
-      >
-        BACK
-      </button>
-
-    </div>
-
-
-    <!-- MESSAGE -->
-
-    <div id="message"></div>
-
-  </form>
-
-</div>
-
-
-
-<script>
-
-/* ==========================================
-   DATA
-========================================== */
-
-let currentProduct = null;
-let purchaseList = [];
-
-
-/* ==========================================
-   PRODUCT SEARCH RESULT
-========================================== */
-
-function loadProduct(data) {
-
-  const info =
-    document.getElementById('productInfo');
-
-  const addBtn =
-    document.getElementById('addToListBtn');
-
-
-  if (!data) {
-
-    currentProduct = null;
-
-    info.style.display = 'flex';
-    info.style.background = 'red';
-    info.style.color = '#000';
-    info.style.border = '1px solid #000';
-
-    info.textContent =
-      'BARCODE NOT FOUND';
-
-    addBtn.style.display = 'none';
-
-    return;
-  }
-
-
-  currentProduct = data;
-
-  info.style.display = 'flex';
-  info.style.background = '#fff';
-  info.style.color = '#000';
-  info.style.border = '1px solid #123047';
-
-  info.textContent =
-    data.product + ' – ' +
-    data.size + ' – ' +
-    data.color + ' – ' +
-    data.gender + ' – ' +
-    data.barcode;
-
-  addBtn.style.display = 'block';
-}
-
-
-/* ==========================================
-   SEARCH BARCODE
-========================================== */
-
-function searchBarcode() {
-
-  const barcode =
-    document
-      .getElementById('barcode')
-      .value
-      .trim();
-
-
-  if (!barcode) {
-    return;
-  }
-
-
-  const oldScript =
-    document.getElementById(
-      'barcodeLookup'
-    );
-
-
-  if (oldScript) {
-    oldScript.remove();
-  }
-
-
-  const script =
-    document.createElement('script');
-
-
-  script.id =
-    'barcodeLookup';
-
-
-  script.src =
-    'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=product&barcode=' +
-    encodeURIComponent(barcode) +
-    '&callback=loadProduct';
-
-
-  document.body.appendChild(script);
-}
-
-
-/* ==========================================
-   ADD TO LIST
-========================================== */
-
-function addToList() {
-
-  if (!currentProduct) {
-    return;
-  }
-
-
-  const barcode =
-    String(
-      currentProduct.barcode
-    ).trim();
-
-
-  const existing =
-    purchaseList.find(
-      item =>
-        item.barcode === barcode
-    );
-
-
-  if (existing) {
-
-    existing.quantity += 1;
-
-  }
-
-  else {
-
-    purchaseList.push({
-
-      barcode:
-        barcode,
-
-      product:
-        currentProduct.product,
-
-      size:
-        currentProduct.size,
-
-      color:
-        currentProduct.color,
-
-      brand:
-        currentProduct.brand,
-
-      gender:
-        currentProduct.gender,
-
-      quantity:
-        1,
-
-      amount:
-        ''
-
-    });
-
-  }
-
-
-  renderPurchaseList();
-
-
-  document
-    .getElementById('barcode')
-    .value = '';
-
-
-  document
-    .getElementById('productInfo')
-    .style.display = 'none';
-
-
-  document
-    .getElementById('addToListBtn')
-    .style.display = 'none';
-
-
-  currentProduct = null;
-}
-
-
-/* ==========================================
-   RENDER PURCHASE LIST
-========================================== */
-
-function renderPurchaseList() {
-
-  const box =
-    document.getElementById(
-      'purchaseList'
-    );
-
-
-  const items =
-    document.getElementById(
-      'purchaseItems'
-    );
-
-
-  box.style.display =
-    'block';
-
-
-  items.innerHTML =
-    '';
-
-
-  purchaseList.forEach(
-    (item, index) => {
-
-
-      const row =
-        document.createElement(
-          'div'
-        );
-
-
-      row.className =
-        'purchase-item';
-
-
-      const description =
-        document.createElement(
-          'div'
-        );
-
-
-      description.className =
-        'purchase-description';
-
-
-      description.textContent =
-
-        item.product + ' – ' +
-        item.size + ' – ' +
-        item.color + ' – ' +
-        item.gender + ' – ' +
-        item.barcode +
-        '  × ' +
-        item.quantity;
-
-
-      const amount =
-        document.createElement(
-          'input'
-        );
-
-
-      amount.type =
-        'number';
-
-
-      amount.step =
-        '1';
-
-
-      amount.placeholder =
-        'ENTER AMOUNT';
-
-
-      amount.className =
-        'amount-input';
-
-
-      amount.value =
-        item.amount || '';
-
-
-      amount.addEventListener(
-        'input',
-        function() {
-
-          purchaseList[index].amount =
-            this.value;
-
-          updateTotal();
-
-        }
-      );
-
-
-      const remove =
-        document.createElement(
-          'button'
-        );
-
-
-      remove.type =
-        'button';
-
-
-      remove.className =
-        'remove-button';
-
-
-      remove.textContent =
-        'REMOVE';
-
-
-      remove.addEventListener(
-        'click',
-        function() {
-
-          removeFromList(index);
-
-        }
-      );
-
-
-      row.appendChild(
-        description
-      );
-
-
-      row.appendChild(
-        amount
-      );
-
-
-      row.appendChild(
-        remove
-      );
-
-
-      items.appendChild(
-        row
-      );
-
-    }
-  );
-
-
-  updateTotal();
-}
-
-
-/* ==========================================
-   TOTAL
-========================================== */
-
-function updateTotal() {
-
-  let total = 0;
-
-
-  purchaseList.forEach(
-    item => {
-
-      total +=
-        Number(item.amount) || 0;
-
-    }
-  );
-
-
-  document
-    .getElementById(
-      'totalAmount'
-    )
-    .textContent =
-
-      'TOTAL: ' +
-      total.toFixed(2) +
-      ' ₼';
-}
-
-
-/* ==========================================
-   REMOVE
-========================================== */
-
-function removeFromList(index) {
-
-  purchaseList.splice(
-    index,
-    1
-  );
-
-
-  if (
-    purchaseList.length === 0
-  ) {
-
-    document
-      .getElementById(
-        'purchaseItems'
-      )
-      .innerHTML = '';
-
-
-    document
-      .getElementById(
-        'purchaseList'
-      )
-      .style.display =
-        'none';
-
-
-    updateTotal();
-
-  }
-
-  else {
-
-    renderPurchaseList();
-
-  }
-}
-
-
-/* ==========================================
-   DEFAULT DATE
-========================================== */
-
-const dateInput =
-  document.getElementById('date');
-
-
-const today =
-  new Date();
-
-
-dateInput.value =
-
-  new Date(
-
-    today.getTime() -
-
-    today.getTimezoneOffset()
-    * 60000
-
-  )
-
-  .toISOString()
-
-  .split('T')[0];
-
-
-/* ==========================================
-   SEND DATA
-========================================== */
-
-document
-  .getElementById('form')
-  .addEventListener(
-    'submit',
-    function(e) {
-
-
-      e.preventDefault();
-
-
-      const btn =
-        document.getElementById(
-          'submitBtn'
-        );
-
-
-      const msg =
-        document.getElementById(
-          'message'
-        );
-
-
-      if (
-        purchaseList.length === 0
-      ) {
-
-        msg.textContent =
-          'PURCHASE LIST EMPTY';
-
-        msg.className =
-          'error';
+        addToListBtn.style.display = 'none';
 
         return;
       }
 
+      currentProduct = data;
 
-      const invalidAmount =
-        purchaseList.some(
-          item =>
-            item.amount === '' ||
-            !Number.isFinite(
-              Number(item.amount)
-            ) ||
-            Number(item.amount) === 0
-        );
+      productInfo.style.display = 'flex';
+      productInfo.style.background = '#fff';
+      productInfo.style.color = '#000';
+      productInfo.style.borderColor = '#ffc000';
+      productInfo.textContent = data.article;
+
+      addToListBtn.style.display = 'block';
+    }
 
 
-      if (invalidAmount) {
+    function barcodeLookupError() {
+      searchBtn.disabled = false;
+      searchBtn.textContent = 'SEARCH BARCODE';
 
-        msg.textContent =
-          'ENTER AMOUNT FOR ALL PRODUCTS';
+      currentProduct = null;
 
-        msg.className =
-          'error';
+      productInfo.style.display = 'flex';
+      productInfo.style.background = 'red';
+      productInfo.style.color = '#000';
+      productInfo.style.borderColor = '#000';
+      productInfo.textContent = 'CONNECTION ERROR';
 
+      addToListBtn.style.display = 'none';
+    }
+
+
+    function searchBarcode() {
+      const barcode =
+        barcodeInput.value.trim();
+
+      if (!barcode) {
         return;
       }
 
+      currentProduct = null;
 
-      btn.disabled =
-        true;
+      addToListBtn.style.display = 'none';
+
+      productInfo.style.display = 'flex';
+      productInfo.style.background = '#fff';
+      productInfo.style.color = '#000';
+      productInfo.textContent = 'SEARCHING...';
+
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'SEARCHING...';
+
+      const oldScript =
+        document.getElementById('barcodeLookup');
+
+      if (oldScript) {
+        oldScript.remove();
+      }
+
+      const script =
+        document.createElement('script');
+
+      script.id = 'barcodeLookup';
+      script.onerror = barcodeLookupError;
+
+      script.src =
+        BACKEND_URL +
+        '?action=product&barcode=' +
+        encodeURIComponent(barcode) +
+        '&callback=loadProduct&_=' +
+        Date.now();
+
+      document.body.appendChild(script);
+    }
 
 
-      btn.textContent =
-        'SENDING...';
+    function addToList() {
+      if (!currentProduct) {
+        return;
+      }
+
+      const barcode =
+        String(currentProduct.barcode).trim();
+
+      const existing =
+        purchaseList.find(
+          item => item.barcode === barcode
+        );
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        purchaseList.push({
+          barcode: barcode,
+          article: currentProduct.article,
+          product: currentProduct.product,
+          quantity: 1,
+          amount: ''
+        });
+      }
+
+      renderPurchaseList();
+
+      barcodeInput.value = '';
+      productInfo.style.display = 'none';
+      addToListBtn.style.display = 'none';
+
+      currentProduct = null;
+
+      barcodeInput.focus();
+    }
 
 
-      msg.className =
-        '';
+    function renderPurchaseList() {
+      const box =
+        document.getElementById('purchaseList');
 
+      const items =
+        document.getElementById('purchaseItems');
 
-      msg.style.display =
-        'none';
+      box.style.display =
+        purchaseList.length
+          ? 'block'
+          : 'none';
 
+      items.innerHTML = '';
 
-      const data = {
+      purchaseList.forEach(
+        (item, index) => {
 
-        action:
-          'purchaseList',
+          const row =
+            document.createElement('div');
 
-        date:
-          dateInput.value,
+          row.className = 'purchase-item';
 
-        items:
-          JSON.stringify(
-            purchaseList
-          )
+          const description =
+            document.createElement('div');
 
-      };
+          description.className =
+            'purchase-description';
 
+          description.textContent =
+            item.article +
+            ' × ' +
+            item.quantity;
 
-      fetch(
+          const amount =
+            document.createElement('input');
 
-        'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec',
+          amount.type = 'number';
+          amount.step = '0.01';
+          amount.min = '0';
+          amount.placeholder = 'ENTER AMOUNT';
+          amount.className = 'amount-input';
+          amount.value = item.amount;
 
-        {
+          amount.addEventListener(
+            'input',
+            function() {
+              purchaseList[index].amount =
+                this.value;
 
-          method:
-            'POST',
+              updateTotal();
+            }
+          );
 
-          body:
-            new URLSearchParams(
-              data
-            )
+          const remove =
+            document.createElement('button');
 
+          remove.type = 'button';
+          remove.className = 'remove-button';
+          remove.textContent = 'REMOVE';
+
+          remove.addEventListener(
+            'click',
+            function() {
+              purchaseList.splice(index, 1);
+              renderPurchaseList();
+            }
+          );
+
+          row.appendChild(description);
+          row.appendChild(amount);
+          row.appendChild(remove);
+
+          items.appendChild(row);
         }
+      );
 
+      updateTotal();
+    }
+
+
+    function updateTotal() {
+      const total =
+        purchaseList.reduce(
+          (sum, item) =>
+            sum +
+            (Number(item.amount) || 0),
+          0
+        );
+
+      document
+        .getElementById('totalAmount')
+        .textContent =
+          'TOTAL: ' +
+          total.toFixed(2) +
+          ' ₼';
+    }
+
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = type;
+    }
+
+
+    const today = new Date();
+
+    dateInput.value =
+      new Date(
+        today.getTime() -
+        today.getTimezoneOffset() * 60000
       )
+      .toISOString()
+      .split('T')[0];
 
 
-      .then(
-        response =>
-          response.text()
-      )
+    searchBtn.addEventListener(
+      'click',
+      searchBarcode
+    );
 
 
-      .then(
-        result => {
+    addToListBtn.addEventListener(
+      'click',
+      addToList
+    );
 
 
-          if (
-            result === 'OK'
-          ) {
+    barcodeInput.addEventListener(
+      'keydown',
+      function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          searchBarcode();
+        }
+      }
+    );
 
 
-            msg.textContent =
-              'ALL DATA SENT SUCCESSFULLY!';
+    document
+      .getElementById('form')
+      .addEventListener(
+        'submit',
+        function(event) {
 
+          event.preventDefault();
 
-            msg.className =
-              'success';
+          const submitBtn =
+            document.getElementById('submitBtn');
 
-
-            purchaseList =
-              [];
-
-
-            document
-              .getElementById(
-                'purchaseItems'
-              )
-              .innerHTML =
-                '';
-
-
-            document
-              .getElementById(
-                'purchaseList'
-              )
-              .style.display =
-                'none';
-
-
-            currentProduct =
-              null;
-
-
-            document
-              .getElementById(
-                'productInfo'
-              )
-              .style.display =
-                'none';
-
-
-            document
-              .getElementById(
-                'addToListBtn'
-              )
-              .style.display =
-                'none';
-
-
-            document
-              .getElementById(
-                'barcode'
-              )
-              .value =
-                '';
-
-
-            updateTotal();
-
-
-            btn.disabled =
-              false;
-
-
-            btn.textContent =
-              'SEND';
-
-          }
-
-          else {
-
-            throw new Error(
-              result
+          if (!dateInput.value) {
+            showMessage(
+              'SET THE DATE',
+              'error'
             );
 
+            return;
           }
 
-        }
-      )
+          if (!purchaseList.length) {
+            showMessage(
+              'PURCHASE LIST EMPTY',
+              'error'
+            );
 
+            return;
+          }
 
-      .catch(
-        error => {
+          const invalidAmount =
+            purchaseList.some(
+              item =>
+                item.amount === '' ||
+                !Number.isFinite(
+                  Number(item.amount)
+                ) ||
+                Number(item.amount) <= 0
+            );
 
+          if (invalidAmount) {
+            showMessage(
+              'ENTER AMOUNT FOR ALL PRODUCTS',
+              'error'
+            );
 
-          msg.textContent =
-            'ERROR: ' +
-            error.message;
+            return;
+          }
 
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'SENDING...';
 
-          msg.className =
-            'error';
+          message.style.display = 'none';
+          message.className = '';
 
+          const itemsToSend =
+            purchaseList.map(
+              item => ({
+                barcode: item.barcode,
+                article: item.article,
+                quantity: item.quantity,
+                amount: Number(item.amount)
+              })
+            );
 
-          btn.disabled =
-            false;
+          fetch(
+            BACKEND_URL,
+            {
+              method: 'POST',
 
+              body:
+                new URLSearchParams({
+                  action: 'purchaseList',
+                  date: dateInput.value,
+                  items:
+                    JSON.stringify(itemsToSend)
+                })
+            }
+          )
 
-          btn.textContent =
-            'SEND';
+          .then(
+            response => response.text()
+          )
 
+          .then(
+            result => {
+              if (result.trim() !== 'OK') {
+                throw new Error(result);
+              }
+
+              showMessage(
+                'ALL DATA SENT SUCCESSFULLY!',
+                'success'
+              );
+
+              purchaseList = [];
+              currentProduct = null;
+
+              renderPurchaseList();
+
+              productInfo.style.display =
+                'none';
+
+              addToListBtn.style.display =
+                'none';
+
+              barcodeInput.value = '';
+              barcodeInput.focus();
+            }
+          )
+
+          .catch(
+            error => {
+              showMessage(
+                'ERROR: ' + error.message,
+                'error'
+              );
+            }
+          )
+
+          .finally(
+            () => {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'SEND';
+            }
+          );
         }
       );
 
+
+    function goHome() {
+      window.location.href = 'HOME.html';
     }
-  );
-
-
-/* ==========================================
-   BACK
-========================================== */
-
-function goHome() {
-
-  window.location.href =
-    'HOME.html';
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
