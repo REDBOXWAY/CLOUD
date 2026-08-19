@@ -1,59 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>SALES ANALYTICS</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
+      min-height: 100vh;
       background: #000;
       color: #fff;
-      min-height: 100vh;
-      font-weight: normal;
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    button,
+    table,
+    th,
+    td {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.5px;
     }
 
     .container {
-      width: 90%;
-      max-width: 900px;
-      margin: 50px auto;
+      width: 92%;
+      max-width: 1000px;
+      margin: 40px auto;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 40px;
-      font-weight: normal;
+      margin: 0 0 36px;
+      font-size: 50px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       background: #111;
-      font-weight: normal;
+      font-size: 20px;
     }
 
-    th, td {
-      padding: 8px;
+    th,
+    td {
+      padding: 12px 10px;
       border: 1px solid #444;
       text-align: center;
-      font-weight: normal;
+      font-weight: 400;
+      white-space: nowrap;
     }
 
     th {
       background: #fff;
       color: #000;
-      font-weight: normal;
+      font-size: 21px;
     }
 
     .total-row td {
       background: #fff;
       color: #000;
-      font-weight: normal;
+      font-size: 21px;
+      font-weight: 400;
     }
 
     .day-separator td {
-      height: 15px;
+      height: 16px;
       padding: 0;
       background: #000;
       border: none;
@@ -61,143 +93,309 @@
 
     button {
       width: 100%;
+      height: 46px;
       margin-top: 30px;
-      padding: 8px;
-      font-size: 18px;
-      font-weight: normal;
-      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
       border: none;
-      border-radius: 10px;
+      border-radius: 7px;
       cursor: pointer;
-      background: #FFC000;
-      color: #000000;
+      background: #ffc000;
+      color: #000;
+      font-size: 20px;
+      font-weight: 400;
     }
+
+    button:hover {
+      filter: brightness(0.95);
+    }
+
+    @media (max-width: 700px) {
+
+      .container {
+        width: 94%;
+        margin: 24px auto 35px;
+      }
+
+      h1 {
+        font-size: 44px;
+        margin-bottom: 28px;
+      }
+
+      table {
+        font-size: 18px;
+      }
+
+      th {
+        font-size: 19px;
+      }
+
+      .total-row td {
+        font-size: 19px;
+      }
+
+      th,
+      td {
+        padding: 10px 8px;
+      }
+
+      button {
+        height: 46px;
+        font-size: 20px;
+      }
+
+    }
+
   </style>
 </head>
 
+
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <h1>SALES ANALYTICS</h1>
-
-  <table>
-
-    <thead>
-      <tr>
-        <th>DATE</th>
-        <th>CATEGORY</th>
-        <th>UNITS</th>
-        <th>AMOUNT</th>
-      </tr>
-    </thead>
-
-    <tbody id="salesData"></tbody>
-
-  </table>
-
-  <button onclick="window.location.href='HOME.html'">
-    BACK
-  </button>
-
-</div>
+    <h1>SALES ANALYTICS</h1>
 
 
-<script>
+    <div class="table-wrap">
 
-function loadAnalytics(data) {
+      <table>
 
-  const table = document.getElementById('salesData');
+        <thead>
 
-  table.innerHTML = '';
+          <tr>
+            <th>DATE</th>
+            <th>CATEGORY</th>
+            <th>UNITS</th>
+            <th>AMOUNT</th>
+          </tr>
 
-  const days = {};
+        </thead>
 
-  data.forEach(item => {
 
-    const date =
-      new Date(item.date).toLocaleDateString('en-GB');
+        <tbody id="salesData"></tbody>
 
-    if (!days[date]) {
-      days[date] = [];
+      </table>
+
+    </div>
+
+
+    <button onclick="window.location.href='HOME.html'">
+      BACK
+    </button>
+
+  </div>
+
+
+
+  <script>
+
+    function loadAnalytics(data) {
+
+      const table =
+        document.getElementById(
+          'salesData'
+        );
+
+
+      table.innerHTML =
+        '';
+
+
+      const days =
+        {};
+
+
+      data.forEach(
+        item => {
+
+
+          const date =
+            new Date(
+              item.date
+            )
+            .toLocaleDateString(
+              'en-GB'
+            );
+
+
+          if (
+            !days[date]
+          ) {
+
+            days[date] =
+              [];
+
+          }
+
+
+          days[date].push(
+            item
+          );
+
+        }
+      );
+
+
+
+      Object.keys(
+        days
+      )
+      .forEach(
+        date => {
+
+
+          const items =
+            days[date];
+
+
+          let totalQuantity =
+            0;
+
+
+          let totalAmount =
+            0;
+
+
+
+          items.forEach(
+            item => {
+
+
+              totalQuantity +=
+                Number(
+                  item.quantity
+                );
+
+
+              totalAmount +=
+                Number(
+                  item.amount
+                );
+
+
+              let category =
+                item.category;
+
+
+              if (
+                category === 'БРЮКИ'
+              ) {
+                category = 'PANTS';
+              }
+
+
+              if (
+                category === 'ПОЛО'
+              ) {
+                category = 'POLO';
+              }
+
+
+              if (
+                category === 'ОБУВЬ'
+              ) {
+                category = 'SHOES';
+              }
+
+
+              if (
+                category ===
+                'СПОРТ КОСТЮМ'
+              ) {
+                category =
+                  'SPORT SUIT';
+              }
+
+
+
+              const row =
+                document.createElement(
+                  'tr'
+                );
+
+
+              row.innerHTML = `
+                <td>${date}</td>
+                <td>${category}</td>
+                <td>${item.quantity}</td>
+                <td>${Number(item.amount).toFixed(2)} ₼</td>
+              `;
+
+
+              table.appendChild(
+                row
+              );
+
+            }
+          );
+
+
+
+          const totalRow =
+            document.createElement(
+              'tr'
+            );
+
+
+          totalRow.className =
+            'total-row';
+
+
+          totalRow.innerHTML = `
+            <td>${date}</td>
+            <td>${items.length}</td>
+            <td>${totalQuantity}</td>
+            <td>${totalAmount.toFixed(2)} ₼</td>
+          `;
+
+
+          table.appendChild(
+            totalRow
+          );
+
+
+
+          const separator =
+            document.createElement(
+              'tr'
+            );
+
+
+          separator.className =
+            'day-separator';
+
+
+          separator.innerHTML = `
+            <td colspan="4"></td>
+          `;
+
+
+          table.appendChild(
+            separator
+          );
+
+        }
+      );
+
     }
 
-    days[date].push(item);
-
-  });
 
 
-  Object.keys(days).forEach(date => {
-
-    const items = days[date];
-
-    let totalQuantity = 0;
-    let totalAmount = 0;
+    const script =
+      document.createElement(
+        'script'
+      );
 
 
-    items.forEach(item => {
-
-      totalQuantity += Number(item.quantity);
-      totalAmount += Number(item.amount);
-
-      let category = item.category;
-
-      if (category === 'БРЮКИ') category = 'PANTS';
-      if (category === 'ПОЛО') category = 'POLO';
-      if (category === 'ОБУВЬ') category = 'SHOES';
-      if (category === 'СПОРТ КОСТЮМ') category = 'SPORT SUIT';
-
-      const row = document.createElement('tr');
-
-      row.innerHTML = `
-        <td>${date}</td>
-        <td>${category}</td>
-        <td>${item.quantity}</td>
-        <td>${Number(item.amount).toFixed(2)} ₼</td>
-      `;
-
-      table.appendChild(row);
-
-    });
+    script.src =
+      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=analytics&callback=loadAnalytics';
 
 
-    const totalRow = document.createElement('tr');
+    document.body.appendChild(
+      script
+    );
 
-    totalRow.className = 'total-row';
-
-    totalRow.innerHTML = `
-      <td>${date}</td>
-      <td>${items.length}</td>
-      <td>${totalQuantity}</td>
-      <td>${totalAmount.toFixed(2)} ₼</td>
-    `;
-
-    table.appendChild(totalRow);
-
-
-    const separator = document.createElement('tr');
-
-    separator.className = 'day-separator';
-
-    separator.innerHTML = `
-      <td colspan="4"></td>
-    `;
-
-    table.appendChild(separator);
-
-  });
-
-}
-
-
-const script = document.createElement('script');
-
-script.src =
-  'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=analytics&callback=loadAnalytics';
-
-document.body.appendChild(script);
-
-</script>
+  </script>
 
 </body>
+
 </html>
