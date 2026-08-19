@@ -2,15 +2,16 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>СТОК</title>
+  <title>STOCK</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
       background: #000;
       color: #fff;
       min-height: 100vh;
+      font-weight: normal;
     }
 
     .container {
@@ -22,6 +23,7 @@
     h1 {
       text-align: center;
       margin-bottom: 30px;
+      font-weight: normal;
     }
 
     table {
@@ -29,17 +31,20 @@
       border-collapse: collapse;
       background: #111;
       font-size: 14px;
+      font-weight: normal;
     }
 
     th, td {
       padding: 8px;
       border: 1px solid #444;
       text-align: center;
+      font-weight: normal;
     }
 
     th {
       background: #fff;
       color: #000;
+      font-weight: normal;
     }
 
     button {
@@ -47,12 +52,13 @@
       margin-top: 30px;
       padding: 8px;
       font-size: 18px;
-      font-weight: bold;
+      font-weight: normal;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       background: #FFC000;
       color: #000000;
+      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
     }
   </style>
 </head>
@@ -61,22 +67,22 @@
 
 <div class="container">
 
-  <h1>СТОК</h1>
+  <h1>STOCK</h1>
 
   <table>
     <thead>
       <tr>
-        <th>КАТЕГОРИЯ</th>
-        <th>ПРИХОД</th>
-        <th>ЦЕНА ЗАКУПА</th>
-        <th>СУММА ПРИХОДА</th>
-        <th>ПРОДАНО</th>
-        <th>ЦЕНА ПРОДАЖИ</th>
-        <th>ФАКТ. ЦЕНА ПРОДАЖИ</th>
-        <th>СУММА ПРОДАЖ</th>
-        <th>ОСТАТОК</th>
-        <th>СУММА ОСТАТКА</th>
-        <th>ДОХОД</th>
+        <th>CATEGORY</th>
+        <th>INCOMING</th>
+        <th>PURCHASE PRICE</th>
+        <th>TOTAL INCOMING</th>
+        <th>SOLD UNITS</th>
+        <th>SELL PRICE</th>
+        <th>ACTUAL SELL PRICE</th>
+        <th>TOTAL SALES</th>
+        <th>BALANCE</th>
+        <th>TOTAL BALANCE</th>
+        <th>PROFIT</th>
       </tr>
     </thead>
 
@@ -85,64 +91,82 @@
   </table>
 
   <button onclick="window.location.href='HOME.html'">
-    ОБРАТНО
+    BACK
   </button>
 
 </div>
+
 <script>
+
 function loadStock(data) {
 
   const table = document.getElementById('stockData');
   table.innerHTML = '';
-let totalIncoming = 0;
-let totalIncomingAmount = 0;
-let totalSold = 0;
-let totalSalesAmount = 0;
-let totalRemaining = 0;
-let totalRemainingAmount = 0;
-let totalProfit = 0;
+
+  let totalIncoming = 0;
+  let totalIncomingAmount = 0;
+  let totalSold = 0;
+  let totalSalesAmount = 0;
+  let totalRemaining = 0;
+  let totalRemainingAmount = 0;
+  let totalProfit = 0;
+
   data.forEach(item => {
 
     const row = document.createElement('tr');
 
- row.innerHTML = `
-   <td>${item.category}</td>
-  <td>${item.incoming}</td>
-  <td>${Number(item.purchasePrice).toFixed(2)} ₼</td>
-  <td>${Number(item.incomingAmount).toFixed(2)} ₼</td>
-  <td>${item.sold}</td>
-  <td>${Number(item.salePrice).toFixed(2)} ₼</td>
-  <td>${item.sold > 0 ? (Number(item.salesAmount) / Number(item.sold)).toFixed(2) : '0.00'} ₼</td>
-  <td>${Number(item.salesAmount).toFixed(2)} ₼</td>
-  <td>${item.remaining}</td>
-  <td>${Number(item.remainingAmount).toFixed(2)} ₼</td>
-  <td>${Number(item.profit).toFixed(2)} ₼</td>
-`;
+    let category = item.category;
+
+    if (category === 'БРЮКИ') category = 'PANTS';
+    if (category === 'ПОЛО') category = 'POLO';
+    if (category === 'ОБУВЬ') category = 'SHOES';
+    if (category === 'СПОРТ КОСТЮМ') category = 'SPORT SUIT';
+
+    row.innerHTML = `
+      <td>${category}</td>
+      <td>${item.incoming}</td>
+      <td>${Number(item.purchasePrice).toFixed(2)} ₼</td>
+      <td>${Number(item.incomingAmount).toFixed(2)} ₼</td>
+      <td>${item.sold}</td>
+      <td>${Number(item.salePrice).toFixed(2)} ₼</td>
+      <td>${item.sold > 0 ? (Number(item.salesAmount) / Number(item.sold)).toFixed(2) : '0.00'} ₼</td>
+      <td>${Number(item.salesAmount).toFixed(2)} ₼</td>
+      <td>${item.remaining}</td>
+      <td>${Number(item.remainingAmount).toFixed(2)} ₼</td>
+      <td>${Number(item.profit).toFixed(2)} ₼</td>
+    `;
+
     table.appendChild(row);
+
     totalIncoming += Number(item.incoming);
-totalIncomingAmount += Number(item.incomingAmount);
-totalSold += Number(item.sold);
-totalSalesAmount += Number(item.salesAmount);
-totalRemaining += Number(item.remaining);
-totalRemainingAmount += Number(item.remainingAmount);
-totalProfit += Number(item.profit);
+    totalIncomingAmount += Number(item.incomingAmount);
+    totalSold += Number(item.sold);
+    totalSalesAmount += Number(item.salesAmount);
+    totalRemaining += Number(item.remaining);
+    totalRemainingAmount += Number(item.remainingAmount);
+    totalProfit += Number(item.profit);
+
   });
- const totalRow = document.createElement('tr');
-totalRow.style.backgroundColor = '#ffffff';
-totalRow.style.color = '#000000';
-totalRow.innerHTML = `
-     <td><strong>ИТОГО</strong></td>
-  <td><strong>${totalIncoming}</strong></td>
-  <td>—</td>
-  <td><strong>${totalIncomingAmount.toFixed(2)} ₼</strong></td>
-  <td><strong>${totalSold}</strong></td>
-  <td>—</td>
-  <td>—</td>
-  <td><strong>${totalSalesAmount.toFixed(2)} ₼</strong></td>
-  <td><strong>${totalRemaining}</strong></td>
-  <td><strong>${totalRemainingAmount.toFixed(2)} ₼</strong></td>
-  <td><strong>${totalProfit.toFixed(2)} ₼</strong></td>
-`;
+
+  const totalRow = document.createElement('tr');
+
+  totalRow.style.backgroundColor = '#ffffff';
+  totalRow.style.color = '#000000';
+  totalRow.style.fontWeight = 'normal';
+
+  totalRow.innerHTML = `
+    <td>TOTAL</td>
+    <td>${totalIncoming}</td>
+    <td>—</td>
+    <td>${totalIncomingAmount.toFixed(2)} ₼</td>
+    <td>${totalSold}</td>
+    <td>—</td>
+    <td>—</td>
+    <td>${totalSalesAmount.toFixed(2)} ₼</td>
+    <td>${totalRemaining}</td>
+    <td>${totalRemainingAmount.toFixed(2)} ₼</td>
+    <td>${totalProfit.toFixed(2)} ₼</td>
+  `;
 
   table.appendChild(totalRow);
 }
@@ -153,6 +177,8 @@ script.src =
   'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=stock&callback=loadStock';
 
 document.body.appendChild(script);
+
 </script>
+
 </body>
 </html>
