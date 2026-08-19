@@ -141,6 +141,44 @@
       height: 40px;
     }
 
+    .search-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-actions .small-button {
+      flex: 1;
+    }
+
+    .clear-search-button {
+      display: flex;
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #8fd14f;
+      cursor: pointer;
+    }
+
+    .clear-search-button svg {
+      width: 34px;
+      height: 34px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .clear-search-button:hover {
+      filter: brightness(1.18);
+    }
+
     #productInfo {
       display: none;
       min-height: 40px;
@@ -349,13 +387,30 @@
           autocomplete="off"
         >
 
-        <button
-          id="searchBtn"
-          class="small-button"
-          type="button"
-        >
-          SEARCH BARCODE
-        </button>
+        <div class="search-actions">
+
+          <button
+            id="searchBtn"
+            class="small-button"
+            type="button"
+          >
+            SEARCH BARCODE
+          </button>
+
+          <button
+            id="clearSearchBtn"
+            class="clear-search-button"
+            type="button"
+            aria-label="Clear search message"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M20 7V3l-2 2a8 8 0 0 0-13 3"/>
+              <path d="M4 17v4l2-2a8 8 0 0 0 13-3"/>
+              <path d="M20 3h-4M4 21h4"/>
+            </svg>
+          </button>
+
+        </div>
 
       </div>
 
@@ -461,6 +516,9 @@
 
     const searchBtn =
       document.getElementById('searchBtn');
+
+    const clearSearchBtn =
+      document.getElementById('clearSearchBtn');
 
     const addBtn =
       document.getElementById('addBtn');
@@ -577,6 +635,23 @@
         Date.now();
 
       document.body.appendChild(script);
+    }
+
+
+    function clearSearchMessage() {
+      currentProduct = null;
+
+      productInfo.textContent = '';
+      productInfo.style.display = 'none';
+
+      addBtn.style.display = 'none';
+
+      barcodeInput.value = '';
+
+      searchBtn.disabled = false;
+      searchBtn.textContent = 'SEARCH BARCODE';
+
+      barcodeInput.focus();
     }
 
 
@@ -872,6 +947,12 @@
     searchBtn.addEventListener(
       'click',
       searchBarcode
+    );
+
+
+    clearSearchBtn.addEventListener(
+      'click',
+      clearSearchMessage
     );
 
 
