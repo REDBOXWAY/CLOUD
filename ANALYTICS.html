@@ -2,15 +2,16 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Аналитика продаж</title>
+  <title>SALES ANALYTICS</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
       background: #000;
       color: #fff;
       min-height: 100vh;
+      font-weight: normal;
     }
 
     .container {
@@ -22,29 +23,33 @@
     h1 {
       text-align: center;
       margin-bottom: 40px;
+      font-weight: normal;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       background: #111;
+      font-weight: normal;
     }
 
     th, td {
       padding: 8px;
       border: 1px solid #444;
       text-align: center;
+      font-weight: normal;
     }
 
     th {
       background: #fff;
       color: #000;
+      font-weight: normal;
     }
 
     .total-row td {
       background: #fff;
       color: #000;
-      font-weight: bold;
+      font-weight: normal;
     }
 
     .day-separator td {
@@ -59,7 +64,8 @@
       margin-top: 30px;
       padding: 8px;
       font-size: 18px;
-      font-weight: bold;
+      font-weight: normal;
+      font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
       border: none;
       border-radius: 10px;
       cursor: pointer;
@@ -73,16 +79,16 @@
 
 <div class="container">
 
-  <h1>АНАЛИТИКА ПРОДАЖ</h1>
+  <h1>SALES ANALYTICS</h1>
 
   <table>
 
     <thead>
       <tr>
-        <th>ДАТА</th>
-        <th>КАТЕГОРИЯ</th>
-        <th>КОЛ-ВО</th>
-        <th>СУММА</th>
+        <th>DATE</th>
+        <th>CATEGORY</th>
+        <th>QUANTITY</th>
+        <th>AMOUNT</th>
       </tr>
     </thead>
 
@@ -91,7 +97,7 @@
   </table>
 
   <button onclick="window.location.href='HOME.html'">
-    ОБРАТНО
+    BACK
   </button>
 
 </div>
@@ -105,13 +111,12 @@ function loadAnalytics(data) {
 
   table.innerHTML = '';
 
-  // ГРУППИРУЕМ ПОЛУЧЕННЫЕ ДАННЫЕ ПО ДНЯМ
   const days = {};
 
   data.forEach(item => {
 
     const date =
-      new Date(item.date).toLocaleDateString('ru-RU');
+      new Date(item.date).toLocaleDateString('en-GB');
 
     if (!days[date]) {
       days[date] = [];
@@ -122,7 +127,6 @@ function loadAnalytics(data) {
   });
 
 
-  // ВЫВОДИМ КАЖДЫЙ ДЕНЬ
   Object.keys(days).forEach(date => {
 
     const items = days[date];
@@ -131,19 +135,25 @@ function loadAnalytics(data) {
     let totalAmount = 0;
 
 
-    // КАТЕГОРИИ ЭТОГО ДНЯ
     items.forEach(item => {
 
       totalQuantity += Number(item.quantity);
       totalAmount += Number(item.amount);
 
+      let category = item.category;
+
+      if (category === 'БРЮКИ') category = 'PANTS';
+      if (category === 'ПОЛО') category = 'POLO';
+      if (category === 'ОБУВЬ') category = 'SHOES';
+      if (category === 'СПОРТ КОСТЮМ') category = 'SPORT SUIT';
+
       const row = document.createElement('tr');
 
       row.innerHTML = `
         <td>${date}</td>
-        <td>${item.category}</td>
+        <td>${category}</td>
         <td>${item.quantity}</td>
-        <td>${Number(item.amount).toFixed(2)}</td>
+        <td>${Number(item.amount).toFixed(2)} ₼</td>
       `;
 
       table.appendChild(row);
@@ -151,7 +161,6 @@ function loadAnalytics(data) {
     });
 
 
-    // ИТОГО ЗА ЭТОТ ДЕНЬ
     const totalRow = document.createElement('tr');
 
     totalRow.className = 'total-row';
@@ -160,13 +169,12 @@ function loadAnalytics(data) {
       <td>${date}</td>
       <td>${items.length}</td>
       <td>${totalQuantity}</td>
-      <td>${totalAmount.toFixed(2)}</td>
+      <td>${totalAmount.toFixed(2)} ₼</td>
     `;
 
     table.appendChild(totalRow);
 
 
-    // ПРОМЕЖУТОК МЕЖДУ ДНЯМИ
     const separator = document.createElement('tr');
 
     separator.className = 'day-separator';
@@ -181,8 +189,6 @@ function loadAnalytics(data) {
 
 }
 
-
-// ЗАГРУЗКА ДАННЫХ ИЗ GOOGLE SHEETS
 
 const script = document.createElement('script');
 
