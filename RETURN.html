@@ -80,19 +80,20 @@
     .date-input {
       width: 160px;
     }
-    .date-input,
-.text-input {
-  border: 1px solid #000;
-  outline: none;
-  box-shadow: none;
-}
 
-.date-input:focus,
-.text-input:focus {
-  border: 1px solid #000;
-  outline: none;
-  box-shadow: none;
-}
+    .date-input,
+    .text-input {
+      border: 1px solid #000;
+      outline: none;
+      box-shadow: none;
+    }
+
+    .date-input:focus,
+    .text-input:focus {
+      border: 1px solid #000;
+      outline: none;
+      box-shadow: none;
+    }
 
     .date-label,
     .field-label {
@@ -159,13 +160,13 @@
       display: none;
     }
 
-.list-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 24px 4px 9px;
-  font-size: 13px;
-  font-weight: 700;
-}
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      margin: 24px 4px 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
 
     #returnList {
       display: none;
@@ -222,19 +223,21 @@
     }
 
     .success {
-  display: block !important;
-  background: transparent;
-  color: #8fd14f;
-  font-weight: 700;
-  border: none !important;
-  padding: 0 !important;
-}
-      
-  
+      display: block !important;
+      background: transparent;
+      color: #8fd14f;
+      font-weight: 700;
+      border: none !important;
+      padding: 0 !important;
+    }
 
     .error {
       display: block !important;
-      background: red;
+      background: transparent;
+      color: red;
+      font-weight: 700;
+      border: none !important;
+      padding: 0 !important;
     }
 
     .table-wrap {
@@ -482,63 +485,50 @@
 
     function loadProduct(data) {
       searchBtn.disabled = false;
-
-      searchBtn.textContent =
-        'SEARCH BARCODE';
+      searchBtn.textContent = 'SEARCH BARCODE';
 
       if (!data) {
         currentProduct = null;
 
-        productInfo.style.display =
-          'flex';
+        productInfo.style.display = 'flex';
+        productInfo.style.background = 'transparent';
+        productInfo.style.color = 'red';
+        productInfo.style.border = 'none';
+        productInfo.style.fontWeight = '700';
+        productInfo.textContent = 'BARCODE NOT FOUND';
 
-        productInfo.style.background =
-          'red';
-
-        productInfo.textContent =
-          'BARCODE NOT FOUND';
-
-        addBtn.style.display =
-          'none';
+        addBtn.style.display = 'none';
 
         return;
       }
 
       currentProduct = data;
 
-      productInfo.style.display =
-        'flex';
+      productInfo.style.display = 'flex';
+      productInfo.style.background = '#fff';
+      productInfo.style.color = '#000';
+      productInfo.style.border = '1px solid #ffc000';
+      productInfo.style.fontWeight = 'normal';
+      productInfo.textContent = data.article;
 
-      productInfo.style.background =
-        '#fff';
-
-      productInfo.textContent =
-        data.article;
-
-      addBtn.style.display =
-        'block';
+      addBtn.style.display = 'block';
     }
 
 
     function lookupError() {
       searchBtn.disabled = false;
-
-      searchBtn.textContent =
-        'SEARCH BARCODE';
+      searchBtn.textContent = 'SEARCH BARCODE';
 
       currentProduct = null;
 
-      productInfo.style.display =
-        'flex';
+      productInfo.style.display = 'flex';
+      productInfo.style.background = 'transparent';
+      productInfo.style.color = 'red';
+      productInfo.style.border = 'none';
+      productInfo.style.fontWeight = '700';
+      productInfo.textContent = 'CONNECTION ERROR';
 
-      productInfo.style.background =
-        'red';
-
-      productInfo.textContent =
-        'CONNECTION ERROR';
-
-      addBtn.style.display =
-        'none';
+      addBtn.style.display = 'none';
     }
 
 
@@ -552,23 +542,17 @@
 
       currentProduct = null;
 
-      productInfo.style.display =
-        'flex';
+      productInfo.style.display = 'flex';
+      productInfo.style.background = 'transparent';
+      productInfo.style.color = '#8fd14f';
+      productInfo.style.border = 'none';
+      productInfo.style.fontWeight = '700';
+      productInfo.textContent = 'SEARCHING...';
 
-      productInfo.style.background =
-        '#fff';
+      addBtn.style.display = 'none';
 
-      productInfo.textContent =
-        'SEARCHING...';
-
-      addBtn.style.display =
-        'none';
-
-      searchBtn.disabled =
-        true;
-
-      searchBtn.textContent =
-        'SEARCHING...';
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'SEARCHING...';
 
       const oldScript =
         document.getElementById(
@@ -580,15 +564,10 @@
       }
 
       const script =
-        document.createElement(
-          'script'
-        );
+        document.createElement('script');
 
-      script.id =
-        'productLookup';
-
-      script.onerror =
-        lookupError;
+      script.id = 'productLookup';
+      script.onerror = lookupError;
 
       script.src =
         BACKEND_URL +
@@ -597,9 +576,7 @@
         '&callback=loadProduct&_=' +
         Date.now();
 
-      document.body.appendChild(
-        script
-      );
+      document.body.appendChild(script);
     }
 
 
@@ -624,8 +601,7 @@
       } else {
         returnList.push({
           barcode: barcode,
-          article:
-            currentProduct.article,
+          article: currentProduct.article,
           unit: 1,
           amount: ''
         });
@@ -633,17 +609,11 @@
 
       renderReturnList();
 
-      barcodeInput.value =
-        '';
+      barcodeInput.value = '';
+      productInfo.style.display = 'none';
+      addBtn.style.display = 'none';
 
-      productInfo.style.display =
-        'none';
-
-      addBtn.style.display =
-        'none';
-
-      currentProduct =
-        null;
+      currentProduct = null;
 
       barcodeInput.focus();
     }
@@ -665,24 +635,18 @@
           ? 'block'
           : 'none';
 
-      itemsBox.innerHTML =
-        '';
+      itemsBox.innerHTML = '';
 
       returnList.forEach(
         (item, index) => {
 
           const row =
-            document.createElement(
-              'div'
-            );
+            document.createElement('div');
 
-          row.className =
-            'return-item';
+          row.className = 'return-item';
 
           const description =
-            document.createElement(
-              'div'
-            );
+            document.createElement('div');
 
           description.className =
             'return-description';
@@ -691,27 +655,14 @@
             item.article;
 
           const unit =
-            document.createElement(
-              'input'
-            );
+            document.createElement('input');
 
-          unit.type =
-            'number';
-
-          unit.min =
-            '1';
-
-          unit.step =
-            '1';
-
-          unit.placeholder =
-            'UNIT';
-
-          unit.className =
-            'unit-input';
-
-          unit.value =
-            item.unit;
+          unit.type = 'number';
+          unit.min = '1';
+          unit.step = '1';
+          unit.placeholder = 'UNIT';
+          unit.className = 'unit-input';
+          unit.value = item.unit;
 
           unit.addEventListener(
             'input',
@@ -722,27 +673,14 @@
           );
 
           const amount =
-            document.createElement(
-              'input'
-            );
+            document.createElement('input');
 
-          amount.type =
-            'number';
-
-          amount.min =
-            '0.01';
-
-          amount.step =
-            '0.01';
-
-          amount.placeholder =
-            'AMOUNT';
-
-          amount.className =
-            'amount-input';
-
-          amount.value =
-            item.amount;
+          amount.type = 'number';
+          amount.min = '0.01';
+          amount.step = '0.01';
+          amount.placeholder = 'AMOUNT';
+          amount.className = 'amount-input';
+          amount.value = item.amount;
 
           amount.addEventListener(
             'input',
@@ -755,18 +693,11 @@
           );
 
           const remove =
-            document.createElement(
-              'button'
-            );
+            document.createElement('button');
 
-          remove.type =
-            'button';
-
-          remove.className =
-            'remove-button';
-
-          remove.textContent =
-            'REMOVE';
+          remove.type = 'button';
+          remove.className = 'remove-button';
+          remove.textContent = 'REMOVE';
 
           remove.addEventListener(
             'click',
@@ -780,25 +711,12 @@
             }
           );
 
-          row.appendChild(
-            description
-          );
+          row.appendChild(description);
+          row.appendChild(unit);
+          row.appendChild(amount);
+          row.appendChild(remove);
 
-          row.appendChild(
-            unit
-          );
-
-          row.appendChild(
-            amount
-          );
-
-          row.appendChild(
-            remove
-          );
-
-          itemsBox.appendChild(
-            row
-          );
+          itemsBox.appendChild(row);
         }
       );
 
@@ -811,17 +729,12 @@
         returnList.reduce(
           (sum, item) =>
             sum +
-            (
-              Number(item.amount) ||
-              0
-            ),
+            (Number(item.amount) || 0),
           0
         );
 
       document
-        .getElementById(
-          'returnTotal'
-        )
+        .getElementById('returnTotal')
         .textContent =
           'RETURN TOTAL: ' +
           total.toFixed(2) +
@@ -829,15 +742,9 @@
     }
 
 
-    function showMessage(
-      text,
-      type
-    ) {
-      message.textContent =
-        text;
-
-      message.className =
-        type;
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = type;
     }
 
 
@@ -847,8 +754,7 @@
           'returnData'
         );
 
-      table.innerHTML =
-        '';
+      table.innerHTML = '';
 
       if (
         !Array.isArray(data) ||
@@ -868,9 +774,7 @@
         item => {
 
           const row =
-            document.createElement(
-              'tr'
-            );
+            document.createElement('tr');
 
           const rawDate =
             item.date || '';
@@ -940,12 +844,9 @@
       }
 
       const script =
-        document.createElement(
-          'script'
-        );
+        document.createElement('script');
 
-      script.id =
-        'returnHistory';
+      script.id = 'returnHistory';
 
       script.src =
         BACKEND_URL +
@@ -954,9 +855,7 @@
         '&_=' +
         Date.now();
 
-      document.body.appendChild(
-        script
-      );
+      document.body.appendChild(script);
     }
 
 
@@ -1048,26 +947,17 @@
               'sendBtn'
             );
 
-          sendBtn.disabled =
-            true;
+          sendBtn.disabled = true;
+          sendBtn.textContent = 'SENDING...';
 
-          sendBtn.textContent =
-            'SENDING...';
-
-          message.style.display =
-            'none';
-
-          message.className =
-            '';
+          message.style.display = 'none';
+          message.className = '';
 
           const itemsToSend =
             returnList.map(
               item => ({
-                barcode:
-                  item.barcode,
-
-                article:
-                  item.article,
+                barcode: item.barcode,
+                article: item.article,
 
                 quantity:
                   -Math.abs(
@@ -1088,11 +978,8 @@
 
               body:
                 new URLSearchParams({
-                  action:
-                    'purchaseList',
-
-                  date:
-                    dateInput.value,
+                  action: 'purchaseList',
+                  date: dateInput.value,
 
                   items:
                     JSON.stringify(
@@ -1133,9 +1020,7 @@
               addBtn.style.display =
                 'none';
 
-              barcodeInput.value =
-                '';
-
+              barcodeInput.value = '';
               barcodeInput.focus();
 
               loadReturnHistory();
@@ -1154,9 +1039,7 @@
 
           .finally(
             () => {
-              sendBtn.disabled =
-                false;
-
+              sendBtn.disabled = false;
               sendBtn.textContent =
                 'SEND RETURN';
             }
