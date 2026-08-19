@@ -15,7 +15,18 @@
       color: #000;
       font-family: "Arial Nova Cond", "Arial Narrow", Arial, sans-serif;
     }
+/* УБРАТЬ СТРЕЛКИ В ENTER AMOUNT */
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
     .page {
       width: 92%;
       max-width: 1200px;
@@ -183,7 +194,7 @@
       border: 1px solid #123047;
       border-radius: 7px;
       background: red;
-      color: white;
+      color: black;
       cursor: pointer;
       font-size: 13px;
     }
@@ -685,7 +696,7 @@ function renderPurchaseList() {
 
 
       amount.step =
-        '0.01';
+        '1';
 
 
       amount.placeholder =
