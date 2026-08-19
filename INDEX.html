@@ -3,8 +3,11 @@
 <head>
   <base target="_top">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -46,7 +49,7 @@
       font-size: 14px;
     }
 
-    input, select {
+    input {
       width: 100%;
       padding: 14px;
       border: 1px solid #ccc;
@@ -83,113 +86,229 @@
 
     .success {
       display: block !important;
-      background: #e7f7e9;
-      color: #176b2c;
+      background: green;
+      color: white;
     }
 
     .error {
       display: block !important;
-      background: #fde8e8;
-      color: #a11;
+      background: red;
+      color: white;
     }
   </style>
 </head>
 
+
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>CLOUD DRIVE</h1>
-      <div class="subtitle">DATA ENTRY</div>
 
-      <form id="form">
-        <label for="date">1. ВЫБЕРИ ДАТУ</label>
-        <input id="date" type="date" required>
-        <label for="barcode">2. ENTER BARCODE</label>
-<input id="barcode" type="text" placeholder="ENTER BARCODE">
-<button
-  id="searchBarcodeBtn"
-  type="button"
-  onclick="searchBarcode()"
-  style="
-    margin-top:10px;
-    background:#111;
-    color:#fff;
-  "
->
-  SEARCH
-</button>
-<div id="productInfo" style="
-  margin-top:10px;
-  padding:10px;
-  background:#111;
-  color:#fff;
-  border-radius:8px;
-  text-align:center;
-  font-weight:bold;
-  display:none;
-"></div>
-        <button
-  id="addToListBtn"
-  type="button"
-  onclick="addToList()"
-  style="display:none; margin-top:10px; background:#FFC000; color:#000;"
->
-  ADD TO LIST
-</button>
-       <div id="purchaseList" style="
-  margin-top:15px;
-  display:none;
-">
-  <div style="
-    font-weight:bold;
-    margin-bottom:8px;
-  ">
-    PURCHASE LIST
-  </div>
+<div class="container">
 
-  <div id="purchaseItems"></div>
-</div> 
+  <div class="card">
 
-     
+    <h1>CLOUD DRIVE</h1>
 
-        
-
-
-
-        <button id="submitBtn" type="submit">ОТПРАВИТЬ</button>
-
-        <button type="button" onclick="goHome()">
-  ОБРАТНО
-</button>
-
-        <div id="message"></div>
-      </form>
+    <div class="subtitle">
+      DATA ENTRY
     </div>
+
+
+    <form id="form">
+
+
+      <!-- DATE -->
+
+      <label for="date">
+        1. ВЫБЕРИ ДАТУ
+      </label>
+
+      <input
+        id="date"
+        type="date"
+        required
+      >
+
+
+      <!-- BARCODE -->
+
+      <label for="barcode">
+        2. ENTER BARCODE
+      </label>
+
+      <input
+        id="barcode"
+        type="text"
+        placeholder="ENTER BARCODE"
+      >
+
+
+      <!-- SEARCH -->
+
+      <button
+        id="searchBarcodeBtn"
+        type="button"
+        onclick="searchBarcode()"
+        style="
+          margin-top:10px;
+          background:#111;
+          color:#fff;
+        "
+      >
+        SEARCH
+      </button>
+
+
+      <!-- PRODUCT FOUND / NOT FOUND -->
+
+      <div
+        id="productInfo"
+        style="
+          margin-top:10px;
+          padding:10px;
+          background:#111;
+          color:#fff;
+          border-radius:8px;
+          text-align:center;
+          font-weight:bold;
+          display:none;
+        "
+      ></div>
+
+
+      <!-- ADD TO LIST -->
+
+      <button
+        id="addToListBtn"
+        type="button"
+        onclick="addToList()"
+        style="
+          display:none;
+          margin-top:10px;
+          background:#FFC000;
+          color:#000;
+        "
+      >
+        ADD TO LIST
+      </button>
+
+
+      <!-- PURCHASE LIST -->
+
+      <div
+        id="purchaseList"
+        style="
+          margin-top:15px;
+          display:none;
+        "
+      >
+
+        <div
+          style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-weight:bold;
+            margin-bottom:8px;
+          "
+        >
+
+          <span>
+            PURCHASE LIST
+          </span>
+
+          <span id="totalAmount">
+            TOTAL: 0.00 ₼
+          </span>
+
+        </div>
+
+        <div id="purchaseItems"></div>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+
+      <button
+        id="submitBtn"
+        type="submit"
+      >
+        ОТПРАВИТЬ
+      </button>
+
+
+      <!-- BACK -->
+
+      <button
+        type="button"
+        onclick="goHome()"
+      >
+        ОБРАТНО
+      </button>
+
+
+      <div id="message"></div>
+
+
+    </form>
+
   </div>
+
+</div>
+
+
 
 <script>
-  let currentProduct = null;
-  function loadProduct(data) {
+
+let currentProduct = null;
+
+let purchaseList = [];
+
+
+
+/* ==========================================
+   PRODUCT FOUND
+========================================== */
+
+function loadProduct(data) {
+
   currentProduct = data;
 
-  const info = document.getElementById('productInfo');
-  
-  const addBtn = document.getElementById('addToListBtn');
+  const info =
+    document.getElementById('productInfo');
+
+  const addBtn =
+    document.getElementById('addToListBtn');
+
+
+  /* NOT FOUND */
 
   if (!data) {
+
     currentProduct = null;
+
     info.style.display = 'block';
+
     info.style.background = 'red';
+
     info.style.color = 'white';
-    info.textContent = 'BARCODE NOT FOUND';
-    
+
+    info.textContent =
+      'BARCODE NOT FOUND';
+
     addBtn.style.display = 'none';
+
     return;
   }
 
+
+  /* FOUND */
+
   info.style.display = 'block';
+
   info.style.background = 'green';
+
   info.style.color = 'white';
+
   info.textContent =
     data.product + ' - ' +
     data.size + ' - ' +
@@ -197,244 +316,741 @@
     data.brand + ' - ' +
     data.gender;
 
-  
+
   addBtn.style.display = 'block';
 }
-let purchaseList = [];
 
-function addToList() {
 
-  const info = document.getElementById('productInfo');
-  const barcode = currentProduct
-  ? String(currentProduct.barcode).trim()
-  : '';
-  const productText = info.textContent.trim();
 
-  if (!barcode || !productText || productText === 'BARCODE NOT FOUND') {
-    return;
-  }
+/* ==========================================
+   SEARCH BARCODE
+========================================== */
 
-  const existing = purchaseList.find(item => item.barcode === barcode);
-
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-   purchaseList.push({
-  barcode: barcode,
-  product: currentProduct.product,
-  size: currentProduct.size,
-  color: currentProduct.color,
-  brand: currentProduct.brand,
-  gender: currentProduct.gender,
-  text: productText,
-  quantity: 1,
-  amount: ''
-});
-  }
-
-  renderPurchaseList();
-
-  document.getElementById('barcode').value = '';
-  document.getElementById('productInfo').style.display = 'none';
-  document.getElementById('addToListBtn').style.display = 'none';
-}
-
-function renderPurchaseList() {
-
-  const box = document.getElementById('purchaseList');
-  const items = document.getElementById('purchaseItems');
-
-  box.style.display = 'block';
-  items.innerHTML = '';
-
-  purchaseList.forEach((item, index) => {
-
-    const row = document.createElement('div');
-
-    row.style.padding = '8px';
-    row.style.marginBottom = '6px';
-    row.style.background = '#111';
-    row.style.color = '#fff';
-    row.style.borderRadius = '8px';
-
-  row.innerHTML = `
-  <div style="margin-bottom:4px;">
-    ${(index + 1)}. ${item.text} × ${item.quantity}
-  </div>
-
-  <div style="
-    margin-bottom:8px;
-    font-size:13px;
-    color:#ccc;
-    font-weight:bold;
-  ">
-    BARCODE: ${item.barcode}
-  </div>
-
-  <input
-    type="number"
-    step="0.01"
-    placeholder="ENTER AMOUNT"
-    value="${item.amount || ''}"
-    oninput="purchaseList[${index}].amount = this.value"
-    style="
-      width:100%;
-      padding:10px;
-      border-radius:8px;
-      border:none;
-      font-size:16px;
-    "
-  >
-  <button
-  type="button"
-  onclick="removeFromList(${index})"
-  style="
-    margin-top:8px;
-    width:100%;
-    padding:8px;
-    background:#dc3545;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
-  "
->
-  REMOVE
-</button>
-`;
-
-items.appendChild(row);
-  });
-}
-  function removeFromList(index) {
-
-  purchaseList.splice(index, 1);
-
-  if (purchaseList.length === 0) {
-    document.getElementById('purchaseItems').innerHTML = '';
-    document.getElementById('purchaseList').style.display = 'none';
-  } else {
-    renderPurchaseList();
-  }
-}
 function searchBarcode() {
 
-  const barcode = document.getElementById('barcode').value.trim();
+  const barcode =
+    document
+      .getElementById('barcode')
+      .value
+      .trim();
+
 
   if (!barcode) {
     return;
   }
 
-  const oldScript = document.getElementById('barcodeLookup');
+
+  const oldScript =
+    document.getElementById(
+      'barcodeLookup'
+    );
+
 
   if (oldScript) {
     oldScript.remove();
   }
 
-  const script = document.createElement('script');
 
-  script.id = 'barcodeLookup';
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  script.id =
+    'barcodeLookup';
+
 
   script.src =
     'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=product&barcode=' +
     encodeURIComponent(barcode) +
     '&callback=loadProduct';
 
+
   document.body.appendChild(script);
 }
 
-  const dateInput = document.getElementById('date');
-  const today = new Date();
-  dateInput.value =
-    new Date(today.getTime() - today.getTimezoneOffset() * 60000)
-      .toISOString().split('T')[0];
 
-  document.getElementById('form').addEventListener('submit', function(e) {
-    e.preventDefault();
 
-    const btn = document.getElementById('submitBtn');
-    const msg = document.getElementById('message');
+/* ==========================================
+   ADD TO PURCHASE LIST
+========================================== */
 
-    btn.disabled = true;
-    btn.textContent = 'ОТПРАВКА...';
-    msg.className = '';
-    msg.style.display = 'none';
+function addToList() {
 
-    const data = {
-  action: 'purchaseList',
-  date: dateInput.value,
-  items: JSON.stringify(purchaseList)
-};
-fetch('https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec', {
-  method: 'POST',
-  body: new URLSearchParams(data)
-})
-.then(response => response.text())
-.then(result => {
+  const info =
+    document.getElementById(
+      'productInfo'
+    );
 
-  if (result === 'OK') {
-    msg.textContent = '✓ SUCCESS';
-    msg.className = 'success';
-    msg.style.background = 'green';
-    msg.style.color = 'white';
 
-    document.getElementById('form').reset();
-purchaseList = [];
+  const barcode =
+    currentProduct
+      ? String(
+          currentProduct.barcode
+        ).trim()
+      : '';
 
-document.getElementById('purchaseItems').innerHTML = '';
-document.getElementById('purchaseList').style.display = 'none';
 
-currentProduct = null;
+  const productText =
+    info.textContent.trim();
 
-document.getElementById('productInfo').style.display = 'none';
-document.getElementById('addToListBtn').style.display = 'none';
-document.getElementById('barcode').value = '';
-    dateInput.value =
-      new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-      .toISOString().split('T')[0];
 
-    btn.disabled = false;
-    btn.textContent = 'ОТПРАВИТЬ';
-
-  } else {
-    throw new Error(result);
+  if (
+    !barcode ||
+    !currentProduct ||
+    !productText ||
+    productText ===
+      'BARCODE NOT FOUND'
+  ) {
+    return;
   }
 
-})
-.catch(error => {
 
-  msg.textContent = 'Ошибка: ' + error.message;
-  msg.className = 'error';
-
-  btn.disabled = false;
-  btn.textContent = 'ОТПРАВИТЬ';
-
-});
+  const existing =
+    purchaseList.find(
+      item =>
+        item.barcode === barcode
+    );
 
 
-    
+  /* SAME PRODUCT AGAIN */
 
-  
+  if (existing) {
+
+    existing.quantity += 1;
+
+  }
+
+  /* NEW PRODUCT */
+
+  else {
+
+    purchaseList.push({
+
+      barcode:
+        barcode,
+
+      product:
+        currentProduct.product,
+
+      size:
+        currentProduct.size,
+
+      color:
+        currentProduct.color,
+
+      brand:
+        currentProduct.brand,
+
+      gender:
+        currentProduct.gender,
+
+      text:
+        productText,
+
+      quantity:
+        1,
+
+      amount:
+        ''
+
+    });
+
+  }
+
+
+  renderPurchaseList();
+
+
+  /* CLEAN SEARCH AREA */
+
+  document
+    .getElementById('barcode')
+    .value = '';
+
+
+  document
+    .getElementById(
+      'productInfo'
+    )
+    .style.display = 'none';
+
+
+  document
+    .getElementById(
+      'addToListBtn'
+    )
+    .style.display = 'none';
+
+
+  currentProduct = null;
+}
 
 
 
+/* ==========================================
+   PURCHASE LIST
+========================================== */
+
+function renderPurchaseList() {
+
+  const box =
+    document.getElementById(
+      'purchaseList'
+    );
+
+
+  const items =
+    document.getElementById(
+      'purchaseItems'
+    );
+
+
+  box.style.display =
+    'block';
+
+
+  items.innerHTML =
+    '';
+
+
+  purchaseList.forEach(
+    (item, index) => {
+
+
+      const row =
+        document.createElement(
+          'div'
+        );
+
+
+      row.style.padding =
+        '8px';
+
+
+      row.style.marginBottom =
+        '6px';
+
+
+      row.style.background =
+        '#111';
+
+
+      row.style.color =
+        '#fff';
+
+
+      row.style.borderRadius =
+        '8px';
 
 
 
+      row.innerHTML = `
+
+        <div
+          style="
+            margin-bottom:4px;
+          "
+        >
+
+          ${index + 1}.
+          ${item.text}
+          × ${item.quantity}
+
+        </div>
+
+
+        <div
+          style="
+            margin-bottom:8px;
+            font-size:13px;
+            color:#ccc;
+            font-weight:bold;
+          "
+        >
+
+          BARCODE:
+          ${item.barcode}
+
+        </div>
+
+
+        <input
+          type="number"
+          step="0.01"
+          placeholder="ENTER AMOUNT"
+
+          value="${item.amount || ''}"
+
+          oninput="
+            purchaseList[${index}].amount = this.value;
+            updateTotal();
+          "
+
+          style="
+            width:100%;
+            padding:10px;
+            border-radius:8px;
+            border:none;
+            font-size:16px;
+          "
+        >
+
+
+        <button
+          type="button"
+
+          onclick="
+            removeFromList(${index})
+          "
+
+          style="
+            margin-top:8px;
+            width:100%;
+            padding:8px;
+            background:#dc3545;
+            color:white;
+            border:none;
+            border-radius:8px;
+            font-weight:bold;
+            cursor:pointer;
+          "
+        >
+
+          REMOVE
+
+        </button>
+
+      `;
+
+
+      items.appendChild(row);
+
+    }
+  );
+
+
+  updateTotal();
+}
 
 
 
+/* ==========================================
+   TOTAL
+========================================== */
+
+function updateTotal() {
+
+  let total = 0;
 
 
-    
-  });
+  purchaseList.forEach(
+    item => {
+
+      total +=
+        Number(item.amount) || 0;
+
+    }
+  );
+
+
+  document
+    .getElementById(
+      'totalAmount'
+    )
+    .textContent =
+      'TOTAL: ' +
+      total.toFixed(2) +
+      ' ₼';
+}
+
+
+
+/* ==========================================
+   REMOVE ITEM
+========================================== */
+
+function removeFromList(index) {
+
+  purchaseList.splice(
+    index,
+    1
+  );
+
+
+  if (
+    purchaseList.length === 0
+  ) {
+
+    document
+      .getElementById(
+        'purchaseItems'
+      )
+      .innerHTML = '';
+
+
+    document
+      .getElementById(
+        'purchaseList'
+      )
+      .style.display =
+        'none';
+
+
+    document
+      .getElementById(
+        'totalAmount'
+      )
+      .textContent =
+        'TOTAL: 0.00 ₼';
+
+  }
+
+  else {
+
+    renderPurchaseList();
+
+  }
+}
+
+
+
+/* ==========================================
+   DEFAULT DATE
+========================================== */
+
+const dateInput =
+  document.getElementById(
+    'date'
+  );
+
+
+const today =
+  new Date();
+
+
+dateInput.value =
+
+  new Date(
+
+    today.getTime() -
+
+    today.getTimezoneOffset()
+    * 60000
+
+  )
+
+  .toISOString()
+
+  .split('T')[0];
+
+
+
+/* ==========================================
+   SUBMIT PURCHASE LIST
+========================================== */
+
+document
+  .getElementById('form')
+  .addEventListener(
+    'submit',
+    function(e) {
+
+
+      e.preventDefault();
+
+
+      const btn =
+        document.getElementById(
+          'submitBtn'
+        );
+
+
+      const msg =
+        document.getElementById(
+          'message'
+        );
+
+
+      /* EMPTY LIST */
+
+      if (
+        purchaseList.length === 0
+      ) {
+
+        msg.textContent =
+          'PURCHASE LIST EMPTY';
+
+        msg.className =
+          'error';
+
+        msg.style.display =
+          'block';
+
+        return;
+      }
+
+
+      /* CHECK AMOUNTS */
+
+      const invalidAmount =
+        purchaseList.some(
+          item =>
+            item.amount === '' ||
+            !Number.isFinite(
+              Number(item.amount)
+            ) ||
+            Number(item.amount) === 0
+        );
+
+
+      if (invalidAmount) {
+
+        msg.textContent =
+          'ENTER AMOUNT FOR ALL PRODUCTS';
+
+        msg.className =
+          'error';
+
+        msg.style.display =
+          'block';
+
+        return;
+      }
+
+
+      btn.disabled =
+        true;
+
+
+      btn.textContent =
+        'ОТПРАВКА...';
+
+
+      msg.className =
+        '';
+
+
+      msg.style.display =
+        'none';
+
+
+
+      const data = {
+
+        action:
+          'purchaseList',
+
+        date:
+          dateInput.value,
+
+        items:
+          JSON.stringify(
+            purchaseList
+          )
+
+      };
+
+
+
+      fetch(
+
+        'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec',
+
+        {
+
+          method:
+            'POST',
+
+          body:
+            new URLSearchParams(
+              data
+            )
+
+        }
+
+      )
+
+
+      .then(
+        response =>
+          response.text()
+      )
+
+
+      .then(
+        result => {
+
+
+          if (
+            result === 'OK'
+          ) {
+
+
+            msg.textContent =
+              '✓ SUCCESS';
+
+
+            msg.className =
+              'success';
+
+
+            msg.style.background =
+              'green';
+
+
+            msg.style.color =
+              'white';
+
+
+            /* CLEAR EVERYTHING */
+
+            document
+              .getElementById(
+                'form'
+              )
+              .reset();
+
+
+            purchaseList =
+              [];
+
+
+            document
+              .getElementById(
+                'purchaseItems'
+              )
+              .innerHTML =
+                '';
+
+
+            document
+              .getElementById(
+                'purchaseList'
+              )
+              .style.display =
+                'none';
+
+
+            document
+              .getElementById(
+                'totalAmount'
+              )
+              .textContent =
+                'TOTAL: 0.00 ₼';
+
+
+            currentProduct =
+              null;
+
+
+            document
+              .getElementById(
+                'productInfo'
+              )
+              .style.display =
+                'none';
+
+
+            document
+              .getElementById(
+                'addToListBtn'
+              )
+              .style.display =
+                'none';
+
+
+            document
+              .getElementById(
+                'barcode'
+              )
+              .value =
+                '';
+
+
+            /* RESTORE TODAY */
+
+            dateInput.value =
+
+              new Date(
+
+                Date.now() -
+
+                new Date()
+                  .getTimezoneOffset()
+                * 60000
+
+              )
+
+              .toISOString()
+
+              .split('T')[0];
+
+
+            btn.disabled =
+              false;
+
+
+            btn.textContent =
+              'ОТПРАВИТЬ';
+
+          }
+
+          else {
+
+            throw new Error(
+              result
+            );
+
+          }
+
+        }
+
+      )
+
+
+      .catch(
+        error => {
+
+
+          msg.textContent =
+            'Ошибка: ' +
+            error.message;
+
+
+          msg.className =
+            'error';
+
+
+          btn.disabled =
+            false;
+
+
+          btn.textContent =
+            'ОТПРАВИТЬ';
+
+        }
+
+      );
+
+    }
+  );
+
+
+
+/* ==========================================
+   HOME
+========================================== */
 
 function goHome() {
-  window.location.href = "HOME.html";
+
+  window.location.href =
+    'HOME.html';
+
 }
 
 </script>
+
 </body>
 </html>
-
