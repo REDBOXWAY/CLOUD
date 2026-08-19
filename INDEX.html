@@ -464,9 +464,11 @@ function barcodeLookupError() {
       addToListBtn.style.display = 'none';
 
       productInfo.style.display = 'flex';
-      productInfo.style.background = '#fff';
-      productInfo.style.color = '#000';
-      productInfo.textContent = 'SEARCHING...';
+productInfo.style.background = 'transparent';
+productInfo.style.color = '#8fd14f';
+productInfo.style.border = 'none';
+productInfo.style.fontWeight = '700';
+productInfo.textContent = 'SEARCHING...';
 
       searchBtn.disabled = true;
       searchBtn.textContent = 'SEARCHING...';
