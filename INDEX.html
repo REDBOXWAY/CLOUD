@@ -1,364 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
   <title>CLOUD DRIVE — REGISTRY</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+    rel="stylesheet"
+  >
+
 
   <style>
 
-    /* GLOBAL FONT: BEBAS NEUE BOLD LOOK */
-    html, body, body * {
-      font-family: "Bebas Neue", sans-serif !important;
-      font-weight: 700 !important;
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+
+      min-height: 100%;
+
+      font-family:
+        "Bebas Neue",
+        sans-serif;
+
+      font-weight: 400;
+
       text-transform: uppercase;
-      letter-spacing: 1px;
+
+      letter-spacing: 0.5px;
     }
 
-    body * {
-      -webkit-text-stroke: 0.35px currentColor;
+
+    body {
+
+      min-height: 100vh;
+
+      background: #ffffff;
+
+      color: #000000;
+
+      font-weight: 400;
+
     }
 
-    input,
+
     button,
+    input,
     textarea,
     select,
     option {
-      font-family: "Bebas Neue", sans-serif !important;
-      font-weight: 700 !important;
+
+      font-family:
+        "Bebas Neue",
+        sans-serif;
+
+      font-weight: 400;
+
       text-transform: uppercase;
-      letter-spacing: 1px;
+
+      letter-spacing: 0.5px;
+
     }
 
-    * {
-      box-sizing: border-box;
-      font-family: "Bebas Neue", sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #000;
-      color: #fff;
-      font-family: "Bebas Neue", sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font-family: "Bebas Neue", sans-serif !important;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
 
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
+
       -webkit-appearance: none;
+
       margin: 0;
+
     }
+
 
     input[type="number"] {
+
       -moz-appearance: textfield;
+
       appearance: textfield;
+
     }
+
+
+
+    /* PAGE */
 
     .page {
+
       width: 92%;
+
       max-width: 1200px;
+
       margin: 0 auto;
+
       padding: 28px 0 40px;
+
     }
+
+
+
+    /* HEADER */
 
     .header {
+
       display: flex;
+
       justify-content: flex-end;
+
       align-items: flex-start;
-      margin-bottom: 22px;
+
+      margin-bottom: 30px;
+
     }
+
 
     .header-right {
+
       text-align: center;
+
     }
+
 
     h1 {
-      margin: 0 0 8px;
-      font-size: 36px;
-      font-weight: 700;
+
+      margin: 0 0 10px;
+
+      color: #000000;
+
+      font-size: 44px;
+
+      line-height: 1;
+
+      font-weight: 400;
+
     }
+
+
+
+    /* DATE */
 
     .date-input {
-      width: 150px;
-      height: 38px;
-      border: 1px solid #ffc000;
+
+      width: 160px;
+
+      height: 44px;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
+
+      outline: none;
+
+      background: #ffffff;
+
+      color: #000000;
+
       text-align: center;
-      font-size: 14px;
-      background: #fff;
+
+      font-size: 20px;
+
+      font-weight: 400;
+
     }
+
+
+    .date-input:focus {
+
+      border: 1px solid #000000;
+
+      outline: none;
+
+    }
+
 
     .date-label {
+
       margin-top: 7px;
-      font-size: 13px;
+
+      color: #000000;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
     }
 
+
+
+    /* BARCODE */
+
     .barcode-label {
-      margin-bottom: 6px;
-      font-size: 13px;
+
+      margin-bottom: 7px;
+
+      color: #000000;
+
+      font-size: 20px;
+
+      font-weight: 400;
+
     }
+
 
     .barcode-row,
     .result-row {
+
       display: grid;
-      grid-template-columns: minmax(300px, 1fr) 150px;
+
+      grid-template-columns:
+        minmax(300px, 1fr)
+        160px;
+
       gap: 18px;
-      max-width: 570px;
+
+      max-width: 620px;
+
       margin-bottom: 16px;
+
     }
 
+
     #barcode {
+
       width: 100%;
-      height: 38px;
-      border: 1px solid #ffc000;
+
+      height: 44px;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
-      text-align: center;
-      font-size: 14px;
+
       outline: none;
-      background: #fff;
+
+      background: #ffffff;
+
+      color: #000000;
+
+      text-align: center;
+
+      font-size: 20px;
+
+      font-weight: 400;
+
     }
+
+
+    #barcode:focus {
+
+      border: 1px solid #000000;
+
+      outline: none;
+
+    }
+
+
+
+    /* BUTTONS */
 
     .small-button,
     .bottom-button {
-      height: 38px;
-      border: 1px solid #ffc000;
+
+      height: 44px;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
+
       background: #ffc000;
-      color: #000;
+
+      color: #000000;
+
       cursor: pointer;
-      font-size: 13px;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
     }
+
 
     .small-button:hover,
     .bottom-button:hover {
+
       filter: brightness(0.95);
+
     }
+
 
     .small-button:disabled,
     .bottom-button:disabled {
+
       cursor: not-allowed;
+
       opacity: 0.65;
+
     }
+
+
+
+    /* SEARCH AREA */
 
     .search-actions {
+
       display: flex;
+
       align-items: center;
+
       gap: 8px;
+
     }
+
 
     .search-actions .small-button {
+
       flex: 1;
+
     }
+
 
     .clear-search-button {
+
       display: flex;
-      width: 38px;
-      height: 38px;
-      flex: 0 0 38px;
+
+      width: 44px;
+
+      height: 44px;
+
+      flex: 0 0 44px;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 0;
+
       border: none;
+
       background: transparent;
+
       color: #8fd14f;
+
       cursor: pointer;
+
     }
+
 
     .clear-search-button svg {
-      width: 33px;
-      height: 33px;
+
+      width: 34px;
+
+      height: 34px;
+
       fill: none;
+
       stroke: currentColor;
+
       stroke-width: 3;
+
       stroke-linecap: round;
+
       stroke-linejoin: round;
+
     }
+
 
     .clear-search-button:hover {
+
       filter: brightness(1.18);
+
     }
+
+
+
+    /* PRODUCT INFO */
 
     #productInfo {
-      min-height: 38px;
-      border: 1px solid #ffc000;
+
+      min-height: 44px;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
+
       display: none;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 7px 12px;
+
       text-align: center;
-      font-size: 13px;
-      background: #fff;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
+      background: #ffffff;
+
+      color: #000000;
+
       overflow-wrap: anywhere;
+
     }
+
 
     #addToListBtn {
+
       display: none;
+
     }
+
+
+
+    /* PURCHASE HEADER */
 
     .purchase-header {
+
       display: flex;
+
       justify-content: space-between;
+
       align-items: center;
-      margin: 20px 5px 7px;
-      font-weight: 700;
-      font-size: 13px;
+
+      margin: 22px 5px 8px;
+
+      color: #000000;
+
+      font-size: 20px;
+
+      font-weight: 400;
+
     }
+
+
+
+    /* PURCHASE LIST */
 
     #purchaseList {
+
       display: none;
+
       width: 100%;
+
       min-height: 245px;
-      border: 1px solid #ffc000;
+
+      border: 1px solid #000000;
+
       padding: 14px 16px;
-      background: #000;
-      color: #fff;
+
+      background: #ffffff;
+
+      color: #000000;
+
     }
+
 
     .purchase-item {
+
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) 150px 150px;
+
+      grid-template-columns:
+        minmax(260px, 1fr)
+        160px
+        160px;
+
       gap: 12px;
+
       align-items: center;
+
       margin-bottom: 10px;
+
     }
+
 
     .purchase-description {
-      font-size: 13px;
+
+      color: #000000;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
+      line-height: 1.2;
+
       overflow-wrap: anywhere;
+
     }
+
+
+
+    /* ENTER AMOUNT */
 
     .amount-input {
+
       width: 100%;
-      height: 38px;
-      border: 1px solid #ffc000;
+
+      height: 44px;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
+
+      outline: none;
+
       padding: 0 12px;
+
+      background: #ffffff;
+
+      color: #000000;
+
       text-align: center;
-      font-size: 13px;
-      background: #fff;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
     }
+
+
+    .amount-input:focus {
+
+      border: 1px solid #000000;
+
+      outline: none;
+
+    }
+
+
+
+    /* REMOVE */
 
     .remove-button {
-      height: 38px;
-      border: 1px solid #ffc000;
+
+      height: 44px;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
+
       background: red;
-      color: #000;
+
+      color: #000000;
+
       cursor: pointer;
-      font-size: 13px;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
     }
+
+
+
+    /* BOTTOM BUTTONS */
 
     .bottom-buttons {
+
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
       gap: 18px;
+
       margin-top: 16px;
+
     }
+
+
+
+    /* MESSAGES */
 
     #message {
+
       display: none;
+
       width: 400px;
+
       max-width: 100%;
+
       margin: 30px auto 0;
+
       padding: 11px 15px;
-      border: 1px solid #ffc000;
+
+      border: 1px solid #000000;
+
       border-radius: 7px;
+
       text-align: center;
-      font-size: 13px;
+
+      font-size: 19px;
+
+      font-weight: 400;
+
     }
+
 
     .success {
+
       display: block !important;
+
       background: transparent;
-      color: #8fd14f;
-      font-weight: 700;
+
+      color: #4fa52f;
+
+      font-weight: 400;
+
       border: none !important;
+
       padding: 0 !important;
+
     }
 
+
     .error {
+
       display: block !important;
+
       background: transparent;
+
       color: red;
-      font-weight: 700;
+
+      font-weight: 400;
+
       border: none !important;
+
       padding: 0 !important;
+
     }
+
+
+
+    /* MOBILE */
 
     @media (max-width: 700px) {
 
       .page {
+
         width: 94%;
+
         padding-top: 18px;
+
       }
+
 
       .header {
+
         justify-content: center;
+
       }
 
+
       h1 {
-        font-size: 28px;
+
+        font-size: 34px;
+
       }
+
 
       .barcode-row,
       .result-row,
       .purchase-item,
       .bottom-buttons {
+
         grid-template-columns: 1fr;
+
       }
+
 
       .barcode-row,
       .result-row {
+
         gap: 8px;
+
         max-width: none;
+
       }
+
 
       .purchase-item {
+
         gap: 8px;
+
       }
+
 
       .bottom-buttons {
+
         gap: 10px;
+
       }
+
 
       #purchaseList {
+
         min-height: 180px;
+
       }
 
+
       .purchase-header {
-        font-size: 12px;
+
+        font-size: 18px;
+
       }
+
     }
 
   </style>
+
 </head>
+
 
 <body>
 
+
   <div class="page">
 
+
     <div class="header">
+
+
       <div class="header-right">
 
-        <h1>CLOUD DRIVE</h1>
+
+        <h1>
+          CLOUD DRIVE
+        </h1>
+
 
         <input
           id="date"
@@ -367,20 +763,34 @@
           required
         >
 
+
         <div class="date-label">
+
           SET THE DATE
+
         </div>
 
+
       </div>
+
+
     </div>
+
+
 
     <form id="form">
 
+
       <div class="barcode-label">
+
         ENTER BARCODE
+
       </div>
 
+
+
       <div class="barcode-row">
+
 
         <input
           id="barcode"
@@ -389,15 +799,22 @@
           autocomplete="off"
         >
 
+
+
         <div class="search-actions">
+
 
           <button
             id="searchBtn"
             type="button"
             class="small-button"
           >
+
             SEARCH
+
           </button>
+
+
 
           <button
             id="clearSearchBtn"
@@ -406,488 +823,1012 @@
             aria-label="Clear search message"
           >
 
+
             <svg viewBox="0 0 24 24">
-              <path d="M20 7V3l-2 2a8 8 0 0 0-13 3"/>
-              <path d="M4 17v4l2-2a8 8 0 0 0 13-3"/>
-              <path d="M20 3h-4M4 21h4"/>
+
+              <path
+                d="M20 7V3l-2 2a8 8 0 0 0-13 3"
+              />
+
+              <path
+                d="M4 17v4l2-2a8 8 0 0 0 13-3"
+              />
+
+              <path
+                d="M20 3h-4M4 21h4"
+              />
+
             </svg>
+
 
           </button>
 
+
         </div>
+
 
       </div>
 
+
+
       <div class="result-row">
 
+
         <div id="productInfo"></div>
+
 
         <button
           id="addToListBtn"
           type="button"
           class="small-button"
         >
+
           ADD TO LIST
+
         </button>
 
+
       </div>
+
+
 
       <div class="purchase-header">
 
+
         <span>
+
           PURCHASE LIST
+
         </span>
+
 
         <span id="totalAmount">
+
           TOTAL: 0.00 ₼
+
         </span>
 
+
       </div>
+
+
 
       <div id="purchaseList">
+
+
         <div id="purchaseItems"></div>
+
+
       </div>
 
+
+
       <div class="bottom-buttons">
+
 
         <button
           id="submitBtn"
           type="submit"
           class="bottom-button"
         >
+
           SEND
+
         </button>
+
 
         <button
           type="button"
           class="bottom-button"
           onclick="goHome()"
         >
+
           BACK
+
         </button>
+
 
       </div>
 
+
+
       <div id="message"></div>
+
 
     </form>
 
+
   </div>
 
+
+
   <script>
+
 
     const BACKEND_URL =
       'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec';
 
+
+
     let currentProduct = null;
+
     let purchaseList = [];
 
+
+
     const dateInput =
-      document.getElementById('date');
+      document.getElementById(
+        'date'
+      );
+
 
     const barcodeInput =
-      document.getElementById('barcode');
+      document.getElementById(
+        'barcode'
+      );
+
 
     const searchBtn =
-      document.getElementById('searchBtn');
+      document.getElementById(
+        'searchBtn'
+      );
+
 
     const clearSearchBtn =
-      document.getElementById('clearSearchBtn');
+      document.getElementById(
+        'clearSearchBtn'
+      );
+
 
     const addToListBtn =
-      document.getElementById('addToListBtn');
+      document.getElementById(
+        'addToListBtn'
+      );
+
 
     const productInfo =
-      document.getElementById('productInfo');
+      document.getElementById(
+        'productInfo'
+      );
+
 
     const message =
-      document.getElementById('message');
+      document.getElementById(
+        'message'
+      );
+
+
 
     function loadProduct(data) {
 
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
+
+      searchBtn.disabled =
+        false;
+
+
+      searchBtn.textContent =
+        'SEARCH';
+
+
 
       if (!data) {
 
-        currentProduct = null;
 
-        productInfo.style.display = 'flex';
-        productInfo.style.background = 'transparent';
-        productInfo.style.color = 'red';
-        productInfo.style.border = 'none';
-        productInfo.style.fontWeight = '700';
-        productInfo.textContent = 'BARCODE NOT FOUND';
+        currentProduct =
+          null;
 
-        addToListBtn.style.display = 'none';
+
+        productInfo.style.display =
+          'flex';
+
+
+        productInfo.style.background =
+          'transparent';
+
+
+        productInfo.style.color =
+          'red';
+
+
+        productInfo.style.border =
+          'none';
+
+
+        productInfo.style.fontWeight =
+          '400';
+
+
+        productInfo.textContent =
+          'BARCODE NOT FOUND';
+
+
+        addToListBtn.style.display =
+          'none';
+
 
         return;
+
       }
 
-      currentProduct = data;
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = '#fff';
-      productInfo.style.color = '#000';
-      productInfo.style.border = '1px solid #ffc000';
-      productInfo.style.fontWeight = 'normal';
-      productInfo.textContent = data.article;
 
-      addToListBtn.style.display = 'block';
+      currentProduct =
+        data;
+
+
+      productInfo.style.display =
+        'flex';
+
+
+      productInfo.style.background =
+        '#ffffff';
+
+
+      productInfo.style.color =
+        '#000000';
+
+
+      productInfo.style.border =
+        '1px solid #000000';
+
+
+      productInfo.style.fontWeight =
+        '400';
+
+
+      productInfo.textContent =
+        data.article;
+
+
+      addToListBtn.style.display =
+        'block';
+
+
     }
+
+
 
     function barcodeLookupError() {
 
-      searchBtn.disabled = false;
-      searchBtn.textContent = 'SEARCH BARCODE';
 
-      currentProduct = null;
+      searchBtn.disabled =
+        false;
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = 'transparent';
-      productInfo.style.color = 'red';
-      productInfo.style.border = 'none';
-      productInfo.style.fontWeight = '700';
-      productInfo.textContent = 'CONNECTION ERROR';
 
-      addToListBtn.style.display = 'none';
+      searchBtn.textContent =
+        'SEARCH';
+
+
+      currentProduct =
+        null;
+
+
+      productInfo.style.display =
+        'flex';
+
+
+      productInfo.style.background =
+        'transparent';
+
+
+      productInfo.style.color =
+        'red';
+
+
+      productInfo.style.border =
+        'none';
+
+
+      productInfo.style.fontWeight =
+        '400';
+
+
+      productInfo.textContent =
+        'CONNECTION ERROR';
+
+
+      addToListBtn.style.display =
+        'none';
+
+
     }
 
+
+
     function searchBarcode() {
+
 
       const barcode =
         barcodeInput.value.trim();
 
-      if (!barcode)
+
+      if (!barcode) {
+
         return;
 
-      currentProduct = null;
-      addToListBtn.style.display = 'none';
+      }
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = 'transparent';
-      productInfo.style.color = '#8fd14f';
-      productInfo.style.border = 'none';
-      productInfo.style.fontWeight = '700';
-      productInfo.textContent = 'SEARCHING...';
 
-      searchBtn.disabled = true;
-      searchBtn.textContent = 'SEARCHING...';
+
+      currentProduct =
+        null;
+
+
+      addToListBtn.style.display =
+        'none';
+
+
+
+      productInfo.style.display =
+        'flex';
+
+
+      productInfo.style.background =
+        'transparent';
+
+
+      productInfo.style.color =
+        '#69b52d';
+
+
+      productInfo.style.border =
+        'none';
+
+
+      productInfo.style.fontWeight =
+        '400';
+
+
+      productInfo.textContent =
+        'SEARCHING...';
+
+
+
+      searchBtn.disabled =
+        true;
+
+
+      searchBtn.textContent =
+        'SEARCHING...';
+
+
 
       const oldScript =
-        document.getElementById('barcodeLookup');
+        document.getElementById(
+          'barcodeLookup'
+        );
 
-      if (oldScript)
+
+      if (oldScript) {
+
         oldScript.remove();
 
-      const script =
-        document.createElement('script');
+      }
 
-      script.id = 'barcodeLookup';
+
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      script.id =
+        'barcodeLookup';
+
 
       script.onerror =
         barcodeLookupError;
 
+
       script.src =
         BACKEND_URL +
+
         '?action=product&barcode=' +
-        encodeURIComponent(barcode) +
+
+        encodeURIComponent(
+          barcode
+        ) +
+
         '&callback=loadProduct&_=' +
+
         Date.now();
 
-      document.body.appendChild(script);
+
+      document.body.appendChild(
+        script
+      );
+
+
     }
+
+
 
     function addToList() {
 
-      if (!currentProduct)
+
+      if (!currentProduct) {
+
         return;
-
-      const barcode =
-        String(currentProduct.barcode).trim();
-
-      const existing =
-        purchaseList.find(
-          item =>
-            item.barcode === barcode
-        );
-
-      if (existing) {
-
-        existing.quantity += 1;
-
-      } else {
-
-        purchaseList.push({
-
-          barcode: barcode,
-          article: currentProduct.article,
-          product: currentProduct.product,
-          quantity: 1,
-          amount: ''
-
-        });
 
       }
 
+
+
+      const barcode =
+        String(
+          currentProduct.barcode
+        ).trim();
+
+
+
+      const existing =
+        purchaseList.find(
+
+          item =>
+            item.barcode ===
+            barcode
+
+        );
+
+
+
+      if (existing) {
+
+
+        existing.quantity +=
+          1;
+
+
+      } else {
+
+
+        purchaseList.push({
+
+          barcode:
+            barcode,
+
+          article:
+            currentProduct.article,
+
+          product:
+            currentProduct.product,
+
+          quantity:
+            1,
+
+          amount:
+            ''
+
+        });
+
+
+      }
+
+
+
       renderPurchaseList();
 
-      barcodeInput.value = '';
-      productInfo.style.display = 'none';
-      addToListBtn.style.display = 'none';
 
-      currentProduct = null;
+
+      barcodeInput.value =
+        '';
+
+
+      productInfo.style.display =
+        'none';
+
+
+      addToListBtn.style.display =
+        'none';
+
+
+      currentProduct =
+        null;
+
 
       barcodeInput.focus();
+
+
     }
+
+
 
     function renderPurchaseList() {
 
+
       const box =
-        document.getElementById('purchaseList');
+        document.getElementById(
+          'purchaseList'
+        );
+
 
       const items =
-        document.getElementById('purchaseItems');
+        document.getElementById(
+          'purchaseItems'
+        );
+
+
 
       box.style.display =
         purchaseList.length
-        ? 'block'
-        : 'none';
 
-      items.innerHTML = '';
+          ? 'block'
+
+          : 'none';
+
+
+
+      items.innerHTML =
+        '';
+
+
 
       purchaseList.forEach(
+
         (item, index) => {
 
+
           const row =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
+
 
           row.className =
             'purchase-item';
 
+
+
           const description =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
+
 
           description.className =
             'purchase-description';
 
+
           description.textContent =
             item.article +
+
             ' × ' +
+
             item.quantity;
 
-          const amount =
-            document.createElement('input');
 
-          amount.type = 'number';
-          amount.step = '0.01';
-          amount.min = '0';
-          amount.placeholder = 'ENTER AMOUNT';
-          amount.className = 'amount-input';
-          amount.value = item.amount;
+
+          const amount =
+            document.createElement(
+              'input'
+            );
+
+
+          amount.type =
+            'number';
+
+
+          amount.step =
+            '0.01';
+
+
+          amount.min =
+            '0';
+
+
+          amount.placeholder =
+            'ENTER AMOUNT';
+
+
+          amount.className =
+            'amount-input';
+
+
+          amount.value =
+            item.amount;
+
+
 
           amount.addEventListener(
+
             'input',
+
             function () {
+
 
               purchaseList[index].amount =
                 this.value;
 
+
               updateTotal();
 
+
             }
+
           );
 
-          const remove =
-            document.createElement('button');
 
-          remove.type = 'button';
-          remove.className = 'remove-button';
-          remove.textContent = 'REMOVE';
+
+          const remove =
+            document.createElement(
+              'button'
+            );
+
+
+          remove.type =
+            'button';
+
+
+          remove.className =
+            'remove-button';
+
+
+          remove.textContent =
+            'REMOVE';
+
+
 
           remove.addEventListener(
+
             'click',
+
             function () {
 
+
               purchaseList.splice(
+
                 index,
+
                 1
+
               );
+
 
               renderPurchaseList();
 
+
             }
+
           );
 
-          row.appendChild(description);
-          row.appendChild(amount);
-          row.appendChild(remove);
 
-          items.appendChild(row);
+
+          row.appendChild(
+            description
+          );
+
+
+          row.appendChild(
+            amount
+          );
+
+
+          row.appendChild(
+            remove
+          );
+
+
+          items.appendChild(
+            row
+          );
+
 
         }
+
       );
 
+
+
       updateTotal();
+
+
     }
 
+
+
     function updateTotal() {
+
 
       const total =
         purchaseList.reduce(
 
           (sum, item) =>
+
             sum +
+
             (
-              Number(item.amount)
+
+              Number(
+                item.amount
+              )
+
               || 0
+
             ),
 
           0
 
         );
 
+
+
       document.getElementById(
         'totalAmount'
       ).textContent =
+
         'TOTAL: ' +
+
         total.toFixed(2) +
+
         ' ₼';
+
+
     }
+
+
 
     function showMessage(
       text,
       type
     ) {
 
+
       message.textContent =
         text;
 
+
       message.className =
         type;
+
+
     }
+
+
 
     const today =
       new Date();
 
+
+
     dateInput.value =
+
       new Date(
+
         today.getTime() -
+
         today.getTimezoneOffset()
         * 60000
+
       )
+
       .toISOString()
+
       .split('T')[0];
 
+
+
     searchBtn.addEventListener(
+
       'click',
+
       searchBarcode
+
     );
 
+
+
     clearSearchBtn.addEventListener(
+
       'click',
+
       function () {
 
-        currentProduct = null;
 
-        productInfo.textContent = '';
-        productInfo.style.display = 'none';
-        addToListBtn.style.display = 'none';
+        currentProduct =
+          null;
 
-        barcodeInput.value = '';
 
-        searchBtn.disabled = false;
-        searchBtn.textContent = 'SEARCH BARCODE';
+        productInfo.textContent =
+          '';
+
+
+        productInfo.style.display =
+          'none';
+
+
+        addToListBtn.style.display =
+          'none';
+
+
+        barcodeInput.value =
+          '';
+
+
+        searchBtn.disabled =
+          false;
+
+
+        searchBtn.textContent =
+          'SEARCH';
+
 
         barcodeInput.focus();
 
+
       }
+
     );
+
+
 
     addToListBtn.addEventListener(
+
       'click',
+
       addToList
+
     );
 
+
+
     barcodeInput.addEventListener(
+
       'keydown',
+
       function (event) {
 
-        if (event.key === 'Enter') {
+
+        if (
+          event.key ===
+          'Enter'
+        ) {
+
 
           event.preventDefault();
+
 
           searchBarcode();
 
+
         }
 
+
       }
+
     );
 
+
+
     document
-      .getElementById('form')
+      .getElementById(
+        'form'
+      )
       .addEventListener(
+
         'submit',
+
         function (event) {
+
 
           event.preventDefault();
 
+
+
           const submitBtn =
-            document.getElementById('submitBtn');
+            document.getElementById(
+              'submitBtn'
+            );
 
-          if (!dateInput.value) {
+
+
+          if (
+            !dateInput.value
+          ) {
+
 
             showMessage(
+
               'SET THE DATE',
+
               'error'
+
             );
 
+
             return;
+
+
           }
 
-          if (!purchaseList.length) {
+
+
+          if (
+            !purchaseList.length
+          ) {
+
 
             showMessage(
+
               'PURCHASE LIST EMPTY',
+
               'error'
+
             );
 
+
             return;
+
+
           }
+
+
 
           const invalidAmount =
             purchaseList.some(
 
               item =>
+
                 item.amount === '' ||
 
                 !Number.isFinite(
-                  Number(item.amount)
+
+                  Number(
+                    item.amount
+                  )
+
                 ) ||
 
-                Number(item.amount)
-                <= 0
+                Number(
+                  item.amount
+                ) <= 0
 
             );
 
-          if (invalidAmount) {
+
+
+          if (
+            invalidAmount
+          ) {
+
 
             showMessage(
+
               'ENTER AMOUNT FOR ALL PRODUCTS',
+
               'error'
+
             );
 
+
             return;
+
+
           }
 
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'SENDING...';
 
-          message.style.display = 'none';
-          message.className = '';
+
+          submitBtn.disabled =
+            true;
+
+
+          submitBtn.textContent =
+            'SENDING...';
+
+
+
+          message.style.display =
+            'none';
+
+
+          message.className =
+            '';
+
+
 
           const itemsToSend =
             purchaseList.map(
+
               item => ({
 
                 barcode:
@@ -900,112 +1841,183 @@
                   item.quantity,
 
                 amount:
-                  Number(item.amount)
+                  Number(
+                    item.amount
+                  )
 
               })
+
             );
 
+
+
           fetch(
+
             BACKEND_URL,
+
             {
 
-              method: 'POST',
+
+              method:
+                'POST',
+
 
               body:
                 new URLSearchParams({
 
+
                   action:
                     'purchaseList',
 
+
                   date:
                     dateInput.value,
+
 
                   items:
                     JSON.stringify(
                       itemsToSend
                     )
 
+
                 })
 
+
             }
+
           )
 
+
           .then(
+
             response =>
               response.text()
+
           )
 
+
           .then(
+
             result => {
 
+
               if (
+
                 result.trim()
                 !== 'OK'
+
               ) {
+
 
                 throw new Error(
                   result
                 );
 
+
               }
 
+
+
               showMessage(
+
                 'ALL DATA SENT SUCCESSFULLY!',
+
                 'success'
+
               );
 
-              purchaseList = [];
-              currentProduct = null;
+
+
+              purchaseList =
+                [];
+
+
+              currentProduct =
+                null;
+
+
 
               renderPurchaseList();
+
+
 
               productInfo.style.display =
                 'none';
 
+
               addToListBtn.style.display =
                 'none';
 
-              barcodeInput.value = '';
+
+              barcodeInput.value =
+                '';
+
+
               barcodeInput.focus();
 
+
             }
+
           )
+
 
           .catch(
+
             error => {
 
+
               showMessage(
+
                 'ERROR: ' +
                 error.message,
+
                 'error'
+
               );
 
+
             }
+
           )
 
+
           .finally(
+
             () => {
+
 
               submitBtn.disabled =
                 false;
 
+
               submitBtn.textContent =
                 'SEND';
 
+
             }
+
           );
 
+
         }
+
       );
 
+
+
     function goHome() {
+
 
       window.location.href =
         'HOME.html';
 
+
     }
+
 
   </script>
 
+
 </body>
+
 </html>
