@@ -121,9 +121,9 @@
     .barcode-row,
     .result-row {
       display: grid;
-      grid-template-columns: minmax(300px, 1fr) 160px;
+      grid-template-columns: minmax(300px, 1fr) 320px;
       gap: 18px;
-      max-width: 620px;
+      max-width: 780px;
       margin-bottom: 16px;
     }
 
@@ -169,41 +169,14 @@
     }
 
     .search-actions {
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
+      width: 100%;
     }
 
     .search-actions .small-button {
-      flex: 1;
-    }
-
-    .clear-search-button {
-      display: flex;
-      width: 44px;
-      height: 44px;
-      flex: 0 0 44px;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      border: none;
-      background: transparent;
-      color: #8fd14f;
-      cursor: pointer;
-    }
-
-    .clear-search-button svg {
-      width: 34px;
-      height: 34px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .clear-search-button:hover {
-      filter: brightness(1.18);
+      width: 100%;
     }
 
     #productInfo {
@@ -363,6 +336,10 @@
         grid-template-columns: 1fr;
       }
 
+      .search-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+
       .purchase-item {
         grid-template-columns: 1fr;
         gap: 8px;
@@ -446,18 +423,11 @@
           </button>
 
           <button
-            id="clearSearchBtn"
-            class="clear-search-button"
+            id="refreshBtn"
             type="button"
-            aria-label="Clear search message"
+            class="small-button"
           >
-
-            <svg viewBox="0 0 24 24">
-              <path d="M20 7V3l-2 2a8 8 0 0 0-13 3"/>
-              <path d="M4 17v4l2-2a8 8 0 0 0 13-3"/>
-              <path d="M20 3h-4M4 21h4"/>
-            </svg>
-
+            REFRESH
           </button>
 
         </div>
@@ -539,8 +509,8 @@
     const searchBtn =
       document.getElementById('searchBtn');
 
-    const clearSearchBtn =
-      document.getElementById('clearSearchBtn');
+    const refreshBtn =
+      document.getElementById('refreshBtn');
 
     const addToListBtn =
       document.getElementById('addToListBtn');
@@ -614,30 +584,53 @@
       }
 
       currentProduct = null;
-      addToListBtn.style.display = 'none';
 
-      productInfo.style.display = 'flex';
-      productInfo.style.background = 'transparent';
-      productInfo.style.color = '#000000;';
-      productInfo.style.border = 'none';
-      productInfo.style.fontWeight = '400';
-      productInfo.textContent = 'SEARCHING...';
+      addToListBtn.style.display =
+        'none';
 
-      searchBtn.disabled = true;
-      searchBtn.textContent = 'SEARCHING...';
+      productInfo.style.display =
+        'flex';
+
+      productInfo.style.background =
+        'transparent';
+
+      productInfo.style.color =
+        '#000000';
+
+      productInfo.style.border =
+        'none';
+
+      productInfo.style.fontWeight =
+        '400';
+
+      productInfo.textContent =
+        'SEARCHING...';
+
+      searchBtn.disabled =
+        true;
+
+      searchBtn.textContent =
+        'SEARCHING...';
 
       const oldScript =
-        document.getElementById('barcodeLookup');
+        document.getElementById(
+          'barcodeLookup'
+        );
 
       if (oldScript) {
         oldScript.remove();
       }
 
       const script =
-        document.createElement('script');
+        document.createElement(
+          'script'
+        );
 
-      script.id = 'barcodeLookup';
-      script.onerror = barcodeLookupError;
+      script.id =
+        'barcodeLookup';
+
+      script.onerror =
+        barcodeLookupError;
 
       script.src =
         BACKEND_URL +
@@ -646,7 +639,45 @@
         '&callback=loadProduct&_=' +
         Date.now();
 
-      document.body.appendChild(script);
+      document.body.appendChild(
+        script
+      );
+    }
+
+
+    function refreshSearch() {
+
+      currentProduct = null;
+
+      productInfo.textContent = '';
+
+      productInfo.style.display =
+        'none';
+
+      productInfo.style.background =
+        '#ffffff';
+
+      productInfo.style.color =
+        '#000000';
+
+      productInfo.style.border =
+        '1px solid #000000';
+
+      productInfo.style.fontWeight =
+        '400';
+
+      addToListBtn.style.display =
+        'none';
+
+      barcodeInput.value = '';
+
+      searchBtn.disabled =
+        false;
+
+      searchBtn.textContent =
+        'SEARCH';
+
+      barcodeInput.focus();
     }
 
 
@@ -676,9 +707,15 @@
         purchaseList.push({
 
           barcode: barcode,
-          article: currentProduct.article,
-          product: currentProduct.product,
+
+          article:
+            currentProduct.article,
+
+          product:
+            currentProduct.product,
+
           quantity: 1,
+
           amount: ''
 
         });
@@ -687,11 +724,17 @@
 
       renderPurchaseList();
 
-      barcodeInput.value = '';
-      productInfo.style.display = 'none';
-      addToListBtn.style.display = 'none';
+      barcodeInput.value =
+        '';
 
-      currentProduct = null;
+      productInfo.style.display =
+        'none';
+
+      addToListBtn.style.display =
+        'none';
+
+      currentProduct =
+        null;
 
       barcodeInput.focus();
     }
@@ -714,20 +757,25 @@
           ? 'block'
           : 'none';
 
-      items.innerHTML = '';
+      items.innerHTML =
+        '';
 
       purchaseList.forEach(
         (item, index) => {
 
           const row =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
 
           row.className =
             'purchase-item';
 
 
           const description =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
 
           description.className =
             'purchase-description';
@@ -739,7 +787,9 @@
 
 
           const amountLabel =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
 
           amountLabel.className =
             'amount-label';
@@ -749,13 +799,18 @@
 
 
           const amount =
-            document.createElement('input');
+            document.createElement(
+              'input'
+            );
 
-          amount.type = 'number';
+          amount.type =
+            'number';
 
-          amount.step = '0.01';
+          amount.step =
+            '0.01';
 
-          amount.min = '0';
+          amount.min =
+            '0';
 
           amount.className =
             'amount-input';
@@ -778,9 +833,12 @@
 
 
           const remove =
-            document.createElement('button');
+            document.createElement(
+              'button'
+            );
 
-          remove.type = 'button';
+          remove.type =
+            'button';
 
           remove.className =
             'remove-button';
@@ -839,8 +897,9 @@
           (sum, item) =>
             sum +
             (
-              Number(item.amount)
-              || 0
+              Number(
+                item.amount
+              ) || 0
             ),
 
           0
@@ -891,31 +950,9 @@
     );
 
 
-    clearSearchBtn.addEventListener(
+    refreshBtn.addEventListener(
       'click',
-      function () {
-
-        currentProduct = null;
-
-        productInfo.textContent = '';
-
-        productInfo.style.display =
-          'none';
-
-        addToListBtn.style.display =
-          'none';
-
-        barcodeInput.value = '';
-
-        searchBtn.disabled =
-          false;
-
-        searchBtn.textContent =
-          'SEARCH';
-
-        barcodeInput.focus();
-
-      }
+      refreshSearch
     );
 
 
@@ -983,11 +1020,14 @@
                 item.amount === '' ||
 
                 !Number.isFinite(
-                  Number(item.amount)
+                  Number(
+                    item.amount
+                  )
                 ) ||
 
-                Number(item.amount)
-                <= 0
+                Number(
+                  item.amount
+                ) <= 0
 
             );
 
@@ -1001,7 +1041,8 @@
             return;
           }
 
-          submitBtn.disabled = true;
+          submitBtn.disabled =
+            true;
 
           submitBtn.textContent =
             'SENDING...';
@@ -1026,10 +1067,13 @@
                   item.quantity,
 
                 amount:
-                  Number(item.amount)
+                  Number(
+                    item.amount
+                  )
 
               })
             );
+
 
           fetch(
 
@@ -1083,9 +1127,11 @@
                 'success'
               );
 
-              purchaseList = [];
+              purchaseList =
+                [];
 
-              currentProduct = null;
+              currentProduct =
+                null;
 
               renderPurchaseList();
 
