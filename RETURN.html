@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>RETURNS</title>
 
@@ -75,14 +70,6 @@
       font-size: 44px;
       font-weight: 400;
       line-height: 1;
-    }
-
-    h2 {
-      margin: 42px 0 16px;
-      text-align: center;
-      color: #000000;
-      font-size: 28px;
-      font-weight: 400;
     }
 
     .return-form {
@@ -280,11 +267,11 @@
     #message {
       display: none;
       max-width: 500px;
-      margin: 30px auto 0;
+      margin: 22px auto 0;
       padding: 11px 15px;
       text-align: center;
       color: #000000;
-      font-size: 21px;
+      font-size: 20px;
       font-weight: 400;
     }
 
@@ -309,6 +296,7 @@
     .table-wrap {
       width: 100%;
       overflow-x: auto;
+      margin-top: 12px;
     }
 
     table {
@@ -321,7 +309,7 @@
 
     th,
     td {
-      padding: 8px 6px;
+      padding: 6px 6px;
       border: 1px solid #000000;
       text-align: center;
       font-weight: 400;
@@ -336,7 +324,7 @@
     }
 
     .empty-row td {
-      padding: 22px;
+      padding: 12px 6px;
       color: #000000;
       font-size: 20px;
       font-weight: 400;
@@ -351,10 +339,6 @@
 
       h1 {
         font-size: 34px;
-      }
-
-      h2 {
-        font-size: 26px;
       }
 
       .return-form {
@@ -396,8 +380,10 @@
         font-size: 19px;
       }
 
-      table {
-        font-size: 18px;
+      table,
+      th,
+      td {
+        font-size: 20px;
       }
 
     }
@@ -541,11 +527,6 @@
     </form>
 
 
-    <h2>
-      RETURN HISTORY
-    </h2>
-
-
     <div class="table-wrap">
 
       <table>
@@ -595,39 +576,25 @@
 
 
     const dateInput =
-      document.getElementById(
-        'date'
-      );
+      document.getElementById('date');
 
     const barcodeInput =
-      document.getElementById(
-        'barcode'
-      );
+      document.getElementById('barcode');
 
     const searchBtn =
-      document.getElementById(
-        'searchBtn'
-      );
+      document.getElementById('searchBtn');
 
     const refreshBtn =
-      document.getElementById(
-        'refreshBtn'
-      );
+      document.getElementById('refreshBtn');
 
     const addBtn =
-      document.getElementById(
-        'addBtn'
-      );
+      document.getElementById('addBtn');
 
     const productInfo =
-      document.getElementById(
-        'productInfo'
-      );
+      document.getElementById('productInfo');
 
     const message =
-      document.getElementById(
-        'message'
-      );
+      document.getElementById('message');
 
 
     const today =
@@ -927,8 +894,7 @@
 
       if (existing) {
 
-        existing.unit +=
-          1;
+        existing.unit += 1;
 
       } else {
 
@@ -1170,14 +1136,11 @@
         returnList.reduce(
 
           (sum, item) =>
-
             sum +
-
             (
               Number(
                 item.amount
-              )
-              || 0
+              ) || 0
             ),
 
           0
@@ -1280,9 +1243,7 @@
 
           const unit =
             item.units !== undefined
-
               ? item.units
-
               : item.quantity;
 
 
@@ -1380,30 +1341,11 @@
 
       return String(value)
 
-        .replaceAll(
-          '&',
-          '&amp;'
-        )
-
-        .replaceAll(
-          '<',
-          '&lt;'
-        )
-
-        .replaceAll(
-          '>',
-          '&gt;'
-        )
-
-        .replaceAll(
-          '"',
-          '&quot;'
-        )
-
-        .replaceAll(
-          "'",
-          '&#039;'
-        );
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
 
     }
 
@@ -1431,10 +1373,7 @@
       'keydown',
       function (event) {
 
-        if (
-          event.key ===
-          'Enter'
-        ) {
+        if (event.key === 'Enter') {
 
           event.preventDefault();
 
@@ -1459,9 +1398,7 @@
           event.preventDefault();
 
 
-          if (
-            !dateInput.value
-          ) {
+          if (!dateInput.value) {
 
             showMessage(
               'SET THE DATE',
@@ -1473,9 +1410,7 @@
           }
 
 
-          if (
-            !returnList.length
-          ) {
+          if (!returnList.length) {
 
             showMessage(
               'RETURN LIST EMPTY',
@@ -1703,7 +1638,6 @@
         'HOME.html';
 
     }
-
 
 
     loadReturnHistory();
