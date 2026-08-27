@@ -121,9 +121,7 @@
     .barcode-row,
     .result-row {
       display: grid;
-      grid-template-columns:
-        minmax(300px, 1fr)
-        160px;
+      grid-template-columns: minmax(300px, 1fr) 160px;
       gap: 18px;
       max-width: 620px;
       margin-bottom: 16px;
@@ -252,8 +250,9 @@
       display: grid;
       grid-template-columns:
         minmax(260px, 1fr)
-        160px
-        160px;
+        120px
+        150px
+        150px;
       gap: 12px;
       align-items: center;
       margin-bottom: 10px;
@@ -265,6 +264,14 @@
       font-weight: 400;
       line-height: 1.2;
       overflow-wrap: anywhere;
+    }
+
+    .amount-label {
+      font-size: 19px;
+      font-weight: 400;
+      color: #666666;
+      text-align: right;
+      white-space: nowrap;
     }
 
     .amount-input {
@@ -299,9 +306,7 @@
 
     .bottom-buttons {
       display: grid;
-      grid-template-columns:
-        1fr
-        1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 18px;
       margin-top: 16px;
     }
@@ -354,19 +359,23 @@
 
       .barcode-row,
       .result-row,
-      .purchase-item,
       .bottom-buttons {
         grid-template-columns: 1fr;
+      }
+
+      .purchase-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .amount-label {
+        text-align: left;
       }
 
       .barcode-row,
       .result-row {
         gap: 8px;
         max-width: none;
-      }
-
-      .purchase-item {
-        gap: 8px;
       }
 
       .bottom-buttons {
@@ -444,19 +453,9 @@
           >
 
             <svg viewBox="0 0 24 24">
-
-              <path
-                d="M20 7V3l-2 2a8 8 0 0 0-13 3"
-              />
-
-              <path
-                d="M4 17v4l2-2a8 8 0 0 0 13-3"
-              />
-
-              <path
-                d="M20 3h-4M4 21h4"
-              />
-
+              <path d="M20 7V3l-2 2a8 8 0 0 0-13 3"/>
+              <path d="M4 17v4l2-2a8 8 0 0 0 13-3"/>
+              <path d="M20 3h-4M4 21h4"/>
             </svg>
 
           </button>
@@ -689,9 +688,7 @@
       renderPurchaseList();
 
       barcodeInput.value = '';
-
       productInfo.style.display = 'none';
-
       addToListBtn.style.display = 'none';
 
       currentProduct = null;
@@ -728,6 +725,7 @@
           row.className =
             'purchase-item';
 
+
           const description =
             document.createElement('div');
 
@@ -739,15 +737,32 @@
             ' × ' +
             item.quantity;
 
+
+          const amountLabel =
+            document.createElement('div');
+
+          amountLabel.className =
+            'amount-label';
+
+          amountLabel.textContent =
+            'ENTER AMOUNT';
+
+
           const amount =
             document.createElement('input');
 
           amount.type = 'number';
+
           amount.step = '0.01';
+
           amount.min = '0';
-          amount.placeholder = 'ENTER AMOUNT';
-          amount.className = 'amount-input';
-          amount.value = item.amount;
+
+          amount.className =
+            'amount-input';
+
+          amount.value =
+            item.amount;
+
 
           amount.addEventListener(
             'input',
@@ -761,12 +776,18 @@
             }
           );
 
+
           const remove =
             document.createElement('button');
 
           remove.type = 'button';
-          remove.className = 'remove-button';
-          remove.textContent = 'REMOVE';
+
+          remove.className =
+            'remove-button';
+
+          remove.textContent =
+            'REMOVE';
+
 
           remove.addEventListener(
             'click',
@@ -782,11 +803,26 @@
             }
           );
 
-          row.appendChild(description);
-          row.appendChild(amount);
-          row.appendChild(remove);
 
-          items.appendChild(row);
+          row.appendChild(
+            description
+          );
+
+          row.appendChild(
+            amountLabel
+          );
+
+          row.appendChild(
+            amount
+          );
+
+          row.appendChild(
+            remove
+          );
+
+          items.appendChild(
+            row
+          );
 
         }
       );
@@ -845,9 +881,7 @@
         * 60000
 
       )
-
       .toISOString()
-
       .split('T')[0];
 
 
@@ -865,15 +899,19 @@
 
         productInfo.textContent = '';
 
-        productInfo.style.display = 'none';
+        productInfo.style.display =
+          'none';
 
-        addToListBtn.style.display = 'none';
+        addToListBtn.style.display =
+          'none';
 
         barcodeInput.value = '';
 
-        searchBtn.disabled = false;
+        searchBtn.disabled =
+          false;
 
-        searchBtn.textContent = 'SEARCH';
+        searchBtn.textContent =
+          'SEARCH';
 
         barcodeInput.focus();
 
@@ -1057,7 +1095,8 @@
               addToListBtn.style.display =
                 'none';
 
-              barcodeInput.value = '';
+              barcodeInput.value =
+                '';
 
               barcodeInput.focus();
 
