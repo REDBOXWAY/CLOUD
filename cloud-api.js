@@ -48,6 +48,12 @@
       gate.innerHTML = '<form><div class="cloud-welcome">Welcome</div><h1>CLOUD DRIVE</h1><span class="cloud-field"><input name="email" type="email" autocomplete="username" placeholder="Enter Login Here" aria-label="Enter Login Here" autocapitalize="none" spellcheck="false" required></span><span class="cloud-field cloud-password-field"><input id="cloud-password" name="password" type="password" autocomplete="current-password" placeholder="Enter Password Here" aria-label="Enter Password Here" required><button id="cloud-password-toggle" type="button" aria-label="Show password" title="Show password" aria-controls="cloud-password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="eye-slash" d="m3 3 18 18"/></svg></button></span><button type="submit">SIGN IN</button><p role="alert" id="cloud-login-message"></p></form>';
       document.body.appendChild(gate);
       const form = gate.querySelector('form');
+      // Remember only the login address in this tab; never persist a password.
+      try { form.elements.email.value = sessionStorage.getItem('cloud-login-email') || ''; } catch (_) {}
+      function rememberLogin(email) {
+        if (!email) return;
+        try { sessionStorage.setItem('cloud-login-email', email); } catch (_) {}
+      }
       const passwordInput = form.elements.password;
       const passwordToggle = form.querySelector('#cloud-password-toggle');
       passwordToggle.addEventListener('click', () => {
@@ -73,10 +79,14 @@
         return field;
       });
       function updateSavedField({input, overlay, text}) {
-        const visible = input.value.length > 0 && document.activeElement !== input;
+        // Chromium may paint a saved password before exposing its value to JavaScript.
+        let savedPasswordPreview = false;
+        if (input === passwordInput && input.type === 'password' && !input.value) {
+          try { savedPasswordPreview = input.matches(':autofill') || input.matches(':-webkit-autofill') || !input.matches(':placeholder-shown'); } catch (_) {}
+        }
+        const visible = (input.value.length > 0 || savedPasswordPreview) && document.activeElement !== input;
         overlay.hidden = !visible;
-        // Never mirror the password itself unless the user has explicitly revealed it.
-        const value = !visible ? '' : input.type === 'password' ? '•'.repeat(input.value.length) : input.value;
+        const value = !visible ? '' : input.type === 'password' ? '•'.repeat(input.value.length || 8) : input.value;
         if (text.textContent !== value) text.textContent = value;
       }
       const syncSavedFields = () => savedFields.forEach(updateSavedField);
@@ -93,13 +103,14 @@
       async function access() {
         const {error} = await client.rpc('cloud_read',{p_action:'access'});
         if (error) throw error;
+        clearInterval(savedValueTimer);
         gate.remove();
         const bar = document.createElement('div'); bar.id='cloud-tools';
         const logout = document.createElement('button');
         logout.type='button';logout.className='cloud-logout';
         logout.setAttribute('aria-label','SIGN OUT');logout.title='SIGN OUT';
         logout.innerHTML='<svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><defs><linearGradient id="cloudExitGradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ff7827"/><stop offset="1" stop-color="#ffd633"/></linearGradient></defs><g fill="none" stroke="url(#cloudExitGradient)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"><path d="M86 67V64a48 48 0 0 1 48-48h48a48 48 0 0 1 48 48v128a48 48 0 0 1-48 48h-48a48 48 0 0 1-48-48v-3"/><path d="M148 128H18m32-38-34 38 34 38"/></g></svg>';
-        logout.onclick=async()=>{await client.auth.signOut();location.reload();};bar.appendChild(logout);
+        logout.onclick=async()=>{const {data:{session}}=await client.auth.getSession();if(session) rememberLogin(session.user.email);await client.auth.signOut();location.reload();};bar.appendChild(logout);
         const home = document.querySelector('main.home');
         if (home) {bar.classList.add('cloud-home-tools');home.prepend(bar);}
         else {document.body.prepend(bar);}
@@ -110,11 +121,12 @@
         try {
           const {error}=await client.auth.signInWithPassword({email:form.elements.email.value.trim(),password:form.elements.password.value});
           if(error) throw error;
+          rememberLogin(form.elements.email.value.trim());
           await access();
         } catch(e) {status.textContent=e.message||'Не удалось войти';}
         finally {button.disabled=false;}
       };
-      try {const {data:{session}}=await client.auth.getSession();if(session) await access();}
+      try {const {data:{session}}=await client.auth.getSession();if(session) { rememberLogin(session.user.email); await access(); }}
       catch(e){status.textContent=e.message||'Не удалось проверить доступ';}
     },{once:true});
   });
