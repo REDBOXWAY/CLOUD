@@ -17,7 +17,7 @@
         #cloud-login h1 {margin:0 0 20px;text-align:center;color:#fff;font:700 clamp(32px,7.5vw,60px)/1.1 "Arial Narrow",Arial,sans-serif;letter-spacing:0;white-space:nowrap}
         #cloud-login input,#cloud-login button {box-sizing:border-box;display:block;width:100%;min-width:0;height:52px;margin:0;padding:12px 18px;border:2px solid transparent;border-radius:10px;background:linear-gradient(#000,#000) padding-box,linear-gradient(45deg,#ff7827,#ffd633) border-box;color:#fff;font:400 18px/1.2 Arial,sans-serif;letter-spacing:.4px;text-align:center;box-shadow:none}
         #cloud-login .cloud-field {display:block;min-width:0;padding:2px;border-radius:10px;background:linear-gradient(45deg,#ff7827,#ffd633)}
-        #cloud-login .cloud-field input {height:48px;border:0;border-radius:8px;background:#000;text-transform:none;caret-color:#ffd633}
+        #cloud-login .cloud-field input {height:48px;border:0;border-radius:8px;background:#000;font-size:24px;padding-top:8px;padding-bottom:8px;text-transform:none;caret-color:#ffd633}
         #cloud-login .cloud-field:focus-within {outline:1px solid #ffd633;outline-offset:4px}
         #cloud-login .cloud-field input:focus-visible {outline:none}
         #cloud-login .cloud-password-field {position:relative}
@@ -27,7 +27,7 @@
         #cloud-login #cloud-password-toggle .eye-slash {display:none}
         #cloud-login #cloud-password-toggle[aria-pressed="true"] .eye-slash {display:block}
         #cloud-login .cloud-password-field input::-ms-reveal,#cloud-login .cloud-password-field input::-ms-clear {display:none}
-        #cloud-login input::placeholder {color:#fff;opacity:1}
+        #cloud-login input::placeholder {color:#fff;opacity:1;font-size:18px}
         #cloud-login button {margin-top:24px;background:#0b4f2c;border-color:#0b4f2c;color:#fff;cursor:pointer;text-transform:uppercase}
         #cloud-login button:hover {filter:brightness(1.12)}
         #cloud-login button:disabled {opacity:.55;cursor:wait}
