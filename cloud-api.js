@@ -15,8 +15,8 @@
         #cloud-login form {width:min(520px,100%);margin:auto;display:grid;gap:24px}
         #cloud-login .cloud-welcome {margin:0 0 8px;text-align:center;color:#ffd020;font:600 clamp(30px,6vw,44px)/1.15 "Arial Narrow",Arial,sans-serif}
         #cloud-login h1 {margin:0 0 20px;text-align:center;color:#fff;font:700 clamp(32px,7.5vw,60px)/1.1 "Arial Narrow",Arial,sans-serif;letter-spacing:0;white-space:nowrap}
-        #cloud-login input,#cloud-login button {box-sizing:border-box;display:block;width:100%;min-width:0;height:52px;margin:0;padding:12px 18px;border:2px solid transparent;border-radius:10px;background:linear-gradient(#000,#000) padding-box,linear-gradient(135deg,#ff9b25,#ffd633) border-box;color:#fff;font:400 18px/1.2 Arial,sans-serif;letter-spacing:.4px;text-align:center;box-shadow:none}
-        #cloud-login input {border:2px solid #ffd633;background:#000;text-transform:none;caret-color:#ffd633}
+        #cloud-login input,#cloud-login button {box-sizing:border-box;display:block;width:100%;min-width:0;height:52px;margin:0;padding:12px 18px;border:2px solid transparent;border-radius:10px;background:linear-gradient(#000,#000) padding-box,linear-gradient(45deg,#ff7827,#ffd633) border-box;color:#fff;font:400 18px/1.2 Arial,sans-serif;letter-spacing:.4px;text-align:center;box-shadow:none}
+        #cloud-login input {border:2px solid transparent;background:linear-gradient(#000,#000) padding-box,linear-gradient(45deg,#ff7827,#ffd633) border-box;text-transform:none;caret-color:#ffd633}
         #cloud-login input::placeholder {color:#fff;opacity:1}
         #cloud-login button {color:#ffd633;cursor:pointer;text-transform:uppercase}
         #cloud-login button:hover {filter:brightness(1.12)}
@@ -29,7 +29,7 @@
       `;
       document.head.appendChild(style);
       const gate = document.createElement('div'); gate.id = 'cloud-login';
-      gate.innerHTML = '<form><div class="cloud-welcome">Welcome</div><h1>CLOUD DRIVE</h1><input name="email" type="email" autocomplete="username" placeholder="LOGIN" aria-label="LOGIN" autocapitalize="none" spellcheck="false" required><input name="password" type="password" autocomplete="current-password" placeholder="PASSWORD" aria-label="PASSWORD" required><button type="submit">SIGN IN</button><p role="alert" id="cloud-login-message"></p></form>';
+      gate.innerHTML = '<form><div class="cloud-welcome">Welcome</div><h1>CLOUD DRIVE</h1><input name="email" type="email" autocomplete="username" placeholder="Enter Login Here" aria-label="Enter Login Here" autocapitalize="none" spellcheck="false" required><input name="password" type="password" autocomplete="current-password" placeholder="Enter Password Here" aria-label="Enter Password Here" required><button type="submit">SIGN IN</button><p role="alert" id="cloud-login-message"></p></form>';
       document.body.appendChild(gate);
       const form = gate.querySelector('form');
       const status = gate.querySelector('p');
