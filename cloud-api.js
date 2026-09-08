@@ -20,6 +20,13 @@
         #cloud-login .cloud-field input {height:48px;border:0;border-radius:8px;background:#000;text-transform:none;caret-color:#ffd633}
         #cloud-login .cloud-field:focus-within {outline:1px solid #ffd633;outline-offset:4px}
         #cloud-login .cloud-field input:focus-visible {outline:none}
+        #cloud-login .cloud-password-field {position:relative}
+        #cloud-login .cloud-password-field input {padding-left:48px;padding-right:48px}
+        #cloud-login #cloud-password-toggle {position:absolute;right:6px;top:6px;display:grid;place-items:center;width:40px;min-width:40px;height:40px;margin:0;padding:8px;border:0;border-radius:6px;background:#000;color:#ffb12b;box-shadow:none;cursor:pointer}
+        #cloud-login #cloud-password-toggle svg {display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+        #cloud-login #cloud-password-toggle .eye-slash {display:none}
+        #cloud-login #cloud-password-toggle[aria-pressed="true"] .eye-slash {display:block}
+        #cloud-login .cloud-password-field input::-ms-reveal,#cloud-login .cloud-password-field input::-ms-clear {display:none}
         #cloud-login input::placeholder {color:#fff;opacity:1}
         #cloud-login button {margin-top:24px;background:#0b4f2c;border-color:#0b4f2c;color:#fff;cursor:pointer;text-transform:uppercase}
         #cloud-login button:hover {filter:brightness(1.12)}
@@ -32,9 +39,18 @@
       `;
       document.head.appendChild(style);
       const gate = document.createElement('div'); gate.id = 'cloud-login';
-      gate.innerHTML = '<form><div class="cloud-welcome">Welcome</div><h1>CLOUD DRIVE</h1><span class="cloud-field"><input name="email" type="email" autocomplete="username" placeholder="Enter Login Here" aria-label="Enter Login Here" autocapitalize="none" spellcheck="false" required></span><span class="cloud-field"><input name="password" type="password" autocomplete="current-password" placeholder="Enter Password Here" aria-label="Enter Password Here" required></span><button type="submit">SIGN IN</button><p role="alert" id="cloud-login-message"></p></form>';
+      gate.innerHTML = '<form><div class="cloud-welcome">Welcome</div><h1>CLOUD DRIVE</h1><span class="cloud-field"><input name="email" type="email" autocomplete="username" placeholder="Enter Login Here" aria-label="Enter Login Here" autocapitalize="none" spellcheck="false" required></span><span class="cloud-field cloud-password-field"><input id="cloud-password" name="password" type="password" autocomplete="current-password" placeholder="Enter Password Here" aria-label="Enter Password Here" required><button id="cloud-password-toggle" type="button" aria-label="Show password" title="Show password" aria-controls="cloud-password" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path class="eye-slash" d="m3 3 18 18"/></svg></button></span><button type="submit">SIGN IN</button><p role="alert" id="cloud-login-message"></p></form>';
       document.body.appendChild(gate);
       const form = gate.querySelector('form');
+      const passwordInput = form.elements.password;
+      const passwordToggle = form.querySelector('#cloud-password-toggle');
+      passwordToggle.addEventListener('click', () => {
+        const show = passwordInput.type === 'password';
+        passwordInput.type = show ? 'text' : 'password';
+        passwordToggle.setAttribute('aria-pressed', String(show));
+        passwordToggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        passwordToggle.title = show ? 'Hide password' : 'Show password';
+      });
       const status = gate.querySelector('p');
       if (!window.supabase) { status.textContent = 'Не удалось загрузить подключение. Проверьте интернет и обновите страницу.'; return; }
       client = window.supabase.createClient(url,key);
@@ -54,7 +70,7 @@
         resolve();
       }
       form.onsubmit=async event=>{
-        event.preventDefault();const button=form.querySelector('button');button.disabled=true;status.textContent='';
+        event.preventDefault();const button=form.querySelector('button[type="submit"]');button.disabled=true;status.textContent='';
         try {
           const {error}=await client.auth.signInWithPassword({email:form.elements.email.value.trim(),password:form.elements.password.value});
           if(error) throw error;
