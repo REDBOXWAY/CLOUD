@@ -370,6 +370,8 @@
 
   </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="cloud-api.js"></script>
 </head>
 
 <body>
@@ -494,8 +496,7 @@
 
   <script>
 
-    const BACKEND_URL =
-      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec';
+    
 
     let currentProduct = null;
     let purchaseList = [];
@@ -612,36 +613,7 @@
       searchBtn.textContent =
         'SEARCHING...';
 
-      const oldScript =
-        document.getElementById(
-          'barcodeLookup'
-        );
-
-      if (oldScript) {
-        oldScript.remove();
-      }
-
-      const script =
-        document.createElement(
-          'script'
-        );
-
-      script.id =
-        'barcodeLookup';
-
-      script.onerror =
-        barcodeLookupError;
-
-      script.src =
-        BACKEND_URL +
-        '?action=product&barcode=' +
-        encodeURIComponent(barcode) +
-        '&callback=loadProduct&_=' +
-        Date.now();
-
-      document.body.appendChild(
-        script
-      );
+      CloudAPI.read("product", barcode).then(loadProduct).catch(barcodeLookupError);
     }
 
 
@@ -1085,9 +1057,7 @@
             );
 
 
-          fetch(
-
-            BACKEND_URL,
+          CloudAPI.send(
 
             {
 

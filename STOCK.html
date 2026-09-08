@@ -149,6 +149,8 @@
     }
 
   </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="cloud-api.js"></script>
 </head>
 
 
@@ -282,7 +284,7 @@
           row.innerHTML = `
 
             <td>
-              ${category}
+              ${CloudAPI.escape(category)}
             </td>
 
             <td>
@@ -307,7 +309,7 @@
 
             <td>
               ${
-                item.sold > 0
+                item.sold !== 0
                   ? (
                       Number(item.salesAmount) /
                       Number(item.sold)
@@ -455,19 +457,7 @@
 
 
 
-    const script =
-      document.createElement(
-        'script'
-      );
-
-
-    script.src =
-      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=stock&callback=loadStock';
-
-
-    document.body.appendChild(
-      script
-    );
+    CloudAPI.read("stock").then(loadStock).catch(CloudAPI.showError);
 
   </script>
 

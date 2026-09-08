@@ -164,6 +164,8 @@
 
   </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="cloud-api.js"></script>
 </head>
 
 
@@ -356,8 +358,8 @@
 
 
               row.innerHTML = `
-                <td>${date}</td>
-                <td>${category}</td>
+                <td>${CloudAPI.escape(date)}</td>
+                <td>${CloudAPI.escape(category)}</td>
                 <td>${item.quantity}</td>
                 <td>${Number(item.amount).toFixed(2)} ₼</td>
               `;
@@ -383,7 +385,7 @@
 
 
           totalRow.innerHTML = `
-            <td>${date}</td>
+            <td>${CloudAPI.escape(date)}</td>
             <td>${items.length}</td>
             <td>${totalQuantity}</td>
             <td>${totalAmount.toFixed(2)} ₼</td>
@@ -422,19 +424,7 @@
 
 
 
-    const script =
-      document.createElement(
-        'script'
-      );
-
-
-    script.src =
-      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec?action=analytics&callback=loadAnalytics';
-
-
-    document.body.appendChild(
-      script
-    );
+    CloudAPI.read("analytics").then(loadAnalytics).catch(CloudAPI.showError);
 
   </script>
 

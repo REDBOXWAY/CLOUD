@@ -390,6 +390,8 @@
 
   </style>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="cloud-api.js"></script>
 </head>
 
 
@@ -566,8 +568,7 @@
 
   <script>
 
-    const BACKEND_URL =
-      'https://script.google.com/macros/s/AKfycbwjwtmAP5m5LxLk-zBepSD4p_lwSRcNEHnhi9VzX7vV_nCqdi_ryk-fkuRwIH58o2Ld/exec';
+    
 
 
     let currentProduct = null;
@@ -766,48 +767,7 @@
         'SEARCHING...';
 
 
-      const oldScript =
-        document.getElementById(
-          'productLookup'
-        );
-
-
-      if (oldScript) {
-        oldScript.remove();
-      }
-
-
-      const script =
-        document.createElement(
-          'script'
-        );
-
-
-      script.id =
-        'productLookup';
-
-
-      script.onerror =
-        lookupError;
-
-
-      script.src =
-        BACKEND_URL +
-
-        '?action=product&barcode=' +
-
-        encodeURIComponent(
-          barcode
-        ) +
-
-        '&callback=loadProduct&_=' +
-
-        Date.now();
-
-
-      document.body.appendChild(
-        script
-      );
+      CloudAPI.read("product", barcode).then(loadProduct).catch(lookupError);
 
     }
 
@@ -1296,42 +1256,7 @@
 
     function loadReturnHistory() {
 
-      const oldScript =
-        document.getElementById(
-          'returnHistory'
-        );
-
-
-      if (oldScript) {
-        oldScript.remove();
-      }
-
-
-      const script =
-        document.createElement(
-          'script'
-        );
-
-
-      script.id =
-        'returnHistory';
-
-
-      script.src =
-        BACKEND_URL +
-
-        '?action=return' +
-
-        '&callback=loadReturns' +
-
-        '&_=' +
-
-        Date.now();
-
-
-      document.body.appendChild(
-        script
-      );
+      CloudAPI.read("return").then(loadReturns).catch(CloudAPI.showError);
 
     }
 
@@ -1514,8 +1439,7 @@
             );
 
 
-          fetch(
-            BACKEND_URL,
+          CloudAPI.send(
             {
 
               method:
