@@ -16,7 +16,7 @@
         #cloud-login .cloud-welcome {margin:0 0 8px;text-align:center;color:#ffd633;background:linear-gradient(45deg,#ff7827,#ffd633);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;font:600 clamp(30px,6vw,44px)/1.15 "Arial Narrow",Arial,sans-serif}
         #cloud-login h1 {margin:0 0 20px;text-align:center;color:#fff;font:700 clamp(32px,7.5vw,60px)/1.1 "Arial Narrow",Arial,sans-serif;letter-spacing:0;white-space:nowrap}
         #cloud-login input,#cloud-login button {box-sizing:border-box;display:block;width:100%;min-width:0;height:52px;margin:0;padding:12px 18px;border:2px solid transparent;border-radius:10px;background:linear-gradient(#000,#000) padding-box,linear-gradient(45deg,#ff7827,#ffd633) border-box;color:#fff;font:400 18px/1.2 Arial,sans-serif;letter-spacing:.4px;text-align:center;box-shadow:none}
-        #cloud-login .cloud-field {display:block;min-width:0;padding:2px;border-radius:10px;background:linear-gradient(45deg,#ff7827,#ffd633)}
+        #cloud-login .cloud-field {position:relative;display:block;min-width:0;padding:2px;border-radius:10px;background:linear-gradient(45deg,#ff7827,#ffd633)}
         #cloud-login .cloud-field input {height:48px;border:0;border-radius:8px;background:#000;font:400 24px/1.2 Arial,sans-serif !important;padding-top:8px;padding-bottom:8px;text-transform:none;caret-color:#ffd633}
         #cloud-login .cloud-field:focus-within {outline:1px solid #ffd633;outline-offset:4px}
         #cloud-login .cloud-field input:focus-visible {outline:none}
@@ -28,6 +28,11 @@
         #cloud-login #cloud-password-toggle[aria-pressed="true"] .eye-slash {display:block}
         #cloud-login .cloud-password-field input::-ms-reveal,#cloud-login .cloud-password-field input::-ms-clear {display:none}
         #cloud-login .cloud-field input:autofill,#cloud-login .cloud-field input:-webkit-autofill {font:400 24px/1.2 Arial,sans-serif !important}
+        #cloud-login .cloud-saved-value {position:absolute;inset:2px;display:flex;align-items:center;justify-content:center;padding:8px 18px;border-radius:8px;background:#000;color:#fff;font:400 24px/1.2 Arial,sans-serif;letter-spacing:.4px;text-transform:none;pointer-events:none;overflow:hidden;white-space:nowrap}
+        #cloud-login .cloud-saved-value[hidden] {display:none}
+        #cloud-login .cloud-password-field .cloud-saved-value {padding-left:48px;padding-right:48px}
+        #cloud-login .cloud-saved-value span {display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+        #cloud-login #cloud-password-toggle {z-index:2}
         #cloud-login input::placeholder {color:#fff;opacity:1;font-size:18px}
         #cloud-login button {margin-top:24px;background:#0b4f2c;border-color:#0b4f2c;color:#fff;cursor:pointer;text-transform:uppercase}
         #cloud-login button:hover {filter:brightness(1.12)}
@@ -52,6 +57,36 @@
         passwordToggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
         passwordToggle.title = show ? 'Hide password' : 'Show password';
       });
+      // Display committed saved values independently of the browser's autofill renderer.
+      const savedFields = [form.elements.email, passwordInput].map(input => {
+        const overlay = document.createElement('span');
+        overlay.className = 'cloud-saved-value';
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.hidden = true;
+        const text = document.createElement('span');
+        overlay.appendChild(text);
+        input.parentElement.appendChild(overlay);
+        const field = {input, overlay, text};
+        for (const event of ['input', 'change', 'focus', 'blur']) {
+          input.addEventListener(event, () => updateSavedField(field));
+        }
+        return field;
+      });
+      function updateSavedField({input, overlay, text}) {
+        const visible = input.value.length > 0 && document.activeElement !== input;
+        overlay.hidden = !visible;
+        // Never mirror the password itself unless the user has explicitly revealed it.
+        const value = !visible ? '' : input.type === 'password' ? '•'.repeat(input.value.length) : input.value;
+        if (text.textContent !== value) text.textContent = value;
+      }
+      const syncSavedFields = () => savedFields.forEach(updateSavedField);
+      passwordToggle.addEventListener('click', syncSavedFields);
+      syncSavedFields();
+      // Password managers may fill without input/change events.
+      const savedValueTimer = setInterval(() => {
+        if (!gate.isConnected) { clearInterval(savedValueTimer); return; }
+        syncSavedFields();
+      }, 250);
       const status = gate.querySelector('p');
       if (!window.supabase) { status.textContent = 'Не удалось загрузить подключение. Проверьте интернет и обновите страницу.'; return; }
       client = window.supabase.createClient(url,key);
