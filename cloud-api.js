@@ -18,7 +18,7 @@
         #cloud-login input,#cloud-login button {box-sizing:border-box;display:block;width:100%;min-width:0;height:52px;margin:0;padding:12px 18px;border:2px solid transparent;border-radius:10px;background:linear-gradient(#000,#000) padding-box,linear-gradient(135deg,#ff9b25,#ffd633) border-box;color:#fff;font:400 18px/1.2 Arial,sans-serif;letter-spacing:.4px;text-align:center;box-shadow:none}
         #cloud-login input {text-transform:none;caret-color:#ffd633}
         #cloud-login input::placeholder {color:#fff;opacity:1}
-        #cloud-login button {background:#ffd633;border-color:#ffd633;color:#000;cursor:pointer;text-transform:uppercase}
+        #cloud-login button {color:#ffd633;cursor:pointer;text-transform:uppercase}
         #cloud-login button:hover {filter:brightness(1.12)}
         #cloud-login button:disabled {opacity:.55;cursor:wait}
         #cloud-login input:focus-visible,#cloud-login button:focus-visible {outline:1px solid #ffd633;outline-offset:4px}
