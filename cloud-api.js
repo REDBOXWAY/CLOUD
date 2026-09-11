@@ -4,6 +4,190 @@
   const url = 'https://rsmudwmpcicobyasrbys.supabase.co';
   const key = 'sb_publishable_gK5PaPntOfQCcpAMi9oGfQ_mMrxaQcY';
   let client;
+
+  // Product identity rule:
+  // BARCODE = unique factory barcode.
+  // CATEGORY = TYPE-SIZE-COLOR-BRAND-GENDER.
+  // Older test data may still look like BARCODE-CATEGORY; keep it readable while
+  // the database is migrated to separate fields.
+  function splitLegacyCategory(value, explicitBarcode = '') {
+    const raw = String(value ?? '').trim();
+    let barcode = String(explicitBarcode ?? '').trim();
+    let category = raw;
+
+    if (barcode && raw.startsWith(barcode + '-')) {
+      category = raw.slice(barcode.length + 1).trim();
+      return {barcode, category};
+    }
+
+    const legacy = raw.match(/^(\d+)-(.+)$/);
+    if (legacy) {
+      if (!barcode) barcode = legacy[1];
+      if (!explicitBarcode || barcode === legacy[1]) category = legacy[2].trim();
+    }
+
+    return {barcode, category};
+  }
+
+  function categoryParts(item) {
+    const keys = ['type', 'size', 'color', 'brand', 'gender'];
+    const parts = keys.map(key => String(item?.[key] ?? '').trim());
+    return parts.every(Boolean) ? parts.join('-') : '';
+  }
+
+  function categorySource(item) {
+    const composed = categoryParts(item);
+    if (composed) return composed;
+
+    const candidates = [item?.category, item?.article, item?.product]
+      .map(value => String(value ?? '').trim())
+      .filter(Boolean);
+
+    if (!candidates.length) return '';
+
+    const explicitBarcode = String(item?.barcode ?? '').trim();
+    let best = candidates[0];
+    let bestScore = -1;
+
+    for (const candidate of candidates) {
+      const cleaned = splitLegacyCategory(candidate, explicitBarcode).category;
+      const score = (cleaned.match(/-/g) || []).length;
+      if (score > bestScore) {
+        best = candidate;
+        bestScore = score;
+      }
+    }
+
+    return best;
+  }
+
+  function normalizeProductItem(item) {
+    if (!item || typeof item !== 'object') return item;
+
+    const source = categorySource(item);
+    const parsed = splitLegacyCategory(source, item.barcode);
+    const category = parsed.category || String(item.category ?? item.article ?? item.product ?? '').trim();
+
+    return {
+      ...item,
+      barcode: parsed.barcode || String(item.barcode ?? '').trim(),
+      category,
+      // The current Supabase RPC still uses the legacy field name "article".
+      // Keep the protocol compatible, but store/display the clean CATEGORY value.
+      article: category || String(item.article ?? '').trim()
+    };
+  }
+
+  function normalizeReadData(action, data) {
+    if (Array.isArray(data)) {
+      if (['stock', 'analytics', 'return'].includes(action)) {
+        return data.map(normalizeProductItem);
+      }
+      return data;
+    }
+
+    if (action === 'product' && data) return normalizeProductItem(data);
+    return data;
+  }
+
+  function installStockExportV2() {
+    if (typeof window.stockZip !== 'function') return;
+
+    window.exportStockExcel = function exportStockExcelV2() {
+      const xml = value => String(value)
+        .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+        .replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
+      const rows = Array.from(document.querySelectorAll('table tr'));
+      const quantities = [2, 5, 9];
+      const sheetRows = rows.map((row, r) => '<row r="' + (r + 1) + '">' + Array.from(row.cells).map((cell, c) => {
+        const address = String.fromCharCode(65 + c) + (r + 1);
+        const value = cell.textContent.trim();
+        if (r > 0 && c >= 2 && value !== '—' && value !== '') {
+          const number = Number(value.replace(/\s|₼/g, ''));
+          if (!Number.isFinite(number)) throw new Error('Invalid stock value: ' + value);
+          return '<c r="' + address + '" s="' + (quantities.includes(c) ? 1 : 2) + '"><v>' + number + '</v></c>';
+        }
+        return '<c r="' + address + '" t="inlineStr"><is><t xml:space="preserve">' + xml(value) + '</t></is></c>';
+      }).join('') + '</row>').join('');
+
+      const files = {
+        '[Content_Types].xml': '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>',
+        '_rels/.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
+        'xl/workbook.xml': '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="STOCK" sheetId="1" r:id="rId1"/></sheets></workbook>',
+        'xl/_rels/workbook.xml.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
+        'xl/styles.xml': '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.00 &quot;₼&quot;"/></numFmts><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="3"><xf xfId="0"/><xf xfId="0" numFmtId="1" applyNumberFormat="1"/><xf xfId="0" numFmtId="164" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>',
+        'xl/worksheets/sheet1.xml': '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="24" customWidth="1"/><col min="2" max="2" width="48" customWidth="1"/><col min="3" max="12" width="23" customWidth="1"/></cols><sheetData>' + sheetRows + '</sheetData>' + (rows.length > 2 ? '<autoFilter ref="A1:L' + (rows.length - 1) + '"/>' : '') + '</worksheet>'
+      };
+
+      const blob = new Blob([window.stockZip(files)], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = objectUrl;
+      link.download = 'STOCK_' + window.CloudAPI.today() + '.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+    };
+  }
+
+  function prepareProductSchemaUI() {
+    if (document.documentElement.dataset.cloudProductSchema === 'v2') return;
+    document.documentElement.dataset.cloudProductSchema = 'v2';
+
+    const page = (location.pathname.split('/').pop() || '').toUpperCase();
+
+    if (page === 'STOCK.HTML') {
+      const header = document.querySelector('table thead tr');
+      if (header && !Array.from(header.cells).some(cell => cell.textContent.trim() === 'BARCODE')) {
+        const barcodeHeader = document.createElement('th');
+        barcodeHeader.textContent = 'BARCODE';
+        header.insertBefore(barcodeHeader, header.firstElementChild);
+      }
+
+      if (typeof window.loadStock === 'function' && !window.loadStock.__barcodeCategoryV2) {
+        const originalLoadStock = window.loadStock;
+        const wrapped = function(data) {
+          originalLoadStock(data);
+          const rows = Array.from(document.querySelectorAll('#stockData tr'));
+          const items = Array.isArray(data) ? data : [];
+
+          items.forEach((item, index) => {
+            const row = rows[index];
+            if (!row) return;
+            const cell = document.createElement('td');
+            cell.textContent = String(item?.barcode ?? '');
+            row.insertBefore(cell, row.firstElementChild);
+          });
+
+          const totalRow = rows[items.length];
+          if (totalRow) {
+            if (totalRow.cells[0]) totalRow.cells[0].textContent = '—';
+            const totalCell = document.createElement('td');
+            totalCell.textContent = 'TOTAL';
+            totalRow.insertBefore(totalCell, totalRow.firstElementChild);
+          }
+        };
+        wrapped.__barcodeCategoryV2 = true;
+        window.loadStock = wrapped;
+      }
+
+      installStockExportV2();
+    }
+
+    if (page === 'ANALYTICS.HTML') {
+      const headers = Array.from(document.querySelectorAll('table thead th'));
+      const article = headers.find(cell => cell.textContent.trim() === 'ARTICLE');
+      if (article) article.textContent = 'CATEGORY';
+    }
+
+    if (page === 'RETURN.HTML') {
+      const headers = Array.from(document.querySelectorAll('table thead th'));
+      const article = headers.find(cell => cell.textContent.trim() === 'ARTICLE');
+      if (article) article.textContent = 'CATEGORY';
+    }
+  }
+
   const ready = new Promise(resolve => {
     document.addEventListener('DOMContentLoaded', async () => {
       const style = document.createElement('style');
@@ -114,6 +298,7 @@
         const home = document.querySelector('main.home');
         if (home) {bar.classList.add('cloud-home-tools');home.prepend(bar);}
         else {document.body.prepend(bar);}
+        prepareProductSchemaUI();
         resolve();
       }
       form.onsubmit=async event=>{
@@ -141,7 +326,8 @@
     async read(action,barcode='') {
       await ready;
       const {data,error}=await client.rpc('cloud_read',{p_action:action,p_barcode:barcode});
-      if(error) throw error;return data;
+      if(error) throw error;
+      return normalizeReadData(action, data);
     },
     async send(options) {
       await ready;
