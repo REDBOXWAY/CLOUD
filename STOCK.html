@@ -1,176 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>STOCK</title>
-
   <style>
-
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    html, body {
+      margin:0; padding:0; min-height:100%;
+      font-family:"Arial Narrow", Arial, sans-serif;
+      font-weight:400; text-transform:uppercase; letter-spacing:.2px;
     }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      font-family: "Arial Narrow", Arial, sans-serif;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.2px;
+    body { min-height:100vh; background:#fff; color:#000; }
+    button, table, th, td {
+      font-family:"Arial Narrow", Arial, sans-serif;
+      font-weight:400; text-transform:uppercase; letter-spacing:.2px;
     }
-
-    body {
-      min-height: 100vh;
-      background: #ffffff;
-      color: #000000;
-      font-family: "Arial Narrow", Arial, sans-serif;
-      font-weight: 400;
-    }
-
-    button,
-    table,
-    th,
-    td {
-      font-family: "Arial Narrow", Arial, sans-serif;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.2px;
-    }
-
-    .container {
-      width: 99%;
-      max-width: none;
-      margin: 25px auto 40px;
-    }
-
+    .container { width:99%; max-width:none; margin:25px auto 40px; }
     h1 {
-      text-align: center;
-      margin: 0 0 28px;
-      color: #000000;
-      font-family: "Arial Narrow", Arial, sans-serif;
-      font-size: 44px;
-      font-weight: 400;
-      line-height: 1;
+      text-align:center; margin:0 0 28px; color:#000;
+      font-size:44px; font-weight:400; line-height:1;
+    }
+    .table-wrap { width:100%; overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; background:#fff; color:#000; font-size:20px; }
+    th, td {
+      padding:6px; border:1px solid #000; text-align:center;
+      font-weight:400; white-space:nowrap; background:#fff; color:#000;
+    }
+    th { font-size:20px; line-height:1.1; }
+    .total-row td { background:#fff; color:#000; font-size:20px; }
+    .back-button {
+      width:100%; height:46px; margin-top:28px; border:1px solid #000;
+      border-radius:7px; cursor:pointer; background:#ffc000; color:#000;
+      font-size:20px; font-weight:400;
+    }
+    .back-button:hover { filter:brightness(.95); }
+
+    #cloud-tools .stock-excel-tool {
+      width:64px; height:64px; margin:0; padding:2px; border:0;
+      background:transparent; display:grid; place-items:center; flex-shrink:0;
+    }
+    #cloud-tools .stock-excel-tool img {
+      display:block; width:58px; height:58px; object-fit:contain; border-radius:9px;
+    }
+    #cloud-tools .stock-excel-tool:hover { opacity:.88; }
+    #cloud-tools .stock-excel-tool:focus-visible {
+      outline:2px solid #ffd633; outline-offset:3px; border-radius:9px;
+    }
+    #stock-import-file { display:none; }
+    #stock-import-status {
+      min-height:22px; margin:12px 0 0; text-align:center; font-size:16px; color:#000;
     }
 
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
+    @media (max-width:900px) {
+      .container { width:98%; margin:20px auto 35px; }
+      h1 { font-size:34px; margin-bottom:24px; }
+      table, th, .total-row td { font-size:20px; }
+      th, td { padding:6px 5px; }
+      .back-button { height:46px; font-size:20px; }
+      #cloud-tools .stock-excel-tool { width:58px; height:58px; }
+      #cloud-tools .stock-excel-tool img { width:52px; height:52px; }
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #ffffff;
-      color: #000000;
-      font-size: 20px;
-    }
-
-    th,
-    td {
-      padding: 6px 6px;
-      border: 1px solid #000000;
-      text-align: center;
-      font-weight: 400;
-      white-space: nowrap;
-      background: #ffffff;
-      color: #000000;
-    }
-
-    th {
-      font-size: 20px;
-      line-height: 1.1;
-      font-weight: 400;
-    }
-
-    .total-row td {
-      background: #ffffff;
-      color: #000000;
-      font-size: 20px;
-      font-weight: 400;
-    }
-
-    button {
-      width: 100%;
-      height: 46px;
-      margin-top: 28px;
-      border: 1px solid #000000;
-      border-radius: 7px;
-      cursor: pointer;
-      background: #ffc000;
-      color: #000000;
-      font-size: 20px;
-      font-weight: 400;
-    }
-
-    button:hover {
-      filter: brightness(0.95);
-    }
-
-    @media (max-width: 900px) {
-
-      .container {
-        width: 98%;
-        margin: 20px auto 35px;
-      }
-
-      h1 {
-        font-size: 34px;
-        margin-bottom: 24px;
-      }
-
-      table {
-        font-size: 20px;
-      }
-
-      th {
-        font-size: 20px;
-      }
-
-      .total-row td {
-        font-size: 20px;
-      }
-
-      th,
-      td {
-        padding: 6px 5px;
-      }
-
-      button {
-        height: 46px;
-        font-size: 20px;
-      }
-
-    }
-
-    #cloud-tools #stock-excel { width:56px; height:56px; margin-top:28px; padding:4px; border:0; background:transparent; display:grid; place-items:center; flex-shrink:0; }
-    #stock-excel img { display:block; width:48px; height:44px; object-fit:contain; border-radius:7px; }
-    #stock-excel:focus-visible { outline:2px solid #ffd633; outline-offset:3px; }
   </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud-api.js?v=logout-font-v4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="cloud-api.js?v=product-schema-v5"></script>
 </head>
-
-
 <body>
-
   <div class="container">
-
     <h1>STOCK</h1>
 
-
     <div class="table-wrap">
-
       <table>
-
         <thead>
-
           <tr>
+            <th>BARCODE</th>
             <th>CATEGORY</th>
             <th>STOCK UNIT</th>
             <th>PURCHASE PRICE</th>
@@ -183,360 +86,268 @@
             <th>BALANCE AMOUNT</th>
             <th>PROFIT</th>
           </tr>
-
         </thead>
-
-
         <tbody id="stockData"></tbody>
-
       </table>
-
     </div>
 
+    <input id="stock-import-file" type="file" accept=".xlsx,.xls">
+    <div id="stock-import-status" aria-live="polite"></div>
 
-    <button
-      onclick="window.location.href='HOME.html'"
-    >
-      BACK
-    </button>
-
+    <button class="back-button" onclick="window.location.href='HOME.html'">BACK</button>
   </div>
 
-
-
   <script>
+    (() => {
+      'use strict';
 
-    function addStockExport() {
-      const bar = document.getElementById('cloud-tools');
-      if (!bar || document.getElementById('stock-excel')) return;
-      const button = document.createElement('button');
-      button.id = 'stock-excel';
-      button.type = 'button';
-      button.title = 'EXTRACT STOCK DATA TO EXCEL';
-      button.setAttribute('aria-label', button.title);
-      button.innerHTML = '<img src="assets/excel-icon-transparent.png" alt="" aria-hidden="true">';
-      button.onclick = () => {
-        try { exportStockExcel(); } catch (error) { CloudAPI.showError(error); }
-      };
-      bar.insertBefore(button, bar.querySelector('.cloud-logout'));
-    }
+      function addStockExcelTools() {
+        const bar = document.getElementById('cloud-tools');
+        if (!bar || document.getElementById('stock-excel-in')) return;
 
-    // Build an XLSX workbook locally. Product labels are always text, never formulas.
-    function exportStockExcel() {
-      const xml = value => String(value).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
-      const rows = Array.from(document.querySelectorAll('table tr'));
-      const quantities = [1, 4, 8];
-      const sheetRows = rows.map((row, r) => '<row r="' + (r+1) + '">' + Array.from(row.cells).map((cell, c) => {
-        const address = String.fromCharCode(65+c) + (r+1);
-        const value = cell.textContent.trim();
-        if (r > 0 && c > 0 && value !== '—' && value !== '') {
-          const number = Number(value.replace(/\s|₼/g, ''));
-          if (!Number.isFinite(number)) throw new Error('Invalid stock value: ' + value);
-          return '<c r="'+address+'" s="'+(quantities.includes(c)?1:2)+'"><v>'+number+'</v></c>';
-        }
-        return '<c r="'+address+'" t="inlineStr"><is><t xml:space="preserve">'+xml(value)+'</t></is></c>';
-      }).join('') + '</row>').join('');
-      const files = {
-        '[Content_Types].xml': '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>',
-        '_rels/.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
-        'xl/workbook.xml': '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="STOCK" sheetId="1" r:id="rId1"/></sheets></workbook>',
-        'xl/_rels/workbook.xml.rels': '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
-        'xl/styles.xml': '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.00 &quot;₼&quot;"/></numFmts><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="3"><xf xfId="0"/><xf xfId="0" numFmtId="1" applyNumberFormat="1"/><xf xfId="0" numFmtId="164" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>',
-        'xl/worksheets/sheet1.xml': '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="48" customWidth="1"/><col min="2" max="11" width="23" customWidth="1"/></cols><sheetData>'+sheetRows+'</sheetData>'+(rows.length>2?'<autoFilter ref="A1:K'+(rows.length-1)+'"/>':'')+'</worksheet>'
-      };
-      const blob = new Blob([stockZip(files)], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url; link.download = 'STOCK_' + CloudAPI.today() + '.xlsx';
-      document.body.appendChild(link); link.click(); link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-    }
+        const makeButton = (id, title, icon) => {
+          const button = document.createElement('button');
+          button.id = id;
+          button.type = 'button';
+          button.className = 'stock-excel-tool';
+          button.title = title;
+          button.setAttribute('aria-label', title);
+          button.innerHTML = '<img src="' + icon + '" alt="" aria-hidden="true">';
+          return button;
+        };
 
-    // ZIP STORE records with UTF-8 names and CRC-32, sufficient for OOXML packages.
-    function stockZip(files) {
-      const encoder = new TextEncoder(), chunks = [], directory = [];
-      let offset = 0;
-      const header = size => {const bytes=new Uint8Array(size); return [bytes,new DataView(bytes.buffer)];};
-      for (const [name, content] of Object.entries(files)) {
-        const filename=encoder.encode(name), data=encoder.encode(content);
-        let crc=0xffffffff;
-        for(const byte of data) {crc ^= byte; for(let bit=0;bit<8;bit++) crc=(crc>>>1)^((crc&1)?0xedb88320:0);}
-        crc=(crc^0xffffffff)>>>0;
-        const [local,l]=header(30);
-        l.setUint32(0,0x04034b50,true); l.setUint16(4,20,true); l.setUint16(6,0x800,true); l.setUint16(12,33,true);
-        l.setUint32(14,crc,true); l.setUint32(18,data.length,true); l.setUint32(22,data.length,true); l.setUint16(26,filename.length,true);
-        chunks.push(local,filename,data);
-        const [central,c]=header(46);
-        c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0x800,true); c.setUint16(14,33,true);
-        c.setUint32(16,crc,true); c.setUint32(20,data.length,true); c.setUint32(24,data.length,true); c.setUint16(28,filename.length,true); c.setUint32(42,offset,true);
-        directory.push(central,filename); offset+=local.length+filename.length+data.length;
+        const excelIn = makeButton(
+          'stock-excel-in',
+          'EXCEL IN — IMPORT PRODUCTS',
+          'assets/excel-in.png'
+        );
+
+        const excelOut = makeButton(
+          'stock-excel-out',
+          'EXCEL OUT — EXPORT STOCK',
+          'assets/excel-out.png'
+        );
+
+        excelIn.onclick = () => document.getElementById('stock-import-file').click();
+        excelOut.onclick = () => {
+          try { exportStockExcel(); }
+          catch (error) { CloudAPI.showError(error); }
+        };
+
+        const logout = bar.querySelector('.cloud-logout');
+        bar.insertBefore(excelIn, logout);
+        bar.insertBefore(excelOut, logout);
       }
-      const size=directory.reduce((sum,chunk)=>sum+chunk.length,0);
-      const [end,e]=header(22); e.setUint32(0,0x06054b50,true); e.setUint16(8,directory.length/2,true); e.setUint16(10,directory.length/2,true); e.setUint32(12,size,true); e.setUint32(16,offset,true);
-      const result=new Uint8Array(offset+size+end.length); let position=0;
-      for(const chunk of [...chunks,...directory,end]) {result.set(chunk,position);position+=chunk.length;}
-      return result;
-    }
 
-    function loadStock(data) {
+      const importFile = document.getElementById('stock-import-file');
+      const importStatus = document.getElementById('stock-import-status');
 
-      const table =
-        document.getElementById(
-          'stockData'
-        );
-
-
-      table.innerHTML =
-        '';
-
-
-      let totalIncoming =
-        0;
-
-      let totalIncomingAmount =
-        0;
-
-      let totalSold =
-        0;
-
-      let totalSalesAmount =
-        0;
-
-      let totalRemaining =
-        0;
-
-      let totalRemainingAmount =
-        0;
-
-      let totalProfit =
-        0;
-
-
-
-      data.forEach(
-        item => {
-
-
-          const row =
-            document.createElement(
-              'tr'
-            );
-
-
-          let category =
-            item.category;
-
-
-          if (
-            category === 'БРЮКИ'
-          ) {
-            category = 'PANTS';
-          }
-
-
-          if (
-            category === 'ПОЛО'
-          ) {
-            category = 'POLO';
-          }
-
-
-          if (
-            category === 'ОБУВЬ'
-          ) {
-            category = 'SHOES';
-          }
-
-
-          if (
-            category === 'СПОРТ КОСТЮМ'
-          ) {
-            category = 'SPORT SUIT';
-          }
-
-
-
-          row.innerHTML = `
-
-            <td>
-              ${CloudAPI.escape(category)}
-            </td>
-
-            <td>
-              ${item.incoming}
-            </td>
-
-            <td>
-              ${Number(item.purchasePrice).toFixed(2)} ₼
-            </td>
-
-            <td>
-              ${Number(item.incomingAmount).toFixed(2)} ₼
-            </td>
-
-            <td>
-              ${item.sold}
-            </td>
-
-            <td>
-              ${Number(item.salePrice).toFixed(2)} ₼
-            </td>
-
-            <td>
-              ${
-                item.sold !== 0
-                  ? (
-                      Number(item.salesAmount) /
-                      Number(item.sold)
-                    ).toFixed(2)
-                  : '0.00'
-              } ₼
-            </td>
-
-            <td>
-              ${Number(item.salesAmount).toFixed(2)} ₼
-            </td>
-
-            <td>
-              ${item.remaining}
-            </td>
-
-            <td>
-              ${Number(item.remainingAmount).toFixed(2)} ₼
-            </td>
-
-            <td>
-              ${Number(item.profit).toFixed(2)} ₼
-            </td>
-
-          `;
-
-
-          table.appendChild(
-            row
-          );
-
-
-
-          totalIncoming +=
-            Number(
-              item.incoming
-            );
-
-
-          totalIncomingAmount +=
-            Number(
-              item.incomingAmount
-            );
-
-
-          totalSold +=
-            Number(
-              item.sold
-            );
-
-
-          totalSalesAmount +=
-            Number(
-              item.salesAmount
-            );
-
-
-          totalRemaining +=
-            Number(
-              item.remaining
-            );
-
-
-          totalRemainingAmount +=
-            Number(
-              item.remainingAmount
-            );
-
-
-          totalProfit +=
-            Number(
-              item.profit
-            );
-
+      importFile.addEventListener('change', () => {
+        const file = importFile.files && importFile.files[0];
+        if (!file) {
+          importStatus.textContent = '';
+          return;
         }
-      );
+        importStatus.textContent = 'SELECTED: ' + file.name + ' — IMPORT LOGIC WILL BE CONNECTED NEXT';
+        importFile.value = '';
+      });
 
+      function renderStock(data) {
+        const table = document.getElementById('stockData');
+        table.innerHTML = '';
 
+        let totalIncoming = 0;
+        let totalIncomingAmount = 0;
+        let totalSold = 0;
+        let totalSalesAmount = 0;
+        let totalRemaining = 0;
+        let totalRemainingAmount = 0;
+        let totalProfit = 0;
 
-      const totalRow =
-        document.createElement(
-          'tr'
-        );
+        (Array.isArray(data) ? data : []).forEach(item => {
+          const sold = Number(item.sold) || 0;
+          const salesAmount = Number(item.salesAmount) || 0;
+          const actualSalePrice = sold !== 0 ? salesAmount / sold : 0;
 
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${CloudAPI.escape(item.barcode || '')}</td>
+            <td>${CloudAPI.escape(item.category || '')}</td>
+            <td>${Number(item.incoming) || 0}</td>
+            <td>${Number(item.purchasePrice || 0).toFixed(2)} ₼</td>
+            <td>${Number(item.incomingAmount || 0).toFixed(2)} ₼</td>
+            <td>${sold}</td>
+            <td>${Number(item.salePrice || 0).toFixed(2)} ₼</td>
+            <td>${actualSalePrice.toFixed(2)} ₼</td>
+            <td>${salesAmount.toFixed(2)} ₼</td>
+            <td>${Number(item.remaining) || 0}</td>
+            <td>${Number(item.remainingAmount || 0).toFixed(2)} ₼</td>
+            <td>${Number(item.profit || 0).toFixed(2)} ₼</td>
+          `;
+          table.appendChild(row);
 
-      totalRow.className =
-        'total-row';
+          totalIncoming += Number(item.incoming) || 0;
+          totalIncomingAmount += Number(item.incomingAmount) || 0;
+          totalSold += sold;
+          totalSalesAmount += salesAmount;
+          totalRemaining += Number(item.remaining) || 0;
+          totalRemainingAmount += Number(item.remainingAmount) || 0;
+          totalProfit += Number(item.profit) || 0;
+        });
 
+        const totalRow = document.createElement('tr');
+        totalRow.className = 'total-row';
+        totalRow.innerHTML = `
+          <td>—</td>
+          <td>TOTAL</td>
+          <td>${totalIncoming}</td>
+          <td>—</td>
+          <td>${totalIncomingAmount.toFixed(2)} ₼</td>
+          <td>${totalSold}</td>
+          <td>—</td>
+          <td>—</td>
+          <td>${totalSalesAmount.toFixed(2)} ₼</td>
+          <td>${totalRemaining}</td>
+          <td>${totalRemainingAmount.toFixed(2)} ₼</td>
+          <td>${totalProfit.toFixed(2)} ₼</td>
+        `;
+        table.appendChild(totalRow);
+      }
 
+      function exportStockExcel() {
+        const xml = value => String(value)
+          .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+          .replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 
-      totalRow.innerHTML = `
+        const rows = Array.from(document.querySelectorAll('table tr'));
+        const quantityColumns = [2, 5, 9];
 
-        <td>
-          TOTAL
-        </td>
+        const sheetRows = rows.map((row, r) =>
+          '<row r="' + (r + 1) + '">' +
+          Array.from(row.cells).map((cell, c) => {
+            const address = String.fromCharCode(65 + c) + (r + 1);
+            const value = cell.textContent.trim();
 
-        <td>
-          ${totalIncoming}
-        </td>
+            if (r > 0 && c >= 2 && value !== '—' && value !== '') {
+              const number = Number(value.replace(/\s|₼/g, ''));
+              if (!Number.isFinite(number)) throw new Error('Invalid stock value: ' + value);
+              return '<c r="' + address + '" s="' + (quantityColumns.includes(c) ? 1 : 2) + '"><v>' + number + '</v></c>';
+            }
 
-        <td>
-          —
-        </td>
+            return '<c r="' + address + '" t="inlineStr"><is><t xml:space="preserve">' +
+              xml(value) + '</t></is></c>';
+          }).join('') +
+          '</row>'
+        ).join('');
 
-        <td>
-          ${totalIncomingAmount.toFixed(2)} ₼
-        </td>
+        const files = {
+          '[Content_Types].xml':
+            '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>',
+          '_rels/.rels':
+            '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>',
+          'xl/workbook.xml':
+            '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="STOCK" sheetId="1" r:id="rId1"/></sheets></workbook>',
+          'xl/_rels/workbook.xml.rels':
+            '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
+          'xl/styles.xml':
+            '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.00 &quot;₼&quot;"/></numFmts><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border/></borders><cellStyleXfs count="1"><xf/></cellStyleXfs><cellXfs count="3"><xf xfId="0"/><xf xfId="0" numFmtId="1" applyNumberFormat="1"/><xf xfId="0" numFmtId="164" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>',
+          'xl/worksheets/sheet1.xml':
+            '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="1" width="24" customWidth="1"/><col min="2" max="2" width="48" customWidth="1"/><col min="3" max="12" width="23" customWidth="1"/></cols><sheetData>' +
+            sheetRows +
+            '</sheetData>' +
+            (rows.length > 2 ? '<autoFilter ref="A1:L' + (rows.length - 1) + '"/>' : '') +
+            '</worksheet>'
+        };
 
-        <td>
-          ${totalSold}
-        </td>
+        const blob = new Blob([stockZip(files)], {
+          type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        });
 
-        <td>
-          —
-        </td>
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'STOCK_' + CloudAPI.today() + '.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+      }
 
-        <td>
-          —
-        </td>
+      function stockZip(files) {
+        const encoder = new TextEncoder();
+        const chunks = [];
+        const directory = [];
+        let offset = 0;
 
-        <td>
-          ${totalSalesAmount.toFixed(2)} ₼
-        </td>
+        const header = size => {
+          const bytes = new Uint8Array(size);
+          return [bytes, new DataView(bytes.buffer)];
+        };
 
-        <td>
-          ${totalRemaining}
-        </td>
+        for (const [name, content] of Object.entries(files)) {
+          const filename = encoder.encode(name);
+          const data = encoder.encode(content);
 
-        <td>
-          ${totalRemainingAmount.toFixed(2)} ₼
-        </td>
+          let crc = 0xffffffff;
+          for (const byte of data) {
+            crc ^= byte;
+            for (let bit = 0; bit < 8; bit++) {
+              crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+            }
+          }
+          crc = (crc ^ 0xffffffff) >>> 0;
 
-        <td>
-          ${totalProfit.toFixed(2)} ₼
-        </td>
+          const [local, l] = header(30);
+          l.setUint32(0, 0x04034b50, true);
+          l.setUint16(4, 20, true);
+          l.setUint16(6, 0x800, true);
+          l.setUint16(12, 33, true);
+          l.setUint32(14, crc, true);
+          l.setUint32(18, data.length, true);
+          l.setUint32(22, data.length, true);
+          l.setUint16(26, filename.length, true);
+          chunks.push(local, filename, data);
 
-      `;
+          const [central, c] = header(46);
+          c.setUint32(0, 0x02014b50, true);
+          c.setUint16(4, 20, true);
+          c.setUint16(6, 20, true);
+          c.setUint16(8, 0x800, true);
+          c.setUint16(14, 33, true);
+          c.setUint32(16, crc, true);
+          c.setUint32(20, data.length, true);
+          c.setUint32(24, data.length, true);
+          c.setUint16(28, filename.length, true);
+          c.setUint32(42, offset, true);
+          directory.push(central, filename);
 
+          offset += local.length + filename.length + data.length;
+        }
 
-      table.appendChild(
-        totalRow
-      );
+        const size = directory.reduce((sum, chunk) => sum + chunk.length, 0);
+        const [end, e] = header(22);
+        e.setUint32(0, 0x06054b50, true);
+        e.setUint16(8, directory.length / 2, true);
+        e.setUint16(10, directory.length / 2, true);
+        e.setUint32(12, size, true);
+        e.setUint32(16, offset, true);
 
-    }
+        const result = new Uint8Array(offset + size + end.length);
+        let position = 0;
+        for (const chunk of [...chunks, ...directory, end]) {
+          result.set(chunk, position);
+          position += chunk.length;
+        }
+        return result;
+      }
 
-
-
-    CloudAPI.read("stock").then(data => { loadStock(data); addStockExport(); }).catch(CloudAPI.showError);
-
+      CloudAPI.read('stock')
+        .then(data => {
+          renderStock(data);
+          addStockExcelTools();
+        })
+        .catch(CloudAPI.showError);
+    })();
   </script>
-
 </body>
-
 </html>
-
