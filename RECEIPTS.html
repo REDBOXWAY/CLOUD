@@ -1,46 +1,56 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CLOUD DRIVE — ЧЕКИ</title>
+<title>CLOUD DRIVE — RECEIPTS</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font:18px Arial,sans-serif}main{max-width:1200px;width:92%;margin:36px auto}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:38px;margin:0 0 8px}header p{margin:0;color:#555}a{color:inherit}button,.back{border:1px solid #111;border-radius:7px;background:#ffc000;color:#111;padding:12px 20px;font:inherit;cursor:pointer;text-decoration:none}button:disabled{opacity:.5;cursor:wait}.filters{display:flex;flex-wrap:wrap;gap:16px;align-items:end;margin:32px 0 20px}label{display:grid;gap:8px;font-size:15px}input{border:1px solid #999;border-radius:7px;padding:12px;font:18px Arial;max-width:100%;min-width:0}.search{flex:1;min-width:200px}.table-wrap{overflow:auto;border:1px solid #ddd;border-radius:8px}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th{background:#f3f3f3;font-size:14px;text-transform:uppercase;letter-spacing:.5px}th,td{padding:18px;border-bottom:1px solid #e6e6e6}td:first-child{font:14px monospace;white-space:normal;overflow-wrap:anywhere;min-width:160px}.amount{text-align:right;font-variant-numeric:tabular-nums}.pdf{font-weight:bold;text-decoration:underline;text-underline-offset:4px}#status{padding:16px 0;line-height:1.5}#more{margin-top:18px}#viewer{width:100%;height:78vh;border:1px solid #ddd}#download{display:inline-block;margin:18px 0}#status.error{color:#a00000}@media(max-width:650px){header{align-items:start}h1{font-size:29px}main{width:94%;margin:24px auto}.filters label{width:100%}.filters input{width:100%}th,td{padding:12px;font-size:15px}}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font:400 20px "Arial Narrow",Arial,sans-serif;letter-spacing:.2px;text-transform:uppercase}main{max-width:1200px;width:92%;margin:36px auto}header{display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:44px;font-weight:400;line-height:1;margin:0 0 8px}header p{margin:0;color:#555}a{color:inherit}button,.back{border:1px solid #111;border-radius:7px;background:#ffc000;color:#111;padding:12px 20px;font:inherit;cursor:pointer;text-decoration:none}button:disabled{opacity:.5;cursor:wait}.filters{display:flex;flex-wrap:wrap;gap:16px;align-items:end;margin:32px 0 20px}label{display:grid;gap:8px;font-size:20px}input{border:1px solid #999;border-radius:7px;padding:12px;font:inherit;max-width:100%;min-width:0}.search{flex:1;min-width:200px}.table-wrap{overflow:auto;border:1px solid #ddd;border-radius:8px}table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}th{background:#f3f3f3;font-size:20px;font-weight:400;line-height:1.1;text-transform:uppercase;letter-spacing:.2px}th,td{padding:18px;border-bottom:1px solid #e6e6e6}td:first-child{font:inherit;white-space:normal;overflow-wrap:anywhere;min-width:160px}.amount{text-align:right;font-variant-numeric:tabular-nums}.pdf{font-weight:400;text-decoration:underline;text-underline-offset:4px}#status{padding:16px 0;line-height:1.5}#more{margin-top:18px}#viewer{width:100%;height:78vh;border:1px solid #ddd}#download{display:inline-block;margin:18px 0}#status.error{color:#a00000}@media(max-width:650px){header{align-items:start}h1{font-size:34px}main{width:94%;margin:24px auto}.filters label{width:100%}.filters input{width:100%}th,td{padding:12px;font-size:20px}}
+
+/* Typography shared with STOCK: normal-weight uppercase Arial Narrow, 20px. */
+button,input,table,th,td,a,label {
+  font-family:"Arial Narrow",Arial,sans-serif;
+  font-weight:400;
+  text-transform:uppercase;
+  letter-spacing:.2px;
+}
+table,th,td,button,input,a,label {font-size:20px;}
+@media (max-width:900px) {h1{font-size:34px;}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="cloud-api.js?v=receipts-v2"></script>
 </head>
 <body><main>
-<header><div><h1>CLOUD DRIVE</h1><p id="subtitle">ЧЕКИ</p></div><a class="back" href="HOME.html">НАЗАД</a></header>
+<header><div><h1>CLOUD DRIVE</h1><p id="subtitle">RECEIPTS</p></div><a class="back" href="HOME.html">BACK</a></header>
 <section id="archive">
-<form class="filters" id="filters"><label class="search">Номер чека<input id="number" type="search" placeholder="Поиск по номеру"></label><label>Дата операции<input id="date" type="date"></label><button type="submit">Найти</button><button type="button" id="reset">Сбросить</button></form>
-<div class="table-wrap"><table><thead><tr><th>№ чека</th><th>Дата и время · Баку</th><th class="amount">Сумма</th><th>Чек</th></tr></thead><tbody id="rows"></tbody></table></div><button id="more" hidden>Загрузить ещё</button>
-</section><p id="status" role="status" aria-live="polite">Загрузка…</p><section id="document" hidden><a id="download">Скачать PDF</a><iframe id="viewer" title="Чек PDF"></iframe></section>
+<form class="filters" id="filters"><label class="search">RECEIPT NUMBER<input id="number" type="search" placeholder="SEARCH BY NUMBER"></label><label>OPERATION DATE<input id="date" type="date"></label><button type="submit">SEARCH</button><button type="button" id="reset">RESET</button></form>
+<div class="table-wrap"><table><thead><tr><th>RECEIPT NO.</th><th>DATE & TIME · BAKU</th><th class="amount">AMOUNT</th><th>RECEIPT</th></tr></thead><tbody id="rows"></tbody></table></div><button id="more" hidden>LOAD MORE</button>
+</section><p id="status" role="status" aria-live="polite">LOADING…</p><section id="document" hidden><a id="download">DOWNLOAD PDF</a><iframe id="viewer" title="RECEIPT PDF"></iframe></section>
 </main>
 <script>
 (() => {
   const $=id=>document.getElementById(id);let offset=0,loading=false,url;
-  const stamp=value=>new Intl.DateTimeFormat('ru-RU',{timeZone:'Asia/Baku',dateStyle:'short',timeStyle:'medium'}).format(new Date(value));
+  const stamp=value=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Baku',dateStyle:'short',timeStyle:'medium'}).format(new Date(value));
   function status(message,error=false){$('status').textContent=message;$('status').className=error?'error':'';}
-  function fail(error){status(error.code==='PGRST202'?'Архив чеков ещё не подключён. Обратитесь к администратору.':'Не удалось загрузить чек: '+error.message,true);}
+  function fail(error){status(error.code==='PGRST202'?'RECEIPT ARCHIVE IS NOT CONNECTED. CONTACT YOUR ADMINISTRATOR.':'UNABLE TO LOAD RECEIPT: '+error.message,true);}
   async function list(reset=true){
     if(loading)return;loading=true;$('more').disabled=true;
     if(reset){offset=0;$('rows').replaceChildren();$('more').hidden=true;}
-    status('Загрузка…');
+    status('LOADING…');
     try {
       const rows=await CloudAPI.receipts('list',{p_number:$('number').value.trim(),p_date:$('date').value||null,p_offset:offset});
       rows.forEach(receipt=>{
         const tr=document.createElement('tr');
         [receipt.number,stamp(receipt.created_at),Number(receipt.total).toFixed(2)+' ₼'].forEach((value,i)=>{const td=document.createElement('td');td.textContent=value;if(i===2)td.className='amount';tr.appendChild(td);});
-        const cell=document.createElement('td'),a=document.createElement('a');a.className='pdf';a.textContent='Открыть PDF';a.href='RECEIPTS.html?id='+encodeURIComponent(receipt.id);a.target='_blank';a.rel='noopener';cell.appendChild(a);tr.appendChild(cell);$('rows').appendChild(tr);
+        const cell=document.createElement('td'),a=document.createElement('a');a.className='pdf';a.textContent='OPEN PDF';a.href='RECEIPTS.html?id='+encodeURIComponent(receipt.id);a.target='_blank';a.rel='noopener';cell.appendChild(a);tr.appendChild(cell);$('rows').appendChild(tr);
       });
-      offset+=rows.length;$('more').hidden=rows.length<50;status(offset?'':'Чеков за выбранный период нет.');
+      offset+=rows.length;$('more').hidden=rows.length<50;status(offset?'':'NO RECEIPTS FOR THE SELECTED PERIOD.');
     }catch(error){fail(error);}finally{loading=false;$('more').disabled=false;}
   }
   async function open(id){
     $('archive').hidden=true;
     try {
       const receipt=await CloudAPI.receipts('get',{p_id:id});
-      if(!receipt){status('Чек не найден.',true);return;}
+      if(!receipt){status('RECEIPT NOT FOUND.',true);return;}
       const bytes=Uint8Array.from(atob(receipt.pdf_base64),c=>c.charCodeAt(0));url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
       $('subtitle').textContent=receipt.number;$('download').href=url;$('download').download=receipt.number+'.pdf';$('viewer').src=url;$('document').hidden=false;status('');
     }catch(error){fail(error);}
