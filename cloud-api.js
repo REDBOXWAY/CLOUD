@@ -329,6 +329,14 @@
       if(error) throw error;
       return normalizeReadData(action, data);
     },
+    async receipts(action, params = {}) {
+      await ready;
+      const names = {list:'cloud_receipts_list',get:'cloud_receipts_get'};
+      if (!names[action]) throw new Error('Unknown receipt action');
+      const {data,error} = await client.rpc(names[action],params);
+      if (error) throw error;
+      return data;
+    },
     async send(options) {
       await ready;
       const body=options.body;
@@ -342,11 +350,34 @@
       if(!pending || pending.signature!==signature) pending={signature,id:crypto.randomUUID()};
       // Persist before sending; retries after an uncertain network result reuse the same ID.
       sessionStorage.setItem(storageKey,JSON.stringify(pending));
-      const {data,error}=await client.rpc('cloud_submit',{p_request_id:pending.id,p_date:date,p_items:items});
+      let receipt = null;
+      const isPurchase = body.get('action') === 'purchaseList' && !!window.ReceiptPDF;
+      let receiptEnabled = false;
+      if (isPurchase) {
+        const availability = await client.rpc('cloud_receipts_ready');
+        if (availability.error && availability.error.code !== 'PGRST202') throw availability.error;
+        receiptEnabled = availability.data === true;
+      }
+      if (receiptEnabled) {
+        pending.created_at ||= new Date().toISOString();
+        sessionStorage.setItem(storageKey,JSON.stringify(pending));
+        receipt = {
+          number:'CD-'+date.replaceAll('-','')+'-'+pending.id,
+          created_at:pending.created_at,
+          cashier:session.user.email || session.user.id,
+          items,
+          total:Math.round(items.reduce((sum,item)=>sum+Number(item.amount),0)*100)/100
+        };
+        receipt.pdf_base64 = ReceiptPDF.create(receipt);
+      }
+      const {data,error}=receiptEnabled
+        ? await client.rpc('cloud_receipt_submit',{p_request_id:pending.id,p_date:date,p_items:items,p_receipt:receipt})
+        : await client.rpc('cloud_submit',{p_request_id:pending.id,p_date:date,p_items:items});
       if(error) throw error;
       if(data!=='OK') throw new Error('UNEXPECTED RESPONSE');
       sessionStorage.removeItem(storageKey);
-      return {text:async()=>data};
+      return {text:async()=>data,receiptId:receiptEnabled ? pending.id : null,receiptUnavailable:isPurchase && !receiptEnabled};
     }
   };
 })();
+

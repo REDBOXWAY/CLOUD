@@ -44,7 +44,7 @@
 
     .menu {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: clamp(24px, 4vw, 64px);
       align-items: start;
     }
@@ -138,7 +138,7 @@
     }
   </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="cloud-api.js?v=logout-font-v4"></script>
+<script src="cloud-api.js?v=receipts-v1"></script>
 </head>
 
 <body>
@@ -240,9 +240,16 @@
         </svg>
       </a>
 
+      <a class="menu-item" href="RECEIPTS.html">
+        <span class="menu-title">RECEIPTS</span>
+        <svg class="menu-icon" viewBox="0 0 180 180" aria-hidden="true">
+          <path class="icon-stroke" d="M42 22h96v136l-16-10-16 10-16-10-16 10-16-10-16 10z M62 50h56 M62 75h56 M62 100h32 M102 122h16"/>
+        </svg>
+      </a>
     </nav>
 
   </main>
 
 </body>
 </html>
+
