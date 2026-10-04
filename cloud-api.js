@@ -361,8 +361,15 @@
       if (receiptEnabled) {
         pending.created_at ||= new Date().toISOString();
         sessionStorage.setItem(storageKey,JSON.stringify(pending));
+        const reservation = await client.rpc('cloud_receipt_reserve',{p_request_id:pending.id});
+        // Older database installations continue working until the numbering migration is applied.
+        if (reservation.error && reservation.error.code !== 'PGRST202') throw reservation.error;
+        const receiptNumber = reservation.error
+          ? 'CD-'+date.replaceAll('-','')+'-'+pending.id
+          : reservation.data;
+        if (typeof receiptNumber !== 'string' || !receiptNumber) throw new Error('INVALID RECEIPT NUMBER');
         receipt = {
-          number:'CD-'+date.replaceAll('-','')+'-'+pending.id,
+          number:receiptNumber,
           created_at:pending.created_at,
           cashier:session.user.email || session.user.id,
           items,
